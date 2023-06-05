@@ -1,0 +1,5 @@
+This paper proposes a neuroanatomical aligning visual object tracker to implement an explainable neural network. It first proposes a brain-like tracking network (BTN) with four neuroanatomically mapped regions. Then it designs a novel benchmark, which named brain-like tracking score (BTS), to measure the model similarity of the human smooth pursuit pathway. Finally, it discover that the middle temporal (MT) and medial superior temporal (MST) areas in the cerebral cortex are similar to the designed network structure. The experimental results on the public and realistic dataset, demonstrate the effectiveness of the proposed methods. Below are my suggestions regarding this submission.
+
+1. In Equation (14), the description of the formula symbol is missing.
+2. Please please add some figure description to Fig 3 and proofread the manuscript. 
+

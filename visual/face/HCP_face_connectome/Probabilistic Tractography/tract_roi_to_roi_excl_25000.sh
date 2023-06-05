@@ -1,0 +1,8 @@
+for s in L_AMG_L_ATL L_AMG_L_FFA L_AMG_L_IFG L_AMG_L_OFA L_AMG_L_OFC L_AMG_L_PCC L_AMG_L_PPA L_AMG_L_pSTS L_AMG_L_V1 L_ATL_L_FFA L_ATL_L_IFG L_ATL_L_OFA L_ATL_L_OFC L_ATL_L_PCC L_ATL_L_PPA L_ATL_L_pSTS L_ATL_L_V1 L_FFA_L_IFG L_FFA_L_OFA L_FFA_L_OFC L_FFA_L_PCC L_FFA_L_PPA L_FFA_L_pSTS L_FFA_L_V1 L_IFG_L_OFA L_IFG_L_OFC L_IFG_L_PCC L_IFG_L_PPA L_IFG_L_pSTS L_IFG_L_V1 L_OFA_L_OFC L_OFA_L_PCC L_OFA_L_PPA L_OFA_L_pSTS L_OFA_L_V1 L_OFC_L_PCC L_OFC_L_PPA L_OFC_L_pSTS L_OFC_L_V1 L_PCC_L_PPA L_PCC_L_pSTS L_PCC_L_V1 L_PPA_L_pSTS L_PPA_L_V1 L_pSTS_L_V1 R_AMG_R_ATL R_AMG_R_FFA R_AMG_R_IFG R_AMG_R_OFA R_AMG_R_OFC R_AMG_R_PCC R_AMG_R_PPA R_AMG_R_pSTS R_AMG_R_V1 R_ATL_R_FFA R_ATL_R_IFG R_ATL_R_OFA R_ATL_R_OFC R_ATL_R_PCC R_ATL_R_PPA R_ATL_R_pSTS R_ATL_R_V1 R_FFA_R_IFG R_FFA_R_OFA R_FFA_R_OFC R_FFA_R_PCC R_FFA_R_PPA R_FFA_R_pSTS R_FFA_R_V1 R_IFG_R_OFA R_IFG_R_OFC R_IFG_R_PCC R_IFG_R_PPA R_IFG_R_pSTS R_IFG_R_V1 R_OFA_R_OFC R_OFA_R_PCC R_OFA_R_PPA R_OFA_R_pSTS R_OFA_R_V1 R_OFC_R_PCC R_OFC_R_PPA R_OFC_R_pSTS R_OFC_R_V1 R_PCC_R_PPA R_PCC_R_pSTS R_PCC_R_V1 R_PPA_R_pSTS R_PPA_R_V1 R_pSTS_R_V1
+do
+  mkdir -p /path/tract_roi_to_roi_excl_25000/${s}
+  for n in 263436 627549
+  do
+     probtrackx2 --network -x /path/seeds_targets/${n}/${s}.txt  -l --onewaycondition -c 0.2 -S 2000 --steplength=0.5 -P 25000 --fibthresh=0.01 --distthresh=0.0 --sampvox=0.0 --xfm=/data/projects/fmri/${n}/MNINonLinear/xfms/standard2acpc_dc.nii.gz --invxfm=/data/projects/fmri/${n}/MNINonLinear/xfms/acpc_dc2standard.nii.gz --avoid=/path/cerebellum_mask.nii.gz --forcedir --opd -s /gpfs/projects/fmri/bedpostX_gpu_g_rician/${n}.bedpostX/merged -m  /gpfs/projects/fmri/bedpostX_gpu_g_rician/${n}.bedpostX/nodif_brain_mask  --dir=/path/tract_roi_to_roi_excl_25000/${s}/${n}
+  done
+done

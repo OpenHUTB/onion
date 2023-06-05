@@ -1,0 +1,37 @@
+# change these paths (should be the only paths you need to change)
+basedir=/home/yw/work/face_PPI # currently the GitHub repo
+MAINDATADIR=/data/projects/fmri # base directory for your input data
+MAINOUTPUTDIR=${basedir}/fsl # base directory for your ouput results
+
+
+task=$1
+subj=$2
+H=$3
+
+OUTPUTDIR=${MAINOUTPUTDIR}/${subj}/MNINonLinear/Results
+
+INPUT1=${OUTPUTDIR}/rfMRI_${task}_LR/L1_${task}_LR_${H}-hemi.feat
+INPUT2=${OUTPUTDIR}/rfMRI_${task}_RL/L1_${task}_RL_${H}-hemi.feat
+
+OUTPUT=${OUTPUTDIR}/L2_${task}_${H}-hemi
+if [ -d ${OUTPUT}.gfeat ]; then
+	rm -rf ${OUTPUT}.gfeat
+	echo "deleting existing output"
+fi
+
+#find and replace: run feat for smoothing
+ITEMPLATE=${basedir}/templates/L2_rest.fsf
+OTEMPLATE=${OUTPUTDIR}/L2_rest_${H}-hemi.fsf
+sed -e 's@OUTPUT@'$OUTPUT'@g' \
+-e 's@INPUT1@'$INPUT1'@g' \
+-e 's@INPUT2@'$INPUT2'@g' \
+<$ITEMPLATE> ${OTEMPLATE}
+feat ${OTEMPLATE}
+
+# delete files that aren't necessary
+for COPE in `seq 9`; do
+	rm -rf ${OUTPUT}.gfeat/cope${COPE}.feat/filtered_func_data.nii.gz
+	rm -rf ${OUTPUT}.gfeat/cope${COPE}.feat/stats/res4d.nii.gz
+	rm -rf ${OUTPUT}.gfeat/cope${COPE}.feat/stats/corrections.nii.gz
+	rm -rf ${OUTPUT}.gfeat/cope${COPE}.feat/stats/threshac1.nii.gz
+done

@@ -1,0 +1,946 @@
+%% 
+%% Copyright 2007-2019 Elsevier Ltd
+%% 
+%% This file is part of the 'Elsarticle Bundle'.
+%% ---------------------------------------------
+%% 
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.2 of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.2 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%% 
+%% The list of all files belonging to the 'Elsarticle Bundle' is
+%% given in the file `manifest.txt'.
+%% 
+
+%% Template article for Elsevier's document class `elsarticle'
+%% with numbered style bibliographic references
+%% SP 2008/03/01
+%%
+%% 
+%%
+%% $Id: elsarticle-template-num.tex 168 2019-02-25 07:15:41Z apu.v $
+%%
+%%
+%\documentclass[preprint,12pt]{elsarticle}
+%\documentclass[final,1p,times,twocolumn]{elsarticle} 
+\documentclass[final,3p,times,twocolumn]{elsarticle}
+%% Use the option review to obtain double line spacing
+%% \documentclass[authoryear,preprint,review,12pt]{elsarticle}
+
+%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn
+%% for a journal layout:
+%% \documentclass[final,1p,times]{elsarticle}
+% \documentclass[final,1p,times,twocolumn]{elsarticle}
+%% \documentclass[final,3p,times]{elsarticle}
+%% \documentclass[final,3p,times,twocolumn]{elsarticle}
+%% \documentclass[final,5p,times]{elsarticle}
+%% \documentclass[final,5p,times,twocolumn]{elsarticle}
+
+%% For including figures, graphicx.sty has been loaded in
+%% elsarticle.cls. If you prefer to use the old commands
+%% please give \usepackage{epsfig}
+
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+%% \usepackage{amsthm}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers.
+%% \usepackage{lineno}
+
+\graphicspath{{image/}}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{array}
+\usepackage{booktabs}
+ % 设置超链接跳转
+\usepackage[colorlinks,
+            linkcolor=blue,
+            anchorcolor=blue,
+            citecolor=blue]{hyperref} 
+\usepackage{amsmath}
+
+% 改变字体颜色
+\usepackage{color,xcolor}
+\usepackage{makecell}
+
+
+
+\journal{Neurocomputing}
+
+\begin{document}
+
+\begin{frontmatter}
+
+%% Title, authors and addresses
+
+%% use the tnoteref command within \title for footnotes;
+%% use the tnotetext command for theassociated footnote;
+%% use the fnref command within \author or \address for footnotes;
+%% use the fntext command for theassociated footnote;
+%% use the corref command within \author for corresponding author footnotes;
+%% use the cortext command for theassociated footnote;
+%% use the ead command for the email address,
+%% and the form \ead[url] for the home page:
+%% \title{Title\tnoteref{label1}}
+%% \tnotetext[label1]{}
+%% \author{Name\corref{cor1}\fnref{label2}}
+%% \ead{email address}
+%% \ead[url]{home page}
+%% \fntext[label2]{}
+%% \cortext[cor1]{}
+%% \address{Address\fnref{label3}}
+%% \fntext[label3]{}
+
+\title{BTN: Neuroanatomical Aligning between Visual Object Tracking \\in Deep Neural Network and Smooth Pursuit in Brain}
+
+%% use optional labels to link authors explicitly to addresses:
+ \author[label1]{Haidong Wang}
+ \ead{haidong@hnu.edu.cn}
+ \author[label1]{Zhiyong Li\corref{cor1}}
+ \ead{zhiyong.li@hnu.edu.cn}
+ \author[label1]{Ke Nai}
+ \ead{naike\_hnu@hnu.edu.cn}
+ \author[label1]{Jin Yuan}
+ \ead{yuanjin@hnu.edu.cn}
+ \author[label2]{Shutao Li}
+ \ead{shutao\_li@hnu.edu.cn}
+ \author[label3]{Xianghua Li}
+ \ead{493630379@qq.com}
+ \address[label1]{College of Computer Science and Electronic Engineering, Hunan University, Changsha, China}
+ \address[label2]{College of Electrical and Information Engineering, Hunan University, Changsha, China}
+ \address[label3]{State Grid Hunan Electric Power Company Limited Economical and Technical Research Institute, Changsha, China}
+\cortext[cor1]{Corresponding authors.}
+
+%\author{}
+%
+%\address{}
+
+\begin{abstract}
+Inspired by neuroanatomy, deep neural networks (DNNs) have recently developed from shallow network structures to exceedingly deep structures, providing excellent visual tracking results.
+However, standard DNNs usually do not easily connect with brain areas on account of their excessive network depth and absent biological constraints, such as recurrent connections. 
+We propose a brain-like tracking network (BTN) with four neuroanatomically mapped regions and recurrence, guided by the brain-like tracking score (BTS), 
+a novel benchmark to measure the model similarity of the human smooth pursuit pathway. 
+In addition, we propose that the middle temporal (MT) and medial superior temporal (MST) areas in the cerebral cortex are equivalent to the designed network structure on the basis of the continuous motion perception of the tracking pathway, 
+and indicate that the metrics between the neuroanatomical similarity in the cerebral cortex and visual tracking of the DNN are compatible. 
+Despite having significant tracking performance on the Tracking-Gump dataset, the BTN has achieved a high BTS. 
+In summary, this research builds a BTN, a brain-like and recurrent DNN, as the first model of the cortical pathway of smooth pursuit.
+\end{abstract}
+
+
+\begin{keyword}
+%% keywords here, in the form: keyword \sep keyword
+
+%% PACS codes here, in the form: \PACS code \sep code
+
+%% MSC codes here, in the form: \MSC code \sep code
+%% or \MSC[2008] code \sep code (2000 is the default)
+Visual object tracking \sep deep neural network \sep neuroscience \sep smooth pursuit
+
+\end{keyword}
+
+\end{frontmatter}
+
+%% \linenumbers
+
+\begin{figure*}
+	\centering
+	\includegraphics[width=6.7in]{imgs/introduction.pdf}
+	\caption{
+		\textbf{
+		Collaborative design between a DNN and neuroanatomy with a BTS.} 
+		Through the quantitative brain-like score, we refer to the human brain and utilize acquired knowledge to enlighten the design of the BTN. 
+		The BTN includes four regions that are mapped into the 		primary visual cortex (V1), 
+		the middle temporal and medial superior temporal areas (MT/MST), the frontal eye field (FEF) and the brainstem/cerebellum. 
+		CONV\textsubscript{V1} is the classical convolutional layer and performs preprocessing to reduce the data size.
+		The DFN\textsubscript{MT/MST} is dynamic filter network, and the RNN\textsubscript{FEF} is recurrent, as depicted in Section~\ref{sec:cornet_s_def} for details.
+		The the upper-right image corresponds to the tracking activation and bounding box in the brain-aligned models, 
+		while lower-right image represents the cortical activation and eye gaze position with the stimulus in the far left,
+		which demonstrates the relationship between computer vision tracking performance and brain tracking response with the BTS, as depicted in Section~\ref{sec:results1}.
+	}
+	\label{fig:introduction}
+\end{figure*}
+
+
+\section{Introduction}{D}{eep} learning has made great progress in building the candidate model of the neuromechanism in the neurological community~\cite{kubilius2019brain-like}. 
+Amazingly, in trained deep neural networks (DNNs) used to classify images~\cite{Deng2009ImageNet}, the middle layer in DNNs can partially explain why the nerve cell in the middle layer of the visual cortex has specific activations to an image~\cite{yamins2014performance,khaligh2014deep,gucclu2015deep,murugesan2017brain,cichy2016deep,yamins2016using}. 
+\textcolor{red}{
+Furthermore, these models also partly predict primate image recognition behavior and cortical activation~\cite{rajalingham2018large,kubilius2016deep}.
+Excellent models of the brain provide extraordinary opportunities for brain-computer interfaces,
+and these methods can be utilized to predict the expected activations in the cortical pathway~\cite{bashivan2019neural}.}
+
+
+\textcolor{red}{
+To capture cortical processing even more strictly in these models, continued architectural search on traditional visual datasets alone no longer seems to be a feasible solution. 
+Even though the great tracking performance in deeper DNNs has truly increased~\cite{ILSVRC15,luo2021trajectory}, it is hopeless to raise the brain-like score~\cite{rajalingham2018large,su2020incremental}. 
+In addition, at the beginning, only partial modules can be obviously mapped to corresponding regions of the visual pathway, 
+and the relations between the small number of visual regions and the numerous and complex modules in GoogleNet~\cite{szegedy2015going} or Inception-v4~\cite{szegedy2017inception} are inconspicuous. 
+Finally, the network with high accuracy in the visual task becomes increasingly deeper except for several brain-like architectures for image classification~\cite{TangSchrimpfLotter2018Recurrent, kar2019evidence}. 
+}
+
+\textcolor{red}{
+To address the interpretability problem of visual tracking model, in this study, we propose that aligning DNNs to anatomy will result in shallower, more interpretable, and more brain-like tracking models, named brain-like tracking network (BTN).
+The BTN is a shallow recurrent brain-like architecture of the brain pathway; 
+hence, it has a much more brain-like structure. 
+In section 4, we introduce the method utilized to analyse human behavioral and cortical data during object tracking. 
+In section 5, we build a fancy measurement method for predicting eye movement behavior and neural activations on the brain-like tracking score (BTS). 
+In our experiments, we introduce a new benchmark dataset composed of behavioral and cortical recordings, 
+and present an outstanding tracking result of 36.5\% at evaluating the model similarity of the visual pathway while obtaining a good tracking effect in the Tracking-Gump dataset~\cite{gaze_forrest}. 
+We find that these results are mainly due to the brain-like architecture, in accordance with prior knowledge of the human cortical pathway processing stimuli input~\cite{TangSchrimpfLotter2018Recurrent, yin2020deep, kar2019evidence}. 
+Finally, to compare the model activations between the RNN\textsubscript{MT/MST} in the BTN and the responses in the human middle temporal and medial superior temporal areas (MT/MST), we discover that the BTN predicts these cortical activations well, 
+and it is also the first visual tracking model to do so on the neural recordings. 
+} 
+%\par
+
+
+\section{Related Works} 
+
+\subsection{Deep neural network}\par
+Many works have recently shown that salient objects are extracted by a series of foveal views~\cite{mnih2014recurrent,draw}.
+The object extraction module in the BTN is implemented with a two-dimensional gaussian filter~\cite{RATM} that is neuroanatomically explainable.
+Focusing on specific appearance representations may be as important as spatial attention. 
+An approach with recurrence can adaptively change the filter of the convolution module, therefore changing it to presentations on a frame and optimizing model performance~\cite{stollenga2014deep}. 
+The filters of the dynamic filter network (DFN)~\cite{brabandere2016dynamic} are obtained online based on the input feature, and the DFN implements model compression without degrading the accuracy. 
+Input-dependent state transitions can help to learn the markovian decision model~\cite{karl2017deep}. 
+\textcolor{red}{
+We do not follow the results, and use the idea to predict the salient feature.} 
+
+
+\textcolor{red}{
+To track a target, it seems to be very suitable to use recurrences and glimpses, but they have only been employed successfully in monochromatic videos with simple backgrounds~\cite{RATM}. 
+Some~\cite{ning2017spatially} obtained prominent results through representations of the target detector that is the input of a recurrent neural network (RNN)~\cite{su2020improved}.
+However, it needs to process each full frame. 
+A recent study~\cite{gordon2017re3} utilized an RNN cropping explicitly to build attention in humans. 
+Our study is similar to~\cite{RATM,luo2019teleoperation}, and utilizes human attention which is implemented with a long short memory network (LSTM) to extract the movement features well in multiple frames. 
+In addition, we seek to design a brain-like network that will gain a superior BTS and exceed the existing tracking models on the Tracking-Gump dataset~\cite{gaze_forrest}.
+}\par
+
+\subsection{Smooth pursuit}
+There have been many successful eye movement experiments. 
+Some eye movement detection methods are proposed according to the existing plentiful datasets that have annotated eye movement data~\cite{dorr2010variability,mathe2012dynamic,hooge2017is,blstm_class}. 
+Many of the existing classification methods, which are designed using motionless input, only process saccades and fixations. 
+Therefore, these methods cannot detect smooth pursuit and prevent the detection of brain-like correlations with smooth pursuit. 
+In order to address this issue, a multi-observer smooth pursuit method (MOSP)~\cite{mosp} that can differentiate three primary eye movements, including saccade, fixation and smooth pursuit, 
+and acquire good performance evaluation is designed~\cite{blstm_class}.
+In addition, to accurately explain the domain of  intelligence as a brain-like model in the human brain and cognitive sciences, 
+the brain-score has been proposed in the research of an integrated benchmark in the field of computer vision~\cite{schrimpf2020integrative}. 
+
+In this work, we take full advantage of the latest achievements. 
+By utilizing these excellent eye movement classification and computer vision methods, 
+we can process functional magnetic resonance imaging (fMRI) and gaze data in the studyforrest dataset~\cite{gaze_forrest} 
+and detect corresponding cortical regions associated with saccadic and smooth pursuit in Tracking-Gump.
+In addition, based on model activation and cortical activation, we designed the BTS to measure their similarity.
+
+
+
+\section{BTN: Brain-like Tracking Network} 
+In this section, we introduce the proposed BTN with three steps. 
+First, we indicate the motivation and design criteria in our methods.
+Second, we detail each component in the BTN pipeline. 
+Finally, we introduce the loss function to train the BTN. \par
+
+\subsection{Design criteria}
+Our aim is to obtain a high brain-likeness between visual object tracking in DNN and the smooth pursuit in brain.
+Additionally, smooth-pursuit movements in our brain keep the image of a moving target on the fovea. 
+\textcolor{red}{
+In the pathway of smooth pursuit,
+primary visual cortex (V1) is the first stage to preprocess the input signals, 
+MT/MST \textcolor{red}{integrate} motion signal across space,
+and frontal eye field (FEF) generates predictive eye movement signals~\cite{b11,b13,b14}.
+}\par
+
+\textcolor{red}{
+Inspired by the pathway of smooth pursuit in brain, we build neuroanatomical mapping from cortical regions to DNN layers, as depicted in Figure~\ref{fig:introduction}.}
+For model comparison, we build the mapping by examining the layer in the DNN that understands activations well in a specific cortical region, 
+ideally such activations will already be predicted by the model with no superfluous parameters. 
+Therefore, the BTN consists of four neural network modules including convolution layer, DFN, LSTM and FC.
+And they are the analogy to the smooth pursuit pathway V1, MT/MST, FEF, 
+and motion predictor that converts the output of FEF to corresponding motion responses, as depicted in Figure~\ref{fig:pipeline}. 
+This plain idea of explicit brain areas segmentation is an important step to design a brain-like tracking model, 
+and we are committed to finding more universal structures. 
+Examples include an entire model as a neural network with no difference in cortical areas
+and various connections that may improve BTS in future work.
+In addition, we follow these two criteria to design the BTN~\cite{kubilius2018predict}:
+
+(1) \textbf{Architecture}: In models with similar tracking performance, we prefer a brain-like network because it is easier to understand and can meet the anatomical constraints.
+And we use DNNs because their neurons are the basic unit of data processing, 
+and all neural activations in DNNs can be clearly mapped to cortical activation~\cite{yamins2016using}.
+\textcolor{red}{
+In addition, recurrent connections are naturally considered for visual object tracking on account of the temporal attributes in the video sequence.}
+Activations in the dorsal pathway also have a temporal attribute; 
+therefore, the BTN is assumed to generate activations in time series.
+
+(2) \textbf{Predictivity}: 
+There is more correct behavior output in intermediate layers and final outputs that meet neuroanatomical constraints (neural responses). 
+This make our model have an ability to predict cortical activation and human eye movement behavior.
+
+We now introduce the pipeline for BTN. 
+
+
+\subsection{BTN pipeline} \label{sec:cornet_s_def}
+
+Given the input frame $F_t$ and attention parameters $a_t$, the fovea (imitating spatial attention) selects a foveal view $f_t$. 
+\textcolor{red}{Moreover, we use an appearance selector, parameterized with appearance $\alpha _t$ including V1 and this dorsal pathway and ventral pathway, to obtain the tracked target representations $m_t$ 
+and update hidden state $h_t$ in LSTM.}
+Then, we decode the output of LSTM and use it to infer the eye movement $\Delta p_t$, spatial attention $a_{t+1}$ and the appearance attention $\alpha _{t+1}$ in the next frame.  
+Appearance attention is driven by top-down information $\alpha _t$ and bottom-up (the foveal view $f_t$) information. 
+However, spatial attention only relies on top-down information $a_t$.
+In this case, bottom-up information only has localized impacts and relies on salience input at a position, 
+but top-down information combines global features into localized analysis. 
+The attention mechanism, which intensified with recurrence, imitates the visual cortex~\cite{attention}.
+Then, we detail each component of the brain-like tracking architecture. 
+
+
+\begin{figure*}
+	\centering
+	\includegraphics[width=5.7in]{imgs/pipeline.pdf}
+	\caption{
+		\textbf{
+			The designed architecture in visual object tracking in humans.} 
+		The believable cortical areas implementing particular roles in smooth pursuit are indicated with rectangular modules.
+		The foveal view $f_t$ is obtained in the input frame $F_t$ with the spatial selector in the fovea. 
+		V1 and the ventral pathway learn the appearance representations $v_t$, 
+		and neurons in the dorsal pathway (including V1 and MT/MST) segment the salient object $d_t$ and background on the foveal view.
+		The refined representations $m_t$ are utilized to compute the working memory $h_t$.
+		Specifically, the FEF may be more important for initiating pursuit learning based on the target velocity,
+		and we combine FEF output $o_t$ and dorsal stream output $d_t$ into the next module. 
+		The cerebellum and brainstem together (including pontine nuclei (PN), flocculus, vermis and vestibular nuclei (VN)) are modeled by fully connected layers (FCs) to generate attention $a_{t+1}$, appearance $\alpha_{t+1}$, and eye position correction signals $\Delta p$,
+		even the final eye movement ($\Delta p_t$) via the oculomotor.
+		All black arrows indicate that information flows within one time-step, 
+		while the gray colored arrows represent the temporal connections.  
+	}
+	\label{fig:pipeline}
+\end{figure*}
+
+\subsubsection{Retina and Dorsal/Ventral \textcolor{red}{Pathway}}
+The spatial selector selects the foveal view $f_t$ for the current frame $F_t$,
+and its output is transmitted to two interconnected cortical pathways.
+The ventral pathway recognizes the tracked targets 
+and the dorsal pathway learns motion features in the field of view. 
+\textcolor{red}{
+We present the dorsal pathway with the MT/MST that analyses motion features, as depicted in Figure~\ref{fig:pipeline};
+and computes a foreground segmentation $d_t$ of the foveal view.}
+
+(1) \textbf{Retina}: 
+The spatial attention mechanism in our model pipeline is modeled according to~\cite{RATM}. 
+An input frame $F_t \in R^{W \times H}$ forms matrices $M_t^x \in R^{w \times W}$ and $M_t^y \in R^{h \times H}$.
+A row of the matrix contains a gaussian distribution. 
+The position and width of the gaussian distribution determine which parts of the input frame are selected as the foveal view $f_t$ in the retina.
+Therefore, the foveal view $f_t \in R^{h \times w}$ can be denoted as
+\begin{equation}
+f_t = M_t^y F_t (M_t^x)^T.
+\end{equation}
+We represent attention with the distributive center, the variance and the stride of the distributive center of continuous matrix rows.
+Unlike the study~\cite{hart}, only the stride and center are predicted through LSTM;
+however, variance only relies on stride.
+The operation avoids extravagant bias when estimating a smaller variance, contributing to a faster learning speed. 
+In addition, the utilized size of $f_t$ relies on the experimental analysis. 
+
+(2) \textbf{Ventral Pathway}: 
+The ventral pathway converts the foveal view $f_t$ into a fixed dimension vector $v_t$ including spatial and appearance features of the tracked object. 
+The network structure architecture relies on the specific experimental analysis. 
+In the architecture of the ventral pathway, we implement V1 using a CNN, which is a mutual module in the ventral pathway and dorsal pathway.
+Generally, however, we implement V1 using several convolutional layers and max pooling layers. 
+\textcolor{red}{
+These layers, which imitate V1 in humans~\cite{theoretical_neuroscience}, are shared with the dorsal pathway.}
+In addition, the pipeline is split into dorsal and ventral pathways. 
+Finally, we implement the ventral pathway by CNN that extracts object representations $v_t$.
+
+(3) \textbf{Dorsal Pathway}: 
+The dorsal pathway (MT/MST) is implemented as a DFN~\cite{brabandere2016dynamic} 
+and is used to address spatial relations between the foreground and background. 
+Let FC$(\cdot)$ indicate a fully connected layer.
+MT/MST utilizes appearance representation $\alpha_t$ to dynamically predict the convolutional filter $\phi_t$
+\begin{equation}
+\left\{ \phi _t ^i \right\}_{i=1}^N = \text{FC}(\alpha_t).
+\end{equation}
+The filters with corresponding nonlinearities in $N$ convolutional layers are applied to the feature in V1. 
+Then, we apply a $1 \times 1$ convolution and a sigmoid function to convert the representation into a two-dimensional mask $d_t$.
+\textcolor{red}{
+Every point in $d_t$ indicates how likely the pursued target is occupied.}
+
+The position map of the dorsal pathway is integrated over the object representations learned by the ventral pathway, which simulate the noise restraining mechanism in the visual system. 
+This can handle occlusion and avoid drift, because the target representation is not overwritten in LSTM when the current frame has no representations of the pursued target. 
+Therefore, the output of ventral and dorsal pathways are integrated as
+\begin{equation}
+m_t = \text{FC}(conc(v_t \odot d_t)),
+\end{equation}
+where $\odot$ indicates the Hadamard product that performs salient object extraction through the representation mask, 
+and $conc$ means a concatenation operator that concatenates all rows of a matrix into a vector.
+
+\subsubsection{FEF}
+
+The proposed method depends on the ability to estimate the object appearance and position in the next frame; 
+and therefore, it heavily relies on state prediction. 
+The LSTM can utilize spatial-temporal and appearance features, 
+and enables the proposed model to handle occlusion and drifting target representations, such as a tracked \textcolor{red}{target} obscured by other distractors. 
+
+The LSTM module, presented in Figure~\ref{fig:pipeline} and named the FEF, utilizes \textcolor{red}{the} output error to predict eye movement. 
+Similar predictive actions exist when smooth pursuit is demonstrated in the FEF area that accepts the output of the dorsal stream~\cite{b11,b13,b14}. 
+The output error goes to zero when the delay between object and eye movement is decreased in model training; 
+thus, LSTM requires inferring eye motion without image input.
+The refined representations $m_t$ are used to update the hidden state $h_t$ in the FEF. 
+\begin{equation} \label{LSTM}
+h_t, o_t = \text{LSTM}(h_{t-1}, m_t).
+\end{equation}
+
+
+
+\subsubsection{Brainstem/Cerebellum}
+
+Then we utilize the output $d_t$ and $o_t$ to estimate eye movement $\Delta p_t$, attention $a_{t+1}$ and appearance $\alpha_{t+1}$.
+\begin{equation} \label{FC}
+\Delta p_t, \Delta a_{t+1}, \alpha_{t+1} = \text{FC}(conc(d_t), o_t),
+\end{equation}
+\begin{equation} \label{attention}
+a_{t+1} = a_t + tanh(c) \Delta a_{t+1},
+\end{equation}
+where $c$ is a trainable coefficient initialized with a low parameter to restrict the update size during learning. 
+Equations (\ref{LSTM}) to (\ref{attention}) describe the information update. 
+We calculate the gaze position with an accumulation of attention variations. 
+Because spatial attention is learned to estimate the position of the tracked object in the next frame, as depicted in Section~\ref{sec:loss}, a gaze position $p_t$ relative to the attention at time $t$ is predicted.
+\begin{equation}
+p_t = a_t + \Delta p_t.
+\end{equation}
+
+In addition, we refer to the discoveries and the idea~\cite{b9} that the brainstem and the cerebellum both instantiate an inverse dynamics controller (IDC)~\cite{purkinje_IDC}. 
+Like~\cite{b9}, we suppose that the IDC is perfect, and thus we can denote 
+\begin{equation}
+\Delta p_t = \Delta p,
+\end{equation}
+where $\Delta p$ is the low pass filter of eye motion.
+Based on this hypothesis, we will not implement IDC in our study. 
+
+\subsection{Loss} \label{sec:loss}
+
+We train the proposed BTN by optimizing an assembly of losses: a tracking loss, a series of attention losses and an auxiliary loss. 
+The BTN loss $L_{b}$ is given by
+\begin{equation}
+L_{b} = L_t + L_a + L_u.
+\end{equation}
+Detailed information on the BTN loss is described below.
+
+
+\subsubsection{Tracking Loss}
+To locate the tracked target, we design the tracking loss between the output of the BTN and the true label. 
+We refer to the study~\cite{UnitBox} and denote the tracking loss as the negative logarithm of their intersection over union (IoU) between predicted bounding box $p_t$ and ground truth $\hat{p}_t$:
+\begin{equation}
+L_t = -\log(\mbox{IoU} ( \frac{p_t \cap \hat{p}_t}{p_t \cup \hat{p}_t} )).
+\end{equation}
+
+
+\subsubsection{Attention Loss}
+\textcolor{red}{
+The attention mechanism selects the tracked object from the input frame $F_t$.}
+To train the BTN better, we utilize three attention loss terms.
+The first item makes the intersection area between the predicted attention $a_t$ and the bounding box $p_t$ as large as possible. 
+The second item prevents obtaining a very large width, and the log functions are applied to maintain stability in the calculation. 
+The third item restrains background noise while focusing entirely on the tracked target, e.g., gazing at a particular object moving in a crowd. 
+To achieve this, we elaborately design a loss that selects only the tracked target.
+For the attention $a_t$ and bounding box $p_t$, $r(a_t, p_t)$ indicates a binary mask that has the same size as the output of V1. 
+$r(a_t, p_t)$ is one where \textcolor{red}{the} bounding box and the foveal view intersect.
+Finally, the third item is denoted as the cross entropy between $r(a_t, p_t)$ and $d_t$.
+\begin{equation}
+L_a = -\log (\frac{a_t \cap p_t}{p_t}) - \log (1 - \frac{a_t \cap F_t}{a_t \cup F_t})
+- r(a_t, p_t) \log(d_t).
+\end{equation}
+
+\subsubsection{Auxiliary Loss}
+We use L2 regularization to regularize the dynamic filter parameter $\phi_t(\alpha_t)$ and the model parameter $\theta$.
+\begin{equation}
+L_u = \frac{1}{2} \left\vert \left\vert \phi_t \right\vert \right\vert _2 ^2 
++ \frac{1}{2} \left\vert \left\vert \theta \right\vert \right\vert _2 ^2.
+%- \sum_{i} \log (\lambda_i^{-1})
+\end{equation}
+
+
+\section{Brain Data Analysis}
+To compare the similarity between DNN tracking and human smooth pursuit, we first extract the smooth pursuit from various eye movements 
+and then select the corresponding brain areas and activations. 
+
+
+\subsection{Eye movement analysis}
+% follow gump 2.3, From the 
+Based on the existing studyforrest dataset~\cite{gaze_forrest}, we obtain the display coordinates and the data assessment for every eye movement recording. 
+A data assessment of 1 means perfect eye movement tracking 
+and a value of 0 means lost. 
+After examining the dataset, we find that subjects 5 and 20 have a conspicuous anomaly. 
+Their lost tracking is 86\% and 39\%, respectively. 
+Therefore, we remove them from our eye movement analysis. 
+
+The remaining eye gaze samples are classified into various types of eye movements by the MOSP method~\cite{mosp},
+which is implemented by~\cite{mosp_imp}.
+The method achieves prominent performance compared to several latest eye movement detection methods on a benchmark dataset~\cite{fix_sp_detection, eye_move_det}. 
+Another feature of the MOSP method that is appropriate for our research is that it utilizes comprehensible parameters that are easy to tune.
+In particular, MOSP achieves remarkable smooth pursuit detection performance which is significant for further experiments. 
+
+The MOSP method has two steps.
+The first step detects saccades, 
+and the second step classifies fixations and smooth pursuits. 
+The method in the first step is detailed in~\cite{dorr2010variability} and utilizes both low-and-high speed threshold values. 
+A larger value is utilized to initialize saccade detection.
+Then, the thresholds are stretched in two directions until the speed is less than the small value. 
+This next step initially assigns a sample with fixation because it is certainly eye fixation. 
+Then the remaining data are labeled as smooth pursuit. 
+Next, we use the DBSCAN method~\cite{1996A} to generate clusters when the density of samples exceeds some value. 
+The smooth pursuit detection method based on density clustering is reliable due to two important characteristics. 
+First, smooth pursuit can exist only if a movement occurs at a given frame, 
+and the number of motion objects in each frame is usually low. 
+Second, motion objects usually attract attention and are tracked by most of subjects. 
+The two characteristics allow the method to robustly detect actual smooth pursuit from similar motion and drift, 
+which is very significant for the latter fMRI analysis.
+For instance, even though we erroneously label certain recordings as smooth pursuit, we label them correctly when the remaining subjects do not have the same feature at the same time and region. 
+However, there are some potential defects of losing smooth pursuit samples as long as a small number of people track the object, and the increased robustness is very significant in our research seeking to identify cortical regions correlated with smooth pursuit. 
+
+Because the raw MOSP is conceived and tested on other datasets~\cite{dorr2010variability}, several hyperparameters are fine tuned. 
+In addition, we improve the smooth pursuit detection performance by utilizing both in-scanner and in-lab samples together because the smooth pursuit detection performance is improved with data augmentation. 
+
+
+\subsection{fMRI analysis}
+We use SPM12 software to analyse the fMRI data. 
+First, we utilize a typical analytic flow, including realigning, coregistering, normalizing and smoothing, for all data~\cite{fMRI_handbook}. 
+In the first-level analysis, we integrate eight segmentation recordings into a design matrix to build the entire video. 
+In every session, we fit a saccade, a smooth pursuit and a video motion regressor. 
+Except for preceding regressors, we utilize 6 head movement elements, which are obtained from the realignment in data pre-processing as disgusting regressors. 
+
+
+The motion and eye movement regressors are built according to the sequence of events with 2 s intervals, which coincide with \textcolor{red}{repetition} time in fMRI. 
+Thus, every event indicates the variance of the regressor between recordings. 
+The event intensity is tuned through the number of motions in 2 s.
+The event intensity is zero when it is equal to the average value 
+and increases to one linearly. 
+In the regressor construction step, we consider video motion, 
+which is implemented using the average video motion in 2 s intervals as before. 
+In particular, the intensity evaluation of the modulating factor of eye movement consider three primary factors: 
+(1) The first factor is based on the recording;
+the number of eye movements varies with different subjects 
+and it may be involved in the differences in cortical connectivity~\cite{individual_variability}. 
+\textcolor{red}{
+In studyforrest dataset~\cite{gaze_forrest}, saccades vary from 6\% to 12\%, and smooth pursuits vary from 12\% to 19\% among different subjects.}
+Therefore, if the average is utilized, the relevant responses in some subjects will be magnified, and some will be suppressed. 
+(2) The second factor captures the variations in eye movement for different inputs 
+and indicates the average percent of every eye movement for a subject. 
+This is equal to the average eye movement. 
+(3) The last captures prevalent differences and variances in the different types of eye movement, 
+and the modulating parameters are proportional to the variances. 
+This factor is selected in the dataset to cause approximately 90\% of the modulating values to be less than one. 
+Hence, we set a smaller modulation factor for saccades because they have lower variance with different stimuli. 
+For smooth pursuit, we set a bigger modulation factor to indicate a larger variance in smooth pursuit, 
+which will not appear without an object in motion.
+
+For the intensity of the modulation values of movement estimation, we follow the same steps as the building of the motion factors. 
+Therefore, we capture the stable condition using the average motion in every input separately. 
+This result is regularized by 90 percent of the movement parameters among all crops and is a limit to one to reduce the impact of abnormal value. 
+
+As it becomes obvious from how the regressors are built, it is impossible to build both smooth pursuits and fixations with these steps without making strong associations in the different eye movements. 
+In order to reinforce the interrelation, we think that the subjects track an object from the beginning. 
+Therefore, the intensity regressor of smooth pursuit will be increased as the fixation intensity decreases. 
+
+When the generalized linear model is fit on the dataset for every subject individually, we utilize the intensity module of the hemodynamic response function of a regressor that crossed all sessions to obtain the contrast of region of interest (ROI). 
+The contrasts contain the primary effect on eye movement and motion, the contrast between saccade and smooth pursuit, and the contrast between motion and eye movement. 
+Finally, in the between-subject analysis, we perform the one sample $t$-test in every preceding contrast of all subjects. 
+The clustering results ($p<0.05$) are mapped to the three-dimensional cortical regions 
+and are selected with specific cortical regions MT/MST to compute BTS in the next section. 
+
+\section{BTS: Brain-like Tracking Score} \label{sec:bts}
+In this part, we present the BTS metrics, which measure the similarity between the DNN model and the human cortex. 
+The BTS is a metric tested on specific experimental datasets, which can be both behavioral and cortical measurements. 
+
+In order to obtain the quantitative metrics about brain similarity, we refer to the open-sourced platform brain-score~\cite{SchrimpfKubilius2018BrainScore} and propose the BTS, a well-designed metric that evaluates a model's ability to predict 
+\textcolor{red}{
+(a) the average pooled human eye movements when tracking an object in each input video frame of the studyforrest dataset~\cite{gaze_forrest}, 
+and (b) the average activation of each cortical position to each input video frame in human visual areas MT/MST on the studyforrest dataset~\cite{gaze_forrest}.
+To evaluate BTN on a unified metric, we compute the average of behavioral and cortical metrics.}
+
+
+\subsection{Behavioral metrics}
+\textcolor{red}{
+The aim of behavioral metrics is to calculate the similarity between the DNN outputs and the human behavioral outputs in a specific problem~\cite{rajalingham2018large}. 
+In the human eye object tracking, the subjects's attention is a circle scope and related to human pupil.
+Thus, the behavioral modes (the position of eye gaze and the size of pupil) is modeled as a circle and differs from the bounding box in visual object tracking. 
+Meanwhile, the main purpose is to realize human-like intelligence, not only the tracking accuracy~\cite{schrimpf2020integrative}; 
+and BTN obtains better behavioral similarity and can predict the position and scope of eye gaze well. 
+Otherwise, the result is that DNNs gain perfect bounding box fitting but can not obtain a good eye gaze prediction performance. 
+}
+
+The utilized 12 video sequences including a salient object moving against a natural background are shown to humans for approximately 20s 
+and their gaze scopes are recorded to track the salient object, and depicted in Section~\ref{sec:datasets}. 
+To analyse and evaluate the proposed model, we used the subject eye movement and model responses of 149 images in 12 image sequences.
+A total of 149 of those frames, where each frame is the input of DNN, are used to predict the eye gaze scope.
+Then, this behavioral predictivity is measured through the scope of eye attention in each frame. 
+
+The resulting output of the DNN is the bounding box of the tracked target, 
+and the subject's attention is a circular scope (center coordinates $x$, $y$ and the radius).
+Therefore, the eye movement predictivity or behavioral score can be modeled as the IoU between the actual eye attention circular scope of gaze $S_{roi}^a$ and the bounding box of the DNN's predictions $S_{roi}^b$. 
+We compute the overall behavioral metrics~$s_b$ among all frame sequences as the eye movement predictivity \textcolor{red}{score as follows:} 
+\begin{equation}
+s_b=\frac{area(S_{roi}^a \cap S_{roi}^b) }  { area(S_{roi}^a \cup S_{roi}^b) }.
+\end{equation}
+
+
+\subsection{Cortical metrics}
+\label{sec:neural-pred}
+
+We utilize the cortical metrics, which infer activations of the human cortex, such as responses in motion cortical MT/MST, to measure how fine the model predicts the specific input frame in the DNN~\cite{yamins2014performance}. 
+This metric requires two groups of inputs with the form of $\text{input} \times \text{neuroids}$, where neuroids are either model interlayer activations or neural recordings. 
+
+In total, 149 frames including a tracked object that appeared randomly on a natural scene are presented to 13 subjects,
+and the neural responses are collected from 2177 MT/MST voxels. 
+In addition, we report the most predictive layer or specific model regions in the BTN. 
+
+In our experiment, the relations are fitted to map from a DNN to a cortex, and these relations are utilized to predict the responses in the provided frames. 
+To accelerate the process, we reduce the activation dimensionality to specified components using principal component analysis (PCA)~\cite{2002Principal}. 
+We utilize the activations from MT/MST to learn the fits. 
+\textcolor{red}{
+The Pearson correlation coefficient $s_r$ constitutes the final neural similarity score for visual motion cortex as follows:
+}
+\begin{equation}
+s_r=\frac{\sum_{i=1}^{n} (y_i-\bar{y}) (y_i^\prime - \bar{y}^\prime) }{\sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2 (y_i^\prime - \bar{y}^\prime)^2 }},
+\end{equation}
+\textcolor{red}{
+where $y^\prime$ is the model activation, $y$ is the actual activation and $n$ is the corresponding feature dimension in DNN. $\bar{y}$ and $\bar{y}^\prime$ are the corresponding median over all individual neural response values.
+}
+
+
+\subsection{Overall score}
+In order to measure how well the BTN performs integrally, we use the BTS as a combination of the IoU behavioral metric and MT/MST cortical metrics.
+The BTS $s_{t}$ presented below is the mean of the two scores. 
+\begin{equation} \label{equ:score_btn}
+s_{t} = \frac{s_b + s_r}{2}.
+\end{equation}
+The design of the BTS is not normalized in various score magnitude because this possibly penalizes scores with small variances.
+So we treat each score for significance fairly for the BTS. 
+
+\section{Experiments}
+Here we indicate the experiments and validity of our proposed BTN with three steps. 
+First, we introduce the datasets and detailed implementation in our \textcolor{red}{method}.
+Second, we demonstrate that the BTN is a valid and brain-like pursuit model.
+Finally, we discuss the model design mechanism and the relationship between DNN and neuroscience. 
+
+
+\subsection{Datasets} \label{sec:datasets}
+We train the proposed BTN in a challenging natural environment on the KITTI dataset~\cite{kitti}. 
+This dataset includes 21 frame sequences including various probable distracters. 
+In addition, 80$\%$ of these sequences are divided into a training dataset and 20$\%$ are divided into a validation dataset. 
+
+To test and analyse our proposed model, the public studyforrest dataset~\cite{gaze_forrest} is utilized as the agent for the real scenario. 
+In the detailed dataset, we use this work describing the initial dataset~\cite{gaze_forrest}. 
+In the studyforrest dataset, the video stimulus is divided into eight segments 
+and played through scanner, as described in Table~\ref{tab:movie_seg}. 
+In brief, the utilized dataset has 15 subjects who watch the movie.
+Meanwhile, the eye tracking is recorded in the scanner. 
+An additional 15 subjects had only their eye tracking recorded in the lab, 
+and these data are utilized to increase the detection performance in smooth pursuit. 
+The movie is played to the in-scanner subject on a projector with a front-reflective mirror 
+and to the in-lab subject through a display directly. 
+The eye tracking data were collected by the 1000Hz eye tracker. 
+These fMRI data were obtained through a 3T scanner with a repetition time of 2 s with a $3 \times 3 \times 3 $ mm$^3$ voxel. 
+Based on these videos and corresponding fMRI recordings, we select 12 segments to test our proposed method, as depicted in Table~\ref{tab:track_seg}.
+
+
+% \makecell [c]
+\begin{table}[h]
+	\centering
+	\footnotesize
+	\caption{The segmentation and mergence of raw film.
+	Raw segments of Forrest Gump that constitute the true input. 
+	The 7 segments are merged~\cite{2014A}, and then, they are segmented into 8 segments, each corresponding to an fMRI recording. 
+	TRs indicates the number of repetition times.
+	The unit of duration is seconds.
+	In these experiments, we utilize the 2002 movie release.}
+	
+	\label{tab:movie_seg}
+	
+	\begin{tabular}{p{0.9cm}<{\centering}p{1.2cm}<{\centering}p{1.45cm}<{\centering}p{1.15cm}<{\centering}p{0.95cm}<{\centering}}
+		\toprule[1.5pt]
+		{Video ID} & {Begin Frame} & {Frame Number} & {Duration}  & {TRs}   \\ \midrule[1pt]
+		1       & 0           & 22,550      & 902.00 & 451.00 \\ 
+		2       & 22,150      & 22,050      & 882.00 & 441.00 \\ 
+		3       & 43,802      & 21,900      & 876.00 & 438.00 \\ 
+		4       & 65,304      & 24,400     & 976.00 & 488.00 \\ 
+		5       & 89,305     & 23,100     & 924.00 & 462.00 \\ 
+		6       & 112,007     & 21,950     & 878.00 & 439.00 \\ 
+		7       & 133,559     & 27,100     & 1,084.00 & 542.00 \\
+		8       & 160,261     & 16,876     & 575.04 & 337.52 \\ 
+		\bottomrule[1.5pt]
+	\end{tabular}
+	
+\end{table}
+
+
+\begin{table}[h]
+	\centering
+	\footnotesize
+	\caption{Frame sequences 1-12 to construct our Tracking-Gump dataset.
+	These 12 short videos in which only one salient object appears in the video sequence are selected. 
+	This ensures that most of subjects will gaze at the object constantly.}
+	
+	\label{tab:track_seg}
+	
+	\begin{tabular}{p{1.0cm}<{\centering}p{0.9cm}<{\centering}p{1.6cm}<{\centering}p{1.5cm}<{\centering}p{0.7cm}<{\centering}}
+		\toprule[1.5pt]
+		Segment ID & Video ID  & Start Frame    & End Frame  & TRs   \\ \midrule[1pt]
+		1     		  & 3 			   & 02:30.00 	   & 02:48.00  & 10  		  \\
+		2  	 		  & 4 			   & 14:50.00 	   & 15:14.00  & 13   		  \\
+		3   		  & 5 			   & 01:32.00 	   & 01:48.00  & 9   		  \\
+		4   		  & 5 			   & 05:02.00  	   & 05:20.00  & 10   		  \\
+		5   		  & 6 			   & 00:08.00 	   & 00:24.00  & 9   		  \\
+		6   		  & 6 			   & 06:56.00 	   & 07:10.02  & 8   		  \\
+		7   		  & 6 			   & 09:42.00  	   & 09:56.01  & 8   		  \\
+		8   		  & 6 			   & 12:26.00 	   & 12:44.00  & 12		      \\
+		9   		  & 7  			   & 06:44.00 	   & 07:06.00  & 12		      \\
+		10  		  & 7 			   & 07:26.00 	   & 08:28.00  & 32		      \\
+		11  		  & 7 			   & 08:30.00 	   & 08:52.00  & 12		      \\
+		12 			  & 7 			   & 10:40.00 	   & 11:10.00  & 16		      \\
+		\bottomrule[1.5pt]
+	\end{tabular}
+	
+\end{table}
+
+
+\subsection{Implementation details}
+Each visual cortical region is implemented by a certain DNN performing some classical operations, such as convolutional operation and nonlinear activation. 
+\textcolor{red}{
+These network modules are equivalent to visual regions, but we change the number of neurons in each cortical region.}
+Considering the \textcolor{red}{computational} costs, we utilize Python with the TensorFlow package~\cite{abadi2015tensorflow} 
+and model the V1 with the headmost 3 convolutional module from the revised AlexNet~\cite{imagenet}. 
+The input size of raw AlexNet is $227 \times 227$ and is downsized to $14 \times 14$ after 3 convolutional modules. 
+Because low-resolution features will lead to poor tracking results, 
+we convert the preliminary step size of 4 to 1 
+and remove a pooling module to retain spatial features, as depicted in Figure~\ref{fig:structure_analysis}. 
+In this way, the size of the obtained feature is $14 \times 14 \times 384$, and the size of the input foveal view is $56 \times 56$.
+In addition, at the tail of V1, there is a 20$\%$ probability of randomly omitting the feature. 
+The ventral pathway includes a convolutional module in which the kernel size is $1 \times 1$. 
+The filters of the DFN are $3 \times 3$ and $1 \times 1$.
+We used 100 LSTM units with the zoneout operation~\cite{zoneout} that have a probability of 0.05.
+We train BTN~\cite{curriculum}, and utilize a similar learning configuration except for the learning rate, which is $2 \times 10 ^{-6}$.
+The starting sequence length is five and increases every twelve iterations. 
+
+
+\subsection{The BTN is a brain-like pursuit model}
+\label{sec:results1}
+
+\textcolor{red}{
+We compared various experimental results to explain why the proposed BTN is a brain-like tracking model. 
+It is easy to see that the model architecture and training procedure are slightly different from other implementations of the visual tracking model.}
+
+Figure~\ref{fig:neural_predictivity} shows how the BTN performs with the BTS on Tracking-Gump dataset. 
+It \textcolor{red}{performs} well with a BTS of 0.365. 
+Interestingly, models that attain the highest tracking scores also have an excellent BTS on Tracking-Gump dataset, 
+indicating a possible relation between the tracking effect and cortical activation pattern on Tracking-Gump dataset. 
+Models with good Tracking-Gump tracking performance show a strong correlation with a BTS of 0.365 and there is a significant correlation ($p \textless 0.05$) in the Tracking-Gump dataset, as depicted in Figure~\ref{fig:neural_predictivity}.
+
+
+\subsubsection{The BTN maintains the architectural similarity with the cerebral cortex}
+
+\textcolor{red}{
+We design a brain-like BTN that follows neuroanatomical aligning more closely than classic DNNs.
+Besides, the BTN achieves good tracking performance as measured by the BTS on Tracking-Gump dataset.  
+Therefore, the BTN satisfies both neuroanatomical limitations in neuroscience and engineering requirements in computer vision.}
+
+We find that the BTN is a closer approximation of neuroanatomy than current excellent DNNs 
+since it especially limits the number of regions and uses a recurrent structure. 
+In neuroscience, because there are no neurologically credible training methods, 
+a brain-like DNN for smooth pursuit will use better neuroanatomical and connectional mechanisms.
+For example, the skip connection~\cite{he2016deep} is not inspired by brain mechanisms and is used to solve the vanishing gradient issue during DNN training.
+Considering various architectures, we tested various architectural configurations before finding the appropriate brain-like architecture BTN as depicted in Figure~\ref{fig:structure_analysis}.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.9\linewidth]{imgs/structure_analysis.pdf}
+	\caption{\textbf{
+		BTN architecture analysis.} 
+		\textcolor{red}{
+		We analyse four main factors including the initial step size in $\rm{CONV_{V1}}$ and the number of dynamic filter layers in $\rm{DFN_{MT/MST}}$, the number of hidden units in $\rm{LSTM_{FEF}}$ and the number of hidden units in $\rm{FC}$.
+		Each row indicates how cortical and behavioral score change based on the trained BTN when a certain hyperparameter changes. 
+		}
+	}
+	\label{fig:structure_analysis}
+\end{figure}
+
+
+\subsubsection{The BTN captures neural responses in MT/MST}
+\label{sec:capture_neural}
+
+\textcolor{red}{
+A feedforward neural network can not predict the trend of time series, 
+and thus cannot capture a brain-like response of the tracking model~\cite{kar2019evidence, TangSchrimpfLotter2018Recurrent}.
+By using recurrent connections, the BTN is able to predict time-varying activation in the corresponding cortex.}
+The latest research work~\cite{kar2019evidence} finds that the decodable results in image classification are not generated in inferior temporal cortical neurons, 
+and these inputs are very difficult for DNNs to spend more time decoding in the inferior temporal region. 
+The time property inspires an assumption for the brain-like network: 
+Does it predict frame-by-frame motion information in MT/MST cortical activations over time? 
+Therefore, the BTN predicts the movement in a video frame when obvious target motion features are available,
+and compared it with the responses recorded in the human MT/MST cortex.
+Significantly, the BTN never learns to predict the human cortical response intensity.
+However, a feature comparison that can decode the object motion similarity between neural responses and the model's responses is learned. 
+When using the PCA method for data compression, more components will retain more neural information.
+Finally, we evaluate how well the BTN captures the fine-grained motion responses in human MT/MST and present a BTS of 0.365 ($p < 0.05$) as depicted in Figure~\ref{fig:neural_predictivity}.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=\linewidth]{imgs/comp_sim.pdf}
+	\caption{
+		\textbf{
+		The BTN captures neural responses in MT/MST.
+		}
+		This indicates the normalized neural similarity and p value according to different PCA component. 
+		When the number of PCA components reaches 90, the neural predictivity for the BTN obtains the best results of 0.365. 
+	}
+	\label{fig:neural_predictivity}
+\end{figure}
+
+
+\subsubsection{The BTN is the valid brain-like tracking model on Tracking-Gump dataset}
+\textcolor{red}{
+Although the tracking performance is truly improved in the later training when improving the cortical similarity, we select the epoch with maximum BTS.}
+In addition, the bounding box of the model prediction is roughly consistent with the position of the eye gaze. 
+Finally, we use both behavioral and MT/MST metrics in our experiments to analyse the motion information in BTN. 
+The BTN also achieves excellent tracking performance on the Tracking-Gump dataset, as depicted in Figure~\ref{fig:tracking}, demonstrating the validity and robustness of this proposed BTN in complex environments. 
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=\linewidth]{imgs/tracking.pdf}
+	\caption{
+		\textbf{
+		Tracking examples of the proposed method on Tracking-Gump dataset. 
+		}
+		\textcolor{red}{
+		For different video sequences, the predicted track results are identified by bounding boxes.
+		In addition, the average eye gaze position of these subjects is identified by the center of a circle, and its area is proportional to the size of pupil.
+		}
+	}
+	\label{fig:tracking}
+\end{figure}
+
+
+\section{Discussion}
+\label{sec:discussion}
+
+In our work, we design the BTN for predicting \textcolor{red}{eye movement and cortical activation in smooth pursuit.
+The BTN implements predictive mechanisms and tracks voluntary objects online.}
+As far as we can see, the BTN allows the DNN to implement the introduced tracking behavioral prediction and neuroanatomical aligning, 
+and the results indicate that the BTN can produce continuous predictive tracking signals. 
+Although smooth pursuit studies demonstrate that the cortical representation of object movement is possibly utilized to tracking inference~\cite{b21,b4,b3}, the cortical theory to build and hold the cortical representation is unknown. 
+This study indicates that the online learning and updating of the cortical representation through the BTN decreases tracking lag, 
+adjusts eye movement and produces continuous tracking when facing drift or occlusion.
+
+An interesting characteristic of smooth pursuit is that when occlusion occurs, pursuit movement continues. 
+There is a motion action at the retina when track a moving object without delay by BTN. 
+After learning the object motion feature, the retinal slip is small. 
+However, the small retinal slip cannot enable occluded object tracking. 
+LSTM can produce self-sustained eye movement prediction~\cite{kashyap2018a}. 
+The small retinal slip components are persistently utilized to adjust the pursuit prediction. 
+When occlusion occurs, this adjustable retinal slip information is absent.
+Thus, tracking is lost step by step, as in the research results~\cite{b4}. 
+Furthermore, in the BTN, every neuron in LSTM has basal voluntary activation. 
+When the tracked target is occluded, the trained activation mode generates tracking signals continuously. 
+
+
+
+\subsection{The role of MT/MST and the FEF in object tracking}
+Many works have found a function in the FEF to predict  object tracking. 
+The ablations or lesions of the FEF impair monkeys tracking moving objects when the object is occluded or appears~\cite{b11}. 
+The neuron activations in the FEF show that continuous activation exists intensively after a moving target has vanished~\cite{b14}. 
+In addition, some fMRI works have found the motion indicator of eye  pursuit prediction in the FEF~\cite{b33}. 
+Our works demonstrate that the FEF extracts a cortical representation of the object movement mode to indicate predictive tracking.
+
+The FEF receives abundant mappings from MT/MST, which are the areas in the dorsal stream that process moving targets. 
+In the latter part, the outputs of the FEF are delivered to dorsal PN in brainstem areas, as depicted in Figure~\ref{fig:introduction}. 
+In addition, these brainstem areas transfer signals from the FEF to PN that conduct oculogyric adjustment~\cite{b36}.
+
+The results of neuroanatomical ablation indicate that the FEF follows the parietal regions and outputs to PN to control eye movement~\cite{b11}. 
+These results \textcolor{red}{demonstrate} that the FEF has a credible cortical correlation with LSTM, which is based on the object tracking prediction abilities. 
+In addition, FEF (LSTM) uses an image stimulus to infer eye motion signals for oculogyric adjustment. 
+
+\subsection{The applications and limitations of BTN}
+\textcolor{red}{
+The proposed BTN can be utilized in the traditional visual object tracking task.
+Besides, it is a more interpretable brain-like tracking model and can be utilized to predict the position of eye gaze and the expected activations in cortical pathway.
+}
+
+\textcolor{red}{
+Nevertheless, the independent training configuration may be the essential characteristic that trains the DNN~\cite{Kornblith2018a}. 
+In addition, an auxiliary task does not have a very large impact on the score but notably improves the transfer effect~\cite{Kornblith2018a}.
+Because the BTN is a transferable problem, it cannot be precluded that the BTS may vary when using different training settings.  
+They claim that it is useful to tremendously improve the transfer effect by retraining the DNN with optimized configurations~\cite{Kornblith2018a}. 
+Therefore, we believe that only the given trained BTN is optimal and not all model of network architecture. 
+Practically speaking, we can perform grid search to select the optimal training settings based on a validation set.
+}
+
+
+\subsection{The relationship between DNNs and neuroscience}
+A significant element to building a BTN that is an important potential architecture for the cortex is the BTS, which is a quantitative metric used to compare a DNN with the cortex in object tracking. 
+Although there are no cortical tracking metrics thus far, the proposed framework proposes a meaningful idea. 
+First, the proposed framework extends previous studies indicating that tracking performance is correlated with cortical similarity.
+Nevertheless, the use of recurrent structures changes this tendency and has excellent neuroanatomical similarity with the cerebral cortex. 
+In addition, a possible conflict is discovered between the Tracking-Gump tracking score and the BTS in the BTN.
+There are many excellent models for visual object tracking, 
+that achieve poor results in the BTS.
+However, these DNNs with poor Tracking-Gump tracking results may \textcolor{red}{acquire} better BTSs. 
+Besides, we find that these DNNs have excellent BTS performance and may easily acquire good tracking results, which supports the assumption that the BTS is a comprehensive metric, and these results are not solely based on the utilized behavioral and neural datasets. 
+
+
+\textcolor{red}{
+In general, we indicate that the brain-like model is a prospective opportunity to cooperate for deep learning and neuroscience. 
+We compare these DNNs through similarity quantification using the BTS 
+and assess the metrics of various behavioral and neural datasets on BTS. 
+For the BTN, we demonstrate that an anatomical model of the cortex according to alignment and recurrent structure can learn cortical mechanisms well through cortical activation prediction and frame-by-frame behavior. 
+In this way, we can simultaneously obtain high tracking performance and the prominent brain-like model.}
+
+
+
+\section{CONCLUSION}
+Inspired by the visual processing mechanisms found in the human brain, our study presents a brain-like tracking model suited to the problem of visual object tracking. 
+Based on the neuroanatomical limitation, the designed model has appropriate tracking performance and improved interpretability. 
+In addition, we illustrate the cortical model specifically connected with the human smooth pursuit in a complicated real environment 
+and develop a new way to compute the similarity between model activation and cortical activation data. 
+\textcolor{red}{
+Furthermore, the model with neuroanatomical alignment can better predict the neural response of human brain. 
+We believe the proposed BTN could encourage novel inspirations in the interpretability of DNN 
+and even motivate the development of brain-computer interfaces.}
+% artificial motion consciousness
+% artificial motion intelligence
+
+
+\section*{Acknowledgements}This work was partially supported by National Key Research and Development Program of China (No.2018YFB1308604), National Natural Science Foundation of China (No.61976086,62106071), Hunan Innovation Technology Investment Project (No.2019GK5061), and Special Project of Foshan Science and Technology Innovation Team (No. FS0AA-KJ919-4402-0069).
+\label{}
+
+%% The Appendices part is started with the command \appendix;
+%% appendix sections are then done as normal sections
+%% \appendix
+
+%% \section{}
+%% \label{}
+
+%% If you have bibdatabase file and want bibtex to generate the
+%% bibitems, please use
+%%
+%%  \bibliographystyle{elsarticle-num} 
+%%  \bibliography{<your bibdatabase>}
+
+%% else use the following coding to input the bibitems directly in the
+%% TeX file.
+
+\bibliographystyle{elsarticle-num} 
+\bibliography{references}
+%
+%\begin{thebibliography}{00}
+%
+%%% \bibitem{label}
+%%% Text of bibliographic item
+%
+%\bibitem{}
+%
+%\end{thebibliography}
+\end{document}
+\endinput
+%%
+%% End of file `elsarticle-template-num.tex'.

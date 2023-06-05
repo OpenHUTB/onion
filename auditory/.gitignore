@@ -1,0 +1,9 @@
+model/src/gtzan/__pycache__
+model/src/gtzan/utils/__pycache__
+
+music_genre_fMRI/preprocess/fM00223/*
+music_genre_fMRI/preprocess/sM00223/*
+
+music_genre_fMRI/preprocess/ds003720-download/*
+
+model/*

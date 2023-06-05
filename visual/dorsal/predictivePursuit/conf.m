@@ -1,0 +1,1 @@
+latex_home = 'D:/doc/thesis/2_BTN/latex';

@@ -1,0 +1,11 @@
+imgs/introduction.pdf
+imgs/pipeline.pdf
+imgs/structure_analysis.pdf
+imgs/tracking.pdf
+*.bbl
+*.blg
+*.pdf
+*.spl
+
+figs/*.png
+

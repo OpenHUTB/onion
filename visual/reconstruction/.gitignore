@@ -1,0 +1,10 @@
+.DS_Store
+._*
+
+*.pyc
+
+result*/
+results*/
+tmp/
+
+icnn

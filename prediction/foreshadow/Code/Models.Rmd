@@ -1,0 +1,251 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+---
+title: "Brain activity foreshadows stock price dynamics"
+output:
+  html_notebook: default
+  html_document: default
+
+
+## Load libraries
+```{r, include=F}
+library(reshape2)
+library(dplyr)
+library(ggplot2)
+library(lmerTest)
+require(MuMIn)
+source('../rsquaredglmm.R') 
+source('../Functions.R')
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#D55E00", "#F0E442", "#0072B2", "#CC79A7", "#999999")
+
+# Read df with data per stock for forecasting analyses
+gdf <- read.csv('../../voi_csv/data.csv')
+```
+
+#Experiment 1
+```{r}
+# Choice model (Behavioral model)
+ans <- checkClassifier(filter(gdf, Experiment==1), as.formula("Result ~ Choice"), type='glm', split.method ='average', days_train=9)
+print(ans)
+
+# Market model
+ans <- checkClassifier(filter(gdf, Experiment==1), as.formula("Result ~ slope + volatility + Previous_Trial"), type='glm', split.method ='average', days_train=9)
+
+# Neural model 
+ans <- checkClassifier(filter(gdf, Experiment==1), as.formula("Result ~ nacc8mmb_TR_4 + mpfcb_TR_4 + desai_insb_TR_4"), type='glm', split.method ='average', days_train=9)
+print(ans) 
+
+# Combined model
+ans <- checkClassifier(filter(gdf, Experiment==1), as.formula("Result ~ Choice + (nacc8mmb_TR_4 + mpfcb_TR_4 + desai_insb_TR_4) *Previous_Trial + slope + volatility"), type='glm', split.method ='average', days_train=9)
+print(ans) 
+
+# Compare models Experiment 1
+model_Choice <- glm("Result ~ Choice", data = filter(gdf, Experiment==1), family = binomial(link = logit))
+
+model_Market <- glm("Result ~ slope + volatility + Previous_Trial", data = filter(gdf, Experiment==1), family = binomial(link = logit))
+
+model_Neural <- glm("Result ~ nacc8mmb_TR_4 + mpfcb_TR_4 + desai_insb_TR_4", data = filter(gdf, Experiment==1), family = binomial(link = logit))
+
+model_Combined <- glm("Result ~ Choice + (nacc8mmb_TR_4 + mpfcb_TR_4 + desai_insb_TR_4) *Previous_Trial + slope + volatility", data = filter(gdf, Experiment==1), family = binomial(link = logit))
+
+lrtest(model_Market, model_Combined)
+anova(model_Market, model_Combined, test = "LRT")
+
+lrtest(model_Choice, model_Combined)
+anova(model_Choice, model_Combined, test = "LRT")
+
+lrtest(model_Neural, model_Combined)
+anova(model_Neural, model_Combined, test = "LRT")
+```
+
+# Experiment 2
+```{r}
+# Choice model (Behavioral model)
+ans <- checkClassifier(filter(gdf, Experiment==2), as.formula("Result ~ Choice"), type='glm', split.method ='average', days_train=9)
+print(ans)
+
+# Market model
+ans <- checkClassifier(filter(gdf, Experiment==2), as.formula("Result ~ slope + volatility + Previous_Trial"), type='glm', split.method ='average', days_train=9)
+
+# Neural model
+ans <- checkClassifier(filter(gdf, Experiment==2), as.formula("Result ~ nacc8mmb_TR_4 + mpfcb_TR_4 + desai_insb_TR_4"), type='glm', split.method ='average', days_train=9)
+print(ans) 
+
+# Combined model
+ans <- checkClassifier(filter(gdf, Experiment==2), as.formula("Result ~ Choice + (nacc8mmb_TR_4 + mpfcb_TR_4 + desai_insb_TR_4) *Previous_Trial + slope + volatility"), type='glm', split.method ='average', days_train=9)
+print(ans) 
+
+# Compare models Experiment 2
+model_Choice <- glm("Result ~ Choice", data = filter(gdf, Experiment==2), family = binomial(link = logit))
+
+model_Market <- glm("Result ~ slope + volatility + Previous_Trial", data = filter(gdf, Experiment==2), family = binomial(link = logit))
+
+model_Neural <- glm("Result ~ nacc8mmb_TR_4 + mpfcb_TR_4 + desai_insb_TR_4", data = filter(gdf, Experiment==2), family = binomial(link = logit))
+
+model_Combined <- glm("Result ~ Choice + (nacc8mmb_TR_4 + mpfcb_TR_4 + desai_insb_TR_4) *Previous_Trial + slope + volatility", data = filter(gdf, Experiment==2), family = binomial(link = logit))
+
+lrtest(model_Market, model_Combined)
+anova(model_Market, model_Combined, test = "LRT")
+
+lrtest(model_Choice, model_Combined)
+anova(model_Choice, model_Combined, test = "LRT")
+
+lrtest(model_Neural, model_Combined)
+anova(model_Neural, model_Combined, test = "LRT")
+```
+
+# Reduced model with only AIns * Previous_Trial 
+```{r}
+summary(glm('Result ~ desai_insb_TR_4*Previous_Trial', data = filter(gdf, Experiment==1), family = binomial(link = logit)))
+
+summary(glm('Result ~ desai_insb_TR_4*Previous_Trial', data = filter(gdf, Experiment==2), family = binomial(link = logit)))
+```
+
+# Interaction AIns*Previous_Trial; Post-hoc T-tests, Exp 1 and Exp 2
+```{r}
+# Post-hoc t-tests to compare AIns activity in inflection vs no inflection trials
+gdf_E1_inflection <- filter(gdf, (Experiment =='1' & Is_Inflection == 1))
+gdf_E1_noinflection <- filter(gdf, (Experiment =='1' & Is_Inflection == 0))
+
+gdf_E2_inflection <- filter(gdf, (Experiment =='2' & Is_Inflection == 1))
+gdf_E2_noinflection <- filter(gdf, (Experiment =='2' & Is_Inflection == 0))
+
+t.test(gdf_E1_inflection$desai_insb_TR_4, gdf_E1_noinflection$desai_insb_TR_4, paired=F)
+t.test(gdf_E2_inflection$desai_insb_TR_4, gdf_E2_noinflection$desai_insb_TR_4, paired=F)
+
+sd(gdf_E1_inflection$desai_insb_TR_4)
+sd(gdf_E1_noinflection$desai_insb_TR_4)
+sd(gdf_E2_inflection$desai_insb_TR_4)
+sd(gdf_E2_noinflection$desai_insb_TR_4)
+
+# Post-hoc t-tests for AIns activation for Result - Goes Down after previous Up or Down day
+# Exp1
+gdf_E1 <- filter(gdf, Experiment =='1')
+up_rd <- filter(gdf_E1, (Result=='Result - Goes Down' & Previous_Trial=="Went Up"))
+down_rd <- filter(gdf_E1, (Result=='Result - Goes Down' & Previous_Trial=="Went Down"))
+sd(up_rd$desai_insb_TR_4)
+sd(down_rd$desai_insb_TR_4)
+
+t.test(up_rd$desai_insb_TR_4, down_rd$desai_insb_TR_4, paired=F)
+
+# Exp2
+gdf_E2 <- filter(gdf, Experiment =='2')
+up_rd <- filter(gdf_E2, (Result=='Result - Goes Down' & Previous_Trial=="Went Up"))
+down_rd <- filter(gdf_E2, (Result=='Result - Goes Down' & Previous_Trial=="Went Down"))
+sd(up_rd$desai_insb_TR_4)
+sd(down_rd$desai_insb_TR_4)
+
+t.test(up_rd$desai_insb_TR_4, down_rd$desai_insb_TR_4, paired=F)
+```
+
+# Classification analyses: Forecasting stock prices out of sample
+```{r}
+# Specify downsample.var in order for results to be downsampled (e.g. downsample.var = 'Result')
+
+# Train on Combined model of Experiment 1 and test on data of Experiment 2
+set.seed(0)
+ans1 <- checkClassifier(filter(gdf, Experiment==1), as.formula("Result ~ Choice + (nacc8mmb_TR_4 + mpfcb_TR_4 + desai_insb_TR_4) *Previous_Trial + slope + volatility"), type='glm', downsample.var = 'Result', split.method ='average', d.test=filter(gdf, Experiment==2))
+kable(ans1)
+
+# Train on Combined model of Experiment 2 and test on data of Experiment 1
+set.seed(0)
+ans2 <- checkClassifier(filter(gdf, Experiment==2), as.formula("Result ~ Choice + (nacc8mmb_TR_4 + mpfcb_TR_4 + desai_insb_TR_4) *Previous_Trial + slope + volatility"), type='glm', split.method ='average', downsample.var = 'Result', d.test=filter(gdf, Experiment==1))
+kable(ans2)
+
+# Train on reduced model with interaction between AIns and PreviousTrial in Experiment 1 [2] and test on data of Experiment 2 [1]
+set.seed(0)
+ans1 <- checkClassifier(filter(gdf, Experiment==1), as.formula("Result ~ desai_insb_TR_4*Previous_Trial"), type='glm', split.method ='average', downsample.var = 'Result', d.test=filter(gdf, Experiment==2))
+kable(ans1)
+
+set.seed(0)
+ans2 <- checkClassifier(filter(gdf, Experiment==2), as.formula("Result ~ desai_insb_TR_4*Previous_Trial"), type='glm', split.method ='average', downsample.var = 'Result', d.test=filter(gdf, Experiment==1))
+kable(ans2)
+```
+
+# Forecasting stock prices using randomized stock data
+```{r, error=F, warning=F, message=false}
+# Combined model
+gdf_rdm1 <- filter(gdf, Experiment ==1)
+gdf_rdm2 <- filter(gdf, Experiment ==2)
+
+NUM_ITERATIONS <- 500
+results_train_1_test_2= t(matrix(NA, NUM_ITERATIONS, 9))
+results_train_2_test_1= t(matrix(NA, NUM_ITERATIONS, 9))
+
+set.seed(0)
+for(i in 1: NUM_ITERATIONS){
+  gdf_rdm1$Result <- sample(gdf_rdm1$Result, replace = F)
+  gdf_rdm2$Result <- sample(gdf_rdm2$Result, replace = F)
+  ans1 <- checkClassifier(gdf_rdm1, as.formula("Result  ~ Choice + (nacc8mmb_TR_4 + mpfcb_TR_4 + desai_insb_TR_4) *Previous_Trial + slope + volatility"), type='glm', split.method ='average', d.test=filter(gdf, Experiment==2), complete_result=T, verbose=F)
+  
+  ans2 <- checkClassifier(gdf_rdm2, as.formula("Result  ~ Choice + (nacc8mmb_TR_4 + mpfcb_TR_4 + desai_insb_TR_4) *Previous_Trial + slope + volatility"), type='glm', split.method ='average', d.test=filter(gdf, Experiment==1), complete_result=T, verbose=F)
+  
+  results_train_1_test_2[, i] <- unlist(ans1)
+  results_train_2_test_1[, i] <- unlist(ans2)
+}
+print("---------------------------------------------------")
+
+train1.test2.result.df <- data.frame(t(results_train_1_test_2))
+colnames(train1.test2.result.df) <- names(ans1)
+print("Train 1 Test 2 Results")
+meanResults12 <- colMeans(train1.test2.result.df)
+print(meanResults12)
+t.test(train1.test2.result.df$test_accuracy, mu=.5)
+
+print("---------------------------------------------------")
+
+train2.test1.result.df <- data.frame(t(results_train_2_test_1))
+colnames(train2.test1.result.df) <- names(ans2)
+print("Train 2 Test 1 Results")
+meanResults21 <- colMeans(train2.test1.result.df)
+
+print(meanResults21)
+t.test(train2.test1.result.df$test_accuracy, mu=.5)
+
+print("---------------------------------------------------")
+
+# Reduced model: AIns interaction with Previous Trial
+gdf_rdm1 <- filter(gdf, Experiment ==1)
+gdf_rdm2 <- filter(gdf, Experiment ==2)
+
+NUM_ITERATIONS <- 500
+results_train_1_test_2= t(matrix(NA, NUM_ITERATIONS, 9))
+results_train_2_test_1= t(matrix(NA, NUM_ITERATIONS, 9))
+
+set.seed(0)
+for(i in 1: NUM_ITERATIONS){
+  gdf_rdm1$Result <- sample(gdf_rdm1$Result, replace = F)
+  gdf_rdm2$Result <- sample(gdf_rdm2$Result, replace = F)
+  ans1 <- checkClassifier(gdf_rdm1, as.formula("Result  ~  desai_insb_TR_4 *Previous_Trial"), type='glm', split.method ='average', d.test=filter(gdf, Experiment==2), complete_result=T, verbose=F)
+  
+  ans2 <- checkClassifier(gdf_rdm2, as.formula("Result  ~  desai_insb_TR_4 *Previous_Trial"), type='glm', split.method ='average', d.test=filter(gdf, Experiment==1), complete_result=T, verbose=F)
+  
+  results_train_1_test_2[, i] <- unlist(ans1)
+  results_train_2_test_1[, i] <- unlist(ans2)
+}
+print("---------------------------------------------------")
+
+train1.test2.result.df <- data.frame(t(results_train_1_test_2))
+colnames(train1.test2.result.df) <- names(ans1)
+print("Train 1 Test 2 Results")
+meanResults12 <- colMeans(train1.test2.result.df)
+print(meanResults12)
+t.test(train1.test2.result.df$test_accuracy, mu=.5)
+
+print("---------------------------------------------------")
+
+train2.test1.result.df <- data.frame(t(results_train_2_test_1))
+colnames(train2.test1.result.df) <- names(ans2)
+print("Train 2 Test 1 Results")
+meanResults21 <- colMeans(train2.test1.result.df)
+
+print(meanResults21)
+t.test(train2.test1.result.df$test_accuracy, mu=.5)
+
+print("---------------------------------------------------")
+```
+

@@ -1,0 +1,12 @@
+.DS_Store
+._*
+*~
+code/matlab/decodedfeatures/
+
+*~
+data
+results
+results_*
+tmp
+lib
+

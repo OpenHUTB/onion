@@ -1,0 +1,476 @@
+
+
+\documentclass[12pt,journal,onecolumn]{IEEEtran}
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+\usepackage{graphicx}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage[TABBOTCAP]{subfigure}
+\usepackage{bm}
+\usepackage{upgreek} 
+\usepackage{amsmath}
+\usepackage{breqn}
+\usepackage{color}
+\usepackage{cite}
+\usepackage[none]{hyphenat}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{caption2}
+\usepackage{setspace}
+
+\usepackage{tikz}
+\newcommand*{\circled}[1]{\lower.7ex\hbox{\tikz\draw (0pt, 0pt)%
+		circle (.4em) node {\makebox[1em][c]{\small #1}};}}
+
+
+\linespread{1.5}
+
+\begin{document}
+
+\begin{center}
+	\textbf{\LARGE Response to Comments} 
+\end{center}
+\vspace{8pt} 
+
+\noindent NEUCOM-Manuscript: NEUCOM-D-21-03628R1 \\
+
+\noindent Title: BTN: Neuroanatomical Aligning between Visual Object Tracking in Deep Neural Network and Smooth Pursuit in Brain \\
+
+\noindent Dear Editor and Reviewers:
+
+\textcolor{blue}{
+We want to thank you and the review team for the detailed comments on our submission, and for the opportunity to revise and reconsider the paper to NEUROCOMPUTING.  
+Those comments are all valuable and very helpful for revising and improving our paper, as well as the important guiding significance to our researches. 
+We have studied these comments carefully and have made correction to meet with your approval. 
+The responds to the reviewer's comments are labeled in blue, 
+and the main corrections in the paper are marked in red to facilitate your reading. 
+}
+
+\vspace{8pt} 
+
+\newpage
+
+
+
+
+
+\textbf{To Reviewer \#1:}
+
+\textcolor{blue}{Thanks for the comments for our paper, we have revised the manuscript according to your recommendations as follows:}
+
+\textbf{Comment (1).} In this paper, The author raises a viewpoint that in the visual object tracking problem, humans present behavioral modes (eye movement) that differ from the bounding box of single object tracking. 
+Therefore, the main purpose is to evaluate the behavioral output mode, not only the tracking performance. 
+This part needs to adds more content to explain why the evaluation of the behavioral output mode is more important which means why we need to consider brain-like score. 
+Because in visual object tracking problem, the problem is the accuracy of object tracking. 
+The reason for considering the result of behavioral output mode is not adequate for the reviewer.
+% 为什么用行为输出模式
+% 更接近于人。使模型的输出更加接近于人的响应。
+
+\textbf{Response:} \textcolor{blue}{Thank you for your valuable comment.
+%Maybe we did not explain it clearly in the previous manuscript. 
+In the revised version, we have reorganized the introduction of Brain-like Tracking Score, especially the behavioral metrics. 
+The purpose of behavioral benchmarks it to compute the similarity between source (e.g., a DNN model) and target (e.g., human) behavioral responses. 
+% 第二段
+Even within the visual behavioral domain of core object recognition, there are many similar behavioral metrics.
+They use the metric of image-by-image patterns of human behavior [1]. 
+For core eye object tracking tasks, human exhibits behavioral patterns that differ from ground truth labels. 
+For example, in pedestrians tracking, humans may pay more attention to the head or even the face, while the visual tracking task focuses on the body or even torso.
+One consequence of this is that DNNs can achieve 100\% accuracy but will not gain a perfect behavioral and cortical similarity score.
+Thus, we use both the behavioral response pattern metric and cortical metric, not an overall accuracy metric, and higher scores are obtained by DNNs that produce and predict the human patterns.
+Finally, we have emphasized it in Section 5.1 as follows: 
+}
+
+% 5.1章 第一段
+\textcolor{red}{
+``The aim of behavioral metrics is to calculate the
+similarity between the DNN outputs and the human behavioral outputs in a specific problem [9]. 
+In the human eye object tracking, the subjects’s attention is a circle scope and related to human pupil.
+Thus, the behavioral modes (the position of eye gaze and the size of pupil) is modeled as a circle and differs from the bounding box in visual object tracking. 
+Meanwhile, the main purpose is to realize human-like intelligence, not only the tracking accuracy [36]; and BTN obtains better behavioral similarity and can predict the position and scope of eye gaze well. 
+Otherwise, the result is that DNNs gain perfect bounding box fitting but can not obtain a good eye gaze prediction performance. "
+} \\
+% APA：名字全部列出来，没有省略
+%\textcolor{blue}{
+%	[1] Schrimpf, M., Kubilius, J., Lee, M. J., Murty, N. A. R., Ajemian, R., \& DiCarlo, J. J. (2020). Integrative benchmarking to advance neurally mechanistic models of human intelligence. Neuron.
+%} \\
+\textcolor{blue}{
+	[1] Rajalingham, R., Issa, E. B., Bashivan, P., Kar, K., Schmidt, K., \& DiCarlo, J. J. (2018). Large-scale, high-resolution comparison of the core visual object recognition behavior of humans, monkeys, and state-of-the-art deep artificial neural networks. Journal of Neuroscience, 38(33), 7255-7269.
+} \\
+
+
+%\begin{figure}[H]
+%	\centering 
+%	\includegraphics[width=0.9\textwidth]{imgs/inconsistency.png}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\centering 
+%	\includegraphics[width=0.9\textwidth]{imgs/framework.png}
+%\end{figure}
+%\vspace{8pt}
+
+\textbf{(2).} The paper says that the BTS may vary when the BTN is retrained. 
+So only the given trained BTN is optimal. 
+Does it means that the application of BTN is very limited according to its training dataset. 
+How to improve the BTN so it could applied to the most conditions. 
+
+% 更好的架构对泛化能力的影响大于特定数据集上学习到的特征（权重）
+% 即使权重信息并不能在任务间很好地迁移，但是网络架构可以很好地被迁移。
+% 最佳的 ImageNet 模型没有给出最佳的图像特征。在 ImageNet 上训练的 ResNet 模型的特征始终优于那些在 ImageNet 上取得更高准确率的网络。
+% 优化过的超参数训练的 inception v4 模型
+\textbf{Response:} \textcolor{blue}{Thank you for your comment. 
+The old version elaborates unclearly in explaining the training of the BTN. 
+In the revised manuscript, we have rewritten our description about the discussion to make it more understandable.
+Since BTN is a transferable problem, architectures transfer well across tasks.
+However, it cannot be precluded that the BTS may vary when using same network architectures and different training settings. 
+It is useful to improve the transfer by retraining the DNN with optimized training configurations. 
+Therefore, we believe that only the given trained BTN is optimal and not all types of network structure.
+In the application of BTN, we can perform grid search to select the optimal training settings, such as learning rate and weight decay, based on a validation set.
+We have emphasized it in Section 7.2 as follows:
+}
+
+% 7.2章 第二段
+% 只是特定训练好的模型是效果最好的，而不是网络结构就行(重新训练就可能不是最好的了)
+% 具体地应用中怎么训练模型（寻找最优的训练配置）
+\textcolor{red}{
+``Nevertheless, the independent training configuration may be the essential characteristic that trains the DNN [68]. In addition, an auxiliary task does not have a very large impact on the score but notably improves the transfer effect [68]. 
+Because the BTN is a transferable problem, it cannot be precluded that the BTS may vary when using different training settings. 
+They claim that it is useful to tremendously improve the transfer effect by retraining the DNN with optimized configurations [68].
+Therefore, we believe that only the given trained
+BTN is optimal and not all model of network architecture. 
+Practically speaking, we can perform grid search to select the optimal training settings based on a validation set."
+} \\
+
+
+
+%\begin{figure}[H]
+%	\centering 
+%	\includegraphics[width=0.9\textwidth]{imgs/inconsistency.png}
+%\end{figure}
+
+
+
+\vspace{8pt}
+
+\textbf{(3).} The paper has raised a brain-like tracking network model to solve object tracking problem. 
+But it appears that it contributes most to establish a neuroscience-like model rather than solving the object tracking problem. 
+So is it necessary to use brain-like model to solve the object tracking problem than just using DNN?
+% 不是主要解决SOT的问题：可解释的问题
+% DNN的必要性，为什么不用其他 类脑模型。（复杂场景）
+
+\textbf{Response:} \textcolor{blue}{Thanks for your professional suggestions. 
+The goal of our work is mainly to solve the interpretability problem of visual tracking model and implement a brain-like architecture with both high accuracy and excellent brain similarity. 
+In the revised manuscript, we have analysed the motivation of our work and the reason for using the brain-like model in our introduction as follows:
+}
+
+% TODO
+% 第1章 第1段
+\textcolor{red}{
+``Amazingly, in
+trained deep neural networks (DNNs) used to classify images [2], the middle layer in DNNs can partially explain why the nerve cell in the middle layer of the visual cortex has specific activations to an image [3, 4, 5, 6, 7, 8]. 
+Furthermore, these models also partly predict primate image classification behavior and evaluations [9, 10].
+Excellent models of the brain provide extraordinary opportunities for brain-computer interfaces, and these methods can be utilized to produce the expected activations in the cortical pathway [11]." 
+} \\
+% 第1章 第2段
+\textcolor{red}{
+``To capture cortical processing even more strictly
+in these models, continued architectural search on
+traditional visual datasets alone no longer seems
+to be a feasible solution. 
+Even though the great tracking performance in deeper DNNs has truly increased [12, 13], it is hopeless to raise the brain-like score [9, 14]. 
+In addition, at the beginning, only partial modules can be obviously mapped to corresponding regions of the visual pathway, and the relations between the small number of visual regions and the numerous and complex modules in GoogleNet [15] or Inception-v4 [16] are inconspicuous. 
+Finally, the network with high accuracy in the visual task becomes increasingly deeper except for several brain-like architectures for image classification [17, 18]." 
+} \\
+
+%\begin{figure}[H]
+%	\centering 
+%	\includegraphics[width=0.9\textwidth]{imgs/online_tracking.png}
+%\end{figure}
+%\vspace{8pt}
+
+
+\textbf{(4).} Another suggestion is that it will be better to introduce the structure of the paper in the introduction part.
+This paper has very good potential. 
+The reviewer believes it could be an outstanding paper after revision.
+
+\textbf{Response:} \textcolor{blue}{Thanks for your valuable suggestions.
+In the revised manuscript, we have introduced the structure of the paper in the tail of our introduction part as follows:
+}
+
+% 第1章 第3段
+\textcolor{red}{
+``To address the interpretability problem of visual tracking model, in this study, we propose that aligning DNNs to anatomy will result in shallower, more interpretable, and more brain-like tracking models, named brain-like tracking network (BTN). 
+The BTN is a shallow recurrent brain-like architecture of the brain pathway; hence, it has a much more brain-like structure. In section 4, we introduce the method utilized to analyse human behavioral and cortical data during object tracking. In section 5, we build a fancy measurement method for predicting eye movement behavior and neural activations on the brain-like tracking score (BTS).
+In our experiments, we introduce a new benchmark dataset composed of behavioral and cortical recordings, and present an outstanding tracking result of 36.5\% at evaluating the model similarity of the visual pathway while obtaining a good tracking effect in the Tracking-Gump dataset [19]. 
+We find that these results are mainly due to the brain-like architecture, in accordance with prior knowledge of the human cortical pathway processing stimuli input [17, 20, 18]. 
+Finally, to compare the model activations between the RNN MT/MST in the BTN and the responses in the human middle temporal and medial superior temporal areas (MT/MST), we discover that the BTN predicts these cortical activations well, and it is also the first visual tracking model to do so on the neural recordings." 
+} 
+
+%\begin{figure}[H]
+%	\centering 
+%	\includegraphics[width=0.9\textwidth]{imgs/result_MOT_one_two_stage.png}
+%\end{figure}
+\vspace{8pt}
+
+
+
+
+\vspace{8pt}
+
+\newpage
+
+
+
+
+
+\textbf{To Reviewer \#3:}
+
+\textcolor{blue}{Thanks for the comments for our paper, we have revised the manuscript according to your recommendations as follows:}
+
+\textbf{(1).}  The literature review is not thorough about the application and the contributions. 
+To highlight the contributions, it suggests reorganizing the section of the related work. 
+At least, for each contribution, it should be novel and meaningful according to a thorough literature review. 
+In the literature analysis, it is recommended to read the following works and consider to discuss their similar application scenarios in the introduction and discussion, 
+Improved recurrent neural network-based manipulator control with remote center of motion constraints: Experimental results; 
+A teleoperation framework for mobile robots based on shared control.
+% 重新组织introduction和realted work，突出重点，并引用文章。
+
+\textbf{Response:}  \textcolor{blue}{Thank you for your kind suggestion.
+The goal of our work is mainly to solve the interpretability problem of visual tracking model.
+In the revised manuscript, we have reorganized the corresponding description of recurrent neural networks and related applications in the section of related work, and emphasized it as follows:} \\
+% 2.1第二段
+\textcolor{red}{
+``To track a target, it seems to be very suitable to use recurrences and glimpses, but they have only been employed successfully in monochromatic videos with simple backgrounds [23]. 
+Some [27] obtained prominent results through representations of the target detector that is the input of a recurrent neural network (RNN) [28].
+However, it needs to process each full frame. 
+A recent study [29] utilized an RNN cropping explicitly to build attention in humans. 
+Our study is similar to [23, 30], and utilizes human attention which is implemented with a long short memory network (LSTM) to extract the movement features well in multiple frames. 
+In addition, we seek to design a brain-like network that will gain a superior BTS and exceed the existing tracking models on the Tracking-Gump dataset [19]."
+} \\
+\textcolor{red}{
+[28] Su, H., Hu, Y., Karimi, H. R., Knoll, A., Ferrigno, G., \& De Momi, E. (2020). Improved recurrent neural network-based manipulator control with remote center of motion constraints: Experimental results. Neural Networks, 131, 291-299.
+} \\
+\textcolor{red}{[30] 
+Luo, J., Lin, Z., Li, Y., \& Yang, C. (2019). A teleoperation framework for mobile robots based on shared control. IEEE Robotics and Automation Letters, 5(2), 377-384.
+} \\
+\vspace{8pt} 
+
+
+\textbf{(2).} It is recommended to present in the first section so that it can highlight the specific scope of this article. 
+The meaning of the assessment experiment should be highlighted.
+% 指定文章的研究范围
+% 强调评估实验的意义（作用），为什么这么设计实验
+
+\textbf{Response:} \textcolor{blue}{Thank you very much for your helpful comment. 
+In the new manuscript, we have first present in our introduction so that it can highlight the specific scope of this article as follows: \\
+% 第一章第二段
+\textcolor{red}{
+``To capture cortical processing even more strictly in these models, continued architectural search on traditional visual datasets alone no longer seems to be a feasible solution. 
+Even though the great tracking performance in deeper DNNs has truly increased [12, 13], it is hopeless to raise the brain-like score [9, 14]. 
+In addition, at the beginning, only partial modules can be obviously mapped to corresponding regions of the visual pathway, and the relations between the small number of visual regions and the numerous and complex modules in GoogleNet [15] or Inception-v4 [16] are inconspicuous. 
+Finally, the network with high accuracy in the
+visual task becomes increasingly deeper except for
+several brain-like architectures for image classification [17, 18]."
+} \\
+Second, we have highlighted the meaning of the assessment experiment in our introduction and Section 6.3 as follows: \\
+% 第一张第三段We find that开始
+\textcolor{red}{
+``We find that these results are mainly due to the brain-like architecture, in accordance with prior knowledge of the human cortical pathway processing stimuli input [17, 20, 18]. 
+Finally, to compare the model activations between the RNN MT/MST in the BTN and the responses in the human middle temporal and medial superior temporal areas (MT/MST), we discover that the BTN predicts these cortical activations well, and it is also the first visual tracking model to do so on the neural recordings."
+} \\
+% 6.3 章第一段
+\textcolor{red}{
+``We compared various experimental results to explain why the proposed BTN is a brain-like tracking model. 
+It is easy to see that the model architecture and training procedure are slightly different from other implementations of the visual tracking model."
+} \\
+% 6.3.1 第一段
+\textcolor{red}{
+``We design a brain-like BTN that follows neuroanatomical aligning more closely than classic DNNs.
+Besides, the BTN achieves good tracking performance as measured by the BTS on Tracking Gump dataset. 
+Therefore, the BTN satisfies both neuroanatomical limitations in neuroscience and engineering requirements in computer vision."
+} \\
+% 6.3.2 第一段 前两句
+\textcolor{red}{
+``A feedforward neural network can not predict the trend of time series, and thus cannot capture a brain-like response of the tracking model [18, 17]. 
+By using recurrent connections, the BTN is able to predict time-varying activation in the corresponding cortex."
+} \\
+% 6.3.3 第一段
+\textcolor{red}{
+``Although the tracking performance is truly improved in the later training when improving the cortical similarity, we select the epoch with maximum BTS."
+} \\
+}
+\\
+
+\vspace{8pt}
+
+
+\textbf{(3).} Maybe it is better to discuss the possibility to improve the scope using deep learning to learn and control robot behavior in the introduction, for example, 
+An Incremental Learning Framework for Human-like Redundancy Optimization of Anthropomorphic Manipulators; 
+Trajectory Online Adaption Based on Human Motion Prediction for Teleoperation.
+
+\textbf{Response:} \textcolor{blue}{Thank you very much for your valuable comment. 
+In the revised version, we have improved the scope using deep learning to learn and deploy in related application in our introduction as follows:
+} 
+% 第1章第2段
+\textcolor{red}{
+``To capture cortical processing even more strictly in these models, continued architectural search on traditional visual datasets alone no longer seems to be a feasible solution. 
+Even though the great tracking performance in deeper DNNs has truly increased [12, 13], it is hopeless to raise the brain-like score [9, 14]. 
+In addition, at the beginning, only partial modules can be obviously mapped to corresponding regions of the visual pathway, and the relations between the small number of visual regions and the numerous and complex modules in GoogleNet [15] or Inception-v4 [16] are inconspicuous. 
+Finally, the network with high accuracy in the visual task becomes increasingly deeper except for several brain-like architectures for image classification [17, 18]. "
+} \\
+\textcolor{red}{[13] Luo, J., Huang, D., Li, Y., \& Yang, C. (2021). Trajectory Online Adaption Based on Human Motion Prediction for Teleoperation. IEEE Transactions on Automation Science and Engineering.
+} \\
+\textcolor{red}{[14] Su, H., Qi, W., Hu, Y., Karimi, H. R., Ferrigno, G., \& De Momi, E. (2020). An incremental learning framework for human-like redundancy optimization of anthropomorphic manipulators. IEEE Transactions on Industrial Informatics.
+} \\
+\\
+\vspace{8pt}
+
+
+\textbf{(4).} Figure 5 is not clear and we would suggest adding more details and labels to make it clear.
+
+\textbf{Response:} \textcolor{blue}{Thank you for your kind suggestion.
+Maybe we did not explain it clearly in the previous manuscript. 
+We have emphasized it in Figure 5 as follows:
+}
+\begin{figure}[H]
+	\centering 
+	\includegraphics[width=0.5\textwidth]{imgs/tracking.png}
+\end{figure}
+\vspace{8pt}
+
+
+
+\textbf{(5).} There should be a further discussion about the limitation of the current works, in particular, what could be the challenge for its related applications.
+% 当前工作的局限性，并提出以后可能的应用（脑机接口、机械手）
+
+\textbf{Response:} \textcolor{blue}{Thank you for your kind suggestion. 
+We discuss the limitation of the current works and the challenge for its related applications in Section 7.2 as follows: 
+} \\
+% 7.2 第二段
+\textcolor{red}{
+``Nevertheless, the independent training configuration may be the essential characteristic that trains the DNN [68]. In addition, an auxiliary task does not have a very large impact on the score but notably improves the transfer effect [68]. Because the BTN is a transferable problem, it cannot be precluded that the BTS may vary when using different training settings. They claim that it is useful to tremendously improve the transfer effect by retraining the DNN with optimized configurations [68].
+Therefore, we believe that only the given trained BTN is optimal and not all model of network architecture. Practically speaking, we can perform grid search to select the optimal training settings based on a validation set."
+} \\
+% 7.2第一段
+\textcolor{red}{
+``The proposed BTN can be utilized in the traditional visual object tracking task. Besides, it is a more interpretable brain-like tracking model and can be utilized to predict the position of eye gaze and the expected activations in cortical pathway."
+} \\
+% 第一章第一段 最后一句
+\textcolor{red}{
+``Excellent models of
+the brain provide extraordinary opportunities for brain-computer interfaces, and these methods can be utilized to produce the expected activations in the cortical pathway [11]."
+} \\
+%\begin{figure}[H]
+%	\centering 
+%	\includegraphics[width=0.9\textwidth]{imgs/result_MOT_one_two_stage.png}
+%\end{figure}
+\vspace{8pt}
+
+%\begin{figure}[H]
+%	\centering 
+%	\includegraphics[width=0.9\textwidth]{imgs/result_MOT_one_two_stage.png}
+%\end{figure}
+
+
+\textbf{(6).} To let readers better understand future work, please give specific research directions.
+
+\textbf{Response:} \textcolor{blue}{Thank you for your kind suggestion. 
+In the revised manuscript, we have fixed it in Section 7.3 and 8 as follows: \\
+}
+% 7.3最后一段
+\textcolor{red}{
+``In general, we indicate that the brain-like model is a prospective opportunity to cooperate for deep learning and neuroscience. We compare these DNNs through similarity quantification using the BTS and assess the metrics of various behavioral and neural datasets on BTS. 
+For the BTN, we demonstrate that an anatomical model of the cortex according to alignment and recurrent structure can learn cortical mechanisms well through cortical activation prediction and frame-by-frame behavior. 
+In this way, we can simultaneously obtain high tracking performance and the prominent brain-like model."
+} \\
+% 8，最后两句
+\textcolor{red}{
+``Furthermore, the model with neuroanatomical alignment can better predict the neural response of human brain. 
+We believe the proposed BTN could encourage novel inspirations in the interpretability of DNN 
+and even motivate the development of brain-computer interfaces."
+}
+
+
+
+%\textbf{[1]} Gu, X. , et al. "Temporal Knowledge Propagation for Image-to-Video Person Re-Identification." International Conference on Computer Vision.
+\vspace{8pt}
+
+
+\vspace{8pt}
+
+\newpage
+
+
+
+
+\textbf{To Reviewer \#5:}
+
+\textcolor{blue}{Thanks for the comments for our paper, we have revised the manuscript according to your recommendations as follows:}
+
+\textbf{(1).} In Equation (14), the description of the formula symbol is missing.
+
+\textbf{Response:} \textcolor{blue}{Thank you for your kind suggestion. 
+We have fixed it in the revised version as follows: \\
+}
+% 5.2 最后一段
+\textcolor{red}{
+The Pearson correlation coefficient $s_r$ constitutes the final neural similarity score for visual motion cortex as follows:
+}
+\begin{figure}[H]
+	\centering 
+	\includegraphics[width=0.4\textwidth]{imgs/pearson.png}
+\end{figure}
+\textcolor{red}{
+where $y^\prime$ is the model activation, $y$ is the actual activation. $\bar{y}$ and $\bar{y}^\prime$ are the corresponding median over all individual neural response values.
+}
+\\
+\vspace{8pt} 
+
+
+\textbf{(2).} Please add some figure descriptions to Fig 3 and proofread the manuscript.
+
+\textbf{Response:} \textcolor{blue}{Thank you for your valuable suggestion. 
+First, we have added detailed figure descriptions to Fig 3 and proofread the manuscript as follows: 
+}
+
+\begin{figure}[H]
+	\centering 
+	\includegraphics[width=0.6\textwidth]{imgs/structure_analysis.png}
+\end{figure}
+
+\vspace{8pt} 
+
+
+\textbf{(3).} It would be interesting to discuss the limitations of the proposed approach.
+
+\textbf{Response:} \textcolor{blue}{Thank you for your professional suggestion. 
+In the revised manuscript, we have discussed the limitations of the proposed approach in Section 7.2 as follows: \\
+}
+% 7.2 第二段
+\textcolor{red}{
+``Nevertheless, the independent training configuration may be the essential characteristic that trains the DNN [68]. 
+In addition, an auxiliary task does not have a very large impact on the score but notably improves the transfer effect [68]. 
+Because the BTN is a transferable problem, it cannot be precluded that the BTS may vary when using different training settings. 
+They claim that it is useful to tremendously improve the transfer effect by retraining the DNN with optimized configurations [68].
+Therefore, we believe that only the given trained BTN is optimal and not all model of network architecture. Practically speaking, we can perform grid search to select the optimal training settings based on a validation set."
+}
+%\begin{figure}[H]
+%	\centering 
+%	\includegraphics[width=0.9\textwidth]{imgs/result_MOT_one_two_stage.png}
+%\end{figure}
+\vspace{8pt} 
+
+
+\vspace{8pt} 
+
+
+\vspace{8pt}
+
+\bibliographystyle{ACM-Reference-Format}
+%\bibliography{test1}
+
+\end{document}
+
+

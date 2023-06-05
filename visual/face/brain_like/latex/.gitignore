@@ -1,0 +1,17 @@
+bfn.pdf
+bfn.aux
+bfn.bbl
+bfn.blg
+bfn.log
+bfn.pdf
+bfn.synctex.gz
+bare_jrnl.synctex.gz
+Authors/HaidongWang-eps-converted-to.pdf
+
+figs/introduction.pdf
+
+imgs/detection.pdf
+imgs/*.pdf
+
+reference.bib.bak
+reference.bib.sav

@@ -1,0 +1,213 @@
+Dear Professor Li,
+
+
+Please find below the referee reports. Based on these and the corresponding recommendation of the associate editor, I have to inform you that your paper
+
+BTN: Neuroanatomical Aligning between Visual Object Tracking in Deep Neural Network and Smooth Pursuit in Brain with manuscript number: NEUCOM-D-21-03628
+
+in its present form cannot be accepted for publication in Neurocomputing.
+
+However, I would very much like to invite you to revise your paper, seriously taking into account the comments of the reviewers, and to resubmit your revised version by Feb 06, 2022 (mm/dd/yy). Any revision received after that may be treated as a new submission.
+
+
+请在下方找到裁判报告。 基于这些和副主编的相应推荐，我不得不通知你，你的论文
+
+BTN：深度神经网络中的视觉对象跟踪与大脑中的平滑追踪之间的神经解剖学对齐，手稿编号：NEUCOM-D-21-03628
+
+目前的形式不能被接受在 Neurocomputing 上发表。
+
+但是，我非常想邀请您修改您的论文，认真考虑审稿人的意见，并在 2022 年 2 月 6 日（mm/dd/yy）之前重新提交您的修订版本。 在此之后收到的任何修订都可能被视为新提交。
+
+
+To submit your revision, go to http://ees.elsevier.com/neucom/ and login as an Author. You will see a menu item call Submission Needing Revision. Here you will also find your submission record.
+
+The revised material should consist of
+
+- your response to the reviewers' comments (to be uploaded as "Revision notes"),
+- the revised PDF of the manuscript,
+- the source files that have been used to prepare it (source files in LaTeX or Word, as well as separate figure files; these will be used for the eventual typesetting of the paper)
+- and finally, biographies and pictures of all authors.
+
+
+*** Please note: while submitting the revised manuscript, please double check the author names provided in the submission and make sure to indicate any authorship related changes in the revision. Once a paper is accepted, we do not accept any changes to the author list unless explicit approval is given from co-authors and respective editor handling the submission; this may cause a significant delay in publishing your manuscript. Therefore, please make sure that you include the correct author list in the revised text of your manuscript. ***
+
+要提交您的修订，请访问 http://ees.elsevier.com/neucom/ 并以作者身份登录。您将看到一个名为 Submission Needing Revision 的菜单项。在这里您还可以找到您的提交记录。
+
+修订后的材料应包括
+
+- 您对审稿人意见的回应（作为“修订说明”上传），
+- 手稿的修订版 PDF，
+- 用于准备它的源文件（LaTeX 或 Word 中的源文件，以及单独的图形文件；这些将用于论文的最终排版）
+- 最后，所有作者的传记和照片。
+
+
+*** 请注意：在提交修改后的手稿时，请仔细检查提交中提供的作者姓名，并确保在修改中注明与作者身份相关的任何更改。一旦论文被接受，我们不接受对作者列表的任何更改，除非得到共同作者和处理提交的相应编辑的明确批准；这可能会导致您的手稿发表严重延迟。因此，请确保您在手稿的修订文本中包含正确的作者列表。 ***
+
+
+Other journal-related information is included below, following the reviewer's comments.
+
+MethodsX file (optional)
+
+If you have customized (a) research method(s) for the project presented in your Neurocomputing article, you are invited to submit this part of your work as MethodsX article alongside your revised research article. MethodsX is an independent journal that publishes the work you have done to develop research methods to your specific needs or setting. This is an opportunity to get full credit for the time and money you may have spent on developing research methods, and to increase the visibility and impact of your work.
+
+How does it work?
+1) Fill in the MethodsX article template: https://www.elsevier.com/MethodsX-template
+2) Place all MethodsX files (including graphical abstract, figures and other relevant files) into a .zip file and upload this as a 'Method Details (MethodsX) ' item alongside your revised Neurocomputing manuscript. Please ensure all of your relevant MethodsX documents are zipped into a single file.
+3) If your Neurocomputing research article is accepted, your MethodsX article will automatically be transferred to MethodsX, where it will be reviewed and published as a separate article upon acceptance. MethodsX is a fully Open Access journal, the publication fee is only 520 US$.
+
+Questions? Please contact the MethodsX team at methodsx@elsevier.com. Example MethodsX articles can be found here: http://www.sciencedirect.com/science/journal/22150161
+
+Include interactive data visualizations in your publication and let your readers interact and engage more closely with your research. Follow the instructions here: https://www.elsevier.com/authors/author-services/data-visualization to find out about available data visualization options and how to include them with your article.
+MethodsX file (optional)
+We invite you to submit a method article alongside your research article. This is an opportunity to get full credit for the time and money you have spent on developing research methods, and to increase the visibility and impact of your work. If your research article is accepted, your method article will be automatically transferred over to the open access journal, MethodsX, where it will be editorially reviewed and published as a separate method article upon acceptance. Both articles will be linked on ScienceDirect. Please use the MethodsX template available here when preparing your article: https://www.elsevier.com/MethodsX-template. Open access fees apply.
+
+Kind regards,
+Jungong Han, Ph.D.
+Editor in Chief
+Neurocomputing
+
+根据审稿人的意见，其他期刊相关信息包括在下面。
+
+MethodsX 文件（可选）
+
+如果您为您的神经计算文章中提出的项目定制了 (a) 研究方法，您将被邀请将您的这部分工作作为 MethodsX 文章与您修订的研究文章一起提交。 MethodsX 是一份独立期刊，发表您为根据您的特定需求或环境开发研究方法所做的工作。这是一个机会，您可以充分利用您在开发研究方法上所花费的时间和金钱，并提高您工作的知名度和影响力。
+
+它是如何工作的？
+1）填写MethodsX文章模板：https://www.elsevier.com/MethodsX-template
+2) 将所有 MethodsX 文件（包括图形摘要、图表和其他相关文件）放入 .zip 文件中，并将其作为“方法详细信息 (MethodsX)”项目与您修订的神经计算手稿一起上传。请确保您的所有相关 MethodsX 文档都压缩到一个文件中。
+3) 如果您的 Neurocomputing 研究文章被接受，您的 MethodsX 文章将自动转移到 MethodsX，在接受后将作为单独的文章进行审查和发表。 MethodsX 是完全开放获取的期刊，出版费仅为 520 美元。
+
+问题？请通过 methodsx@elsevier.com 联系 MethodsX 团队。可以在此处找到示例 MethodsX 文章：http://www.sciencedirect.com/science/journal/22150161
+
+在您的出版物中加入交互式数据可视化，让您的读者与您的研究更密切地互动和参与。按照此处的说明操作：https://www.elsevier.com/authors/author-services/data-visualization 以了解可用的数据可视化选项以及如何将它们包含在您的文章中。
+MethodsX 文件（可选）
+我们邀请您在研究文章的同时提交一篇方法文章。这是一个机会，您可以充分利用您在开发研究方法上所花费的时间和金钱，并提高您工作的知名度和影响力。如果您的研究文章被接受，您的方法文章将自动转移到开放获取期刊 MethodsX，在那里它将被编辑审查并在接受后作为单独的方法文章发表。这两篇文章都将在 ScienceDirect 上链接。准备文章时，请使用这里提供的 MethodsX 模板：https://www.elsevier.com/MethodsX-template。开放访问费用适用。
+
+亲切的问候，
+韩军工，博士
+主编辑
+神经计算
+
+Data in Brief (optional):
+
+We invite you to convert your supplementary data (or a part of it) into an additional journal publication in Data in Brief, a multi-disciplinary open access journal. Data in Brief articles are a fantastic way to describe supplementary data and associated metadata, or full raw datasets deposited in an external repository, which are otherwise unnoticed. A Data in Brief article (which will be reviewed, formatted, indexed, and given a DOI) will make your data easier to find, reproduce, and cite.
+
+You can submit to Data in Brief via the Neurocomputing submission system when you upload your revised Neurocomputing manuscript. To do so, complete the template and follow the co-submission instructions found here: www.elsevier.com/dib-template. If your Neurocomputing manuscript is accepted, your Data in Brief submission will automatically be transferred to Data in Brief for editorial review and publication.
+
+Please note: an open access Article Publication Charge (APC) is payable by the author or research funder to cover the costs associated with publication in Data in Brief and ensure your data article is immediately and permanently free to access by all. For the current APC see: www.elsevier.com/journals/data-in-brief/2352-3409/open-access-journal
+
+Please contact the Data in Brief editorial office at dib-me@elsevier.com or visit the Data in Brief homepage (www.journals.elsevier.com/data-in-brief/) if you have questions or need further information.
+
+Editor's and reviewers' comments:
+
+
+
+AE: This idea of this paper is interesting, but there are limitations about the proposed method. The authors need to emphasize the novelties and make more comparative experiments, such as that of mentioned for Reviewer 3.
+
+数据简介（可选）：
+
+我们邀请您将您的补充数据（或其中的一部分）转换为多学科开放获取期刊 Data in Brief 中的额外期刊出版物。简要文章中的数据是描述补充数据和相关元数据或存储在外部存储库中的完整原始数据集的绝佳方式，否则会被忽视。 Data in Brief 文章（将被审查、格式化、编入索引并给出 DOI）将使您的数据更易于查找、复制和引用。
+
+当您上传修改后的神经计算手稿时，您可以通过神经计算提交系统提交数据摘要。为此，请完成模板并按照此处的共同提交说明进行操作：www.elsevier.com/dib-template。如果您的 Neurocomputing 手稿被接受，您提交的 Data in Brief 将自动转移到 Data in Brief 进行编辑审查和出版。
+
+请注意：作者或研究资助者需支付开放获取文章出版费 (APC)，以支付与在简报中发表相关的费用，并确保所有人立即永久免费访问您的数据文章。有关当前的 APC，请参见：www.elsevier.com/journals/data-in-brief/2352-3409/open-access-journal
+
+如果您有任何问题或需要更多信息，请通过 dib-me@elsevier.com 联系 Data in Brief 编辑部或访问 Data in Brief 主页 (www.journals.elsevier.com/data-in-brief/)。
+
+编辑和审稿人的评论：
+
+AE：这篇论文的这个想法很有趣，但是所提出的方法存在局限性。作者需要强调新颖性并进行更多的对比实验，例如Reviewer 3提到的实验。
+
+
+Reviewer #1: Based on neuroanatomy and DNN, the paper proposes a brain-like tracking network model(BTN) which monitors the human-brain working principle for visual object tracking problem. The reviewer's questions are as follows:
+(1)In this paper , The author raises a viewpoint that In the visual object tracking problem, humans present behavioral modes (eye movement) that differ from the bounding box of
+single object tracking. Therefore, the main purpose is to evaluate the behavioral output mode, not only the tracking performance. This part needs to adds more content to explain why the evaluation of the behavioral output mode is more important which means why we need to consider brain-like score. Because in visual object tracking problem, the problem is the accuracy of object tracking. The reason for considering the result of behavioral output mode is not adequate for the reviewer.
+(2)The paper says that the BTS may vary when the BTN is retrained. So only the given trained BTN is optimal. Does it means that the application of BTN is very limited according to its training dataset. How to improve the BTN so it could applied to the most conditions.
+(3)The paper has raised a brain-like tracking network model to solve object tracking problem. But it appears that it contributes most to establish a neuroscience-like model rather than solving the object tracking problem. So is it necessary to use brain-like model to solve the object tracking problem than just using DNN?
+(4)Another suggestion is that it will be better to introduce the structure of the paper in the introduction part.
+This paper has very good potential. The reviewer believes it could be an outstanding paper after revision.
+
+评论者#1：基于神经解剖学和DNN，论文提出了一种类脑跟踪网络模型（BTN），该模型监控人脑工作原理以解决视觉对象跟踪问题。审稿人的问题如下：
+(1)在这篇论文中，作者提出了一个观点，即在视觉对象跟踪问题中，人类呈现出不同于边界框的行为模式（眼球运动）。
+单个对象跟踪。因此，主要目的是评估行为输出模式，而不仅仅是跟踪性能。这部分需要增加更多的内容来解释为什么行为输出模式的评估更重要，这意味着为什么我们需要考虑类脑评分。因为在视觉对象跟踪问题中，问题是对象跟踪的准确性。考虑行为输出模式结果的原因对审稿人来说是不够的。
+(2)论文说BTN在重新训练时BTS可能会发生变化。所以只有给定的训练过的 BTN 是最优的。这是否意味着根据其训练数据集，BTN 的应用非常有限。如何改进 BTN 使其适用于大多数情况。
+(3)论文提出了一种类脑跟踪网络模型来解决目标跟踪问题。但似乎它对建立类似神经科学的模型的贡献最大，而不是解决对象跟踪问题。那么是否有必要使用类脑模型来解决目标跟踪问题而不仅仅是使用 DNN？
+(4)另外一个建议是，最好在引言部分介绍论文的结构。
+这篇论文很有潜力。审稿人认为修改后可能是一篇优秀的论文。
+
+
+Reviewer #3: This paper focused on the issue of visual tracking using deep neural networks. This paper attempts to address this gap of that standard DNNs usually do not easily connect with brain areas on account of their excessive network depth and absent biological constraints, such as recurrent connections. A brain-like tracking network (BTN) with four neuroanatomically mapped regions and recurrence is proposed in this paper, guided by the brain-like tracking score (BTS), a novel benchmark to measure the model similarity of the human smooth pursuit pathway. Despite having significant tracking performance on the Tracking-Gump dataset, the BTN has achieved a high BTS. This research work is interesting for the visual tracking research society, and the experimental results are discussed suitably. However, this paper has several limitations and the standard is not enough, and address the following items would result in a good paper,
+
+1. The literature review is not thorough about the application and the contributions. To highlight the contributions, it suggests reorganizing the section of the related work. At least, for each contribution, it should be novel and meaningful according to a thorough literature review. In the literature analysis, it is recommended to read the following works and consider to discuss their similar application scenarios in the introduction and discussion, Improved recurrent neural network-based manipulator control with remote center of motion constraints: Experimental results; A teleoperation framework for mobile robots based on shared control.
+2. It is recommended to present in the first section so that it can highlight the specific scope of this article. The meaning of the assessment experiment should be highlighted.
+3. Maybe it is better to discuss the possibility to improve the scope using deep learning to learn and control robot behavior in the introduction, for example, An Incremental Learning Framework for Human-like Redundancy Optimization of Anthropomorphic Manipulators; Trajectory Online Adaption Based on Human Motion Prediction for Teleoperation.
+4. Figure 5 is not clear and we would suggest adding more details and labels to make it clear.
+5. There should be a further discussion about the limitation of the current works, in particular, what could be the challenge for its related applications.
+6. To let readers better understand future work, please give specific research directions.
+
+审稿人 #3：这篇论文重点讨论了使用深度神经网络进行视觉跟踪的问题。本文试图解决标准 DNN 通常不容易与大脑区域连接的差距，因为它们的网络深度过大且缺乏生物约束，例如循环连接。本文提出了一种具有四个神经解剖学映射区域和复发的类脑跟踪网络 (BTN)，以类脑跟踪分数 (BTS) 为指导，BTS 是衡量人类平滑追踪路径模型相似性的新基准。尽管在 Tracking-Gump 数据集上具有显着的跟踪性能，但 BTN 已经实现了高 BTS。这项研究工作对视觉跟踪研究会很有趣，并且对实验结果进行了适当的讨论。但是，这篇论文有几个局限性，标准还不够，解决以下几项才能成为一篇好论文，
+
+1. 文献综述对应用和贡献不透彻。为了突出贡献，它建议重新组织相关工作的部分。至少，根据彻底的文献综述，对于每项贡献，它应该是新颖且有意义的。在文献分析中，建议阅读以下作品，并在介绍和讨论中考虑讨论它们类似的应用场景， 基于远程运动中心约束的改进递归神经网络机械手控制：实验结果；一种基于共享控制的移动机器人遥操作框架。
+2. 建议在第一部分展示，以便突出本文的具体范围。应突出评估实验的意义。
+3. 也许在介绍中讨论使用深度学习来学习和控制机器人行为的范围的可能性会更好，例如，An Incremental Learning Framework for Human-like Redundancy Optimization of Anthropomorphic Manipulators；基于人体运动预测的遥操作轨迹在线自适应。
+4. 图5不清楚，我们建议添加更多细节和标签以使其清晰。
+5. 应进一步讨论当前作品的局限性，特别是其相关应用可能面临的挑战。
+6. 为了让读者更好地了解未来的工作，请给出具体的研究方向。
+
+Improved recurrent neural network-based manipulator control with remote center of motion constraints: Experimental results
+Hang Su(米兰理工大学), Yingbai Hub, Hamid Reza Karimi a,∗, Alois Knoll b, Giancarlo Ferrigno a, Elena De Momia
+
+A Teleoperation Framework for Mobile Robots based on Shared Control
+Jing Luo(华南理工大学), Zhidong Lin(华南理工大学), Yanan Li(英国萨塞克斯大学), and Chenguang Yang(西英格兰大学)
+
+An Incremental Learning Framework for Human-like Redundancy Optimization of Anthropomorphic Manipulators
+Hang Su(米兰), Wen Qi, Yingbai Hu(慕尼黑工业大学), Hamid Reza Karimi(米兰), Giancarlo Ferrigno, Elena De Momi
+
+Trajectory Online Adaption Based on Human Motion Prediction for Teleoperation
+Jing Luo(武汉理工大学), Darong Huang(华南理工大学), Yanan Li(英国萨塞克斯大学), Chenguang Yang(西英格兰)
+
+
+
+
+Reviewer #5: This paper proposes a neuroanatomical aligning visual object tracker to implement an explainable neural network. It first proposes a brain-like tracking network (BTN) with four neuroanatomically mapped regions. Then it designs a novel benchmark, which is named brain-like tracking score (BTS), to measure the model similarity of the human smooth pursuit pathway. Finally, it discover that the middle temporal (MT) and medial superior temporal (MST) areas in the cerebral cortex are similar to the designed network structure. The experimental results on the public and realistic dataset, demonstrate the effectiveness of the proposed methods. Below are my suggestions regarding this submission.
+
+1. In Equation (14), the description of the formula symbol is missing.
+2. Please please add some figure descriptions to Fig 3 and proofread the manuscript.
+3. It would be interesting to discuss the limitations of the proposed approach.
+
+评论者 #5：这篇论文提出了一种神经解剖学对齐视觉对象跟踪器来实现一个可解释的神经网络。 它首先提出了一个具有四个神经解剖学映射区域的类脑跟踪网络（BTN）。 然后设计了一个新的基准，称为类脑跟踪分数（BTS），来衡量人类平滑追踪路径的模型相似度。 最后，它发现大脑皮层的中颞 (MT) 和内侧上颞 (MST) 区域与设计的网络结构相似。 在公共和现实数据集上的实验结果证明了所提出方法的有效性。 以下是我对此提交的建议。
+
+1. 公式（14）中缺少公式符号的描述。
+2. 请在图3中添加一些图形描述并校对稿件。
+3. 讨论提议方法的局限性会很有趣。
+
+
+
+==============================================================
+
+Additional journal-related information:
+
+Please proceed to the following link to update your personal classifications and keywords, if necessary:
+********
+
+
+Please note that this journal offers a new, free service called AudioSlides: brief, webcast-style presentations that are shown next to published articles on ScienceDirect (see also http://www.elsevier.com/audioslides). If your paper is accepted for publication, you will automatically receive an invitation to create an AudioSlides presentation.
+
+
+Neurocomputing features the Interactive Plot Viewer, see: http://www.elsevier.com/interactiveplots. Interactive Plots provide easy access to the data behind plots. To include one with your article, please prepare a .csv file with your plot data and test it online at http://authortools.elsevier.com/interactiveplots/verification before submission as supplementary material.
+
+
+For further assistance, please visit our customer support site at http://help.elsevier.com/app/answers/list/p/7923 Here you can search for solutions on a range of topics, find answers to frequently asked questions and learn more about EM via interactive tutorials. You will also find our 24/7 support contact details should you need any further assistance from one of our customer support representatives.
+
+#AU_NEUCOM#
+
+To ensure this email reaches the intended recipient, please do not delete the above code
+
+Neurocomputing 具有交互式绘图查看器，请参阅：http://www.elsevier.com/interactiveplots。交互式绘图可以轻松访问绘图背后的数据。要在您的文章中包含一个，请准备一个包含您的绘图数据的 .csv 文件，并在作为补充材料提交之前在 http://authortools.elsevier.com/interactiveplots/verification 上在线测试。
+
+
+如需进一步帮助，请访问我们的客户支持网站 http://help.elsevier.com/app/answers/list/p/7923 在这里您可以搜索有关一系列主题的解决方案，找到常见问题的答案并学习通过交互式教程了解更多关于 EM 的信息。如果您需要我们的一位客户支持代表的任何进一步帮助，您还可以找到我们的 24/7 全天候支持联系方式。
+
+#AU_NEUCOM#
+
+为确保这封电子邮件到达预期收件人，请不要删除以上代码

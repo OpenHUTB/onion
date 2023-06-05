@@ -1,0 +1,6 @@
+This manuscript studies the relation visual object tracking and eye tracking in neurosciences. Specifically, the authors design a neuroanatomical aligning deep neural network to predict the activation on cortex. Then they use a metrics to measure the similarity between deep neural network and a specified brain area. The overall structure is different from previous visual tracking model, thus can be treated as a nice work.
+
+1. The organization of Section 4 is a bit messy. There may lacks an overview text to wrap up everything. The correspondent introduction in in the end of Sec 4.2 is unclear slightly. It is recommended to highlight the novel parts of the proposed method in Section 4 while leave some existing implementations into Section 6.2. 
+2. In the latter part of Sec 3.2.3, it is not the focus of the paper and is not reflected in the proposed model. Can it be described briefly or merge it into the previous introduction section. 
+3. The introduction to dorsal pathway at the end of the Sec 3.2.1 may lack some references about LSTM. 
+
