@@ -1,4 +1,5 @@
 %% 类脑音频识别
+run('./init');
 %% 准备音频数据
 
 run('music_genre_fMRI\process_music.mlx');
@@ -25,11 +26,13 @@ run('analysis_FeaturePrediction'); % 得出类脑相似性分数
 % 下载eps2pdf工具
 utils_rep = 'https://github.com/OpenHUTB/utils';
 git_path = fullfile(matlabroot, 'software', 'git', 'bin', 'git.exe');
+% utils_dir = fullfile("C:", 'buffer', 'utils'); % 测试使用
 utils_dir = fullfile("C:", 'workspace', 'utils'); % workspace
 if ~exist(utils_dir, 'dir')
-    clone_cmd =  append(git_path, " clone ", utils_dir);
+    clone_cmd =  append(git_path, " clone ", utils_rep, " ", utils_dir);
     system(clone_cmd);
-    % todo
+    % 克隆失败：error setting certificate verify locations:  CAfile:
+    % 换成C:\Program Files\Git 下的软件就成功了，原因未知
 end
 %%
 addpath(fullfile(utils_dir, 'export_fig'));
@@ -39,25 +42,28 @@ addpath(fullfile(utils_dir, 'export_fig'));
 eps2pdf(fullfile(cur_dir, 'latex', 'authors', 'HaidongWang.eps'), ...
     fullfile(cur_dir, 'latex', 'authors', 'HaidongWang.pdf'));
 
-
 % latex编译论文
 cc
-run('../../utils/init_matlab.mlx');
+% run('../../utils/init_matlab.mlx');
 cc
 cd('latex');
 latex_cmd = [fullfile(latex_exe_dir, 'pdflatex.exe') ' -synctex=1 -interaction=nonstopmode ban.tex'];
 system(latex_cmd);
-winopen('ban.pdf')
+% winopen('ban.pdf')
+rptview('ban.pdf');
+
 % init_robot
+
+
 %% 
 % 测试
 
 
-% BUTTON1_MASK（鼠标左键），BUTTON2_MASK（鼠标中键）；BUTTON3_MASK（鼠标右键）
-robot.keyPress    (java.awt.event.KeyEvent.VK_CONTROL);
-robot.mousePress  (java.awt.event.InputEvent.BUTTON1_MASK);
-robot.mouseRelease(java.awt.event.InputEvent.BUTTON1_MASK);
-robot.keyRelease  (java.awt.event.KeyEvent.VK_CONTROL);
+% % BUTTON1_MASK（鼠标左键），BUTTON2_MASK（鼠标中键）；BUTTON3_MASK（鼠标右键）
+% robot.keyPress    (java.awt.event.KeyEvent.VK_CONTROL);
+% robot.mousePress  (java.awt.event.InputEvent.BUTTON1_MASK);
+% robot.mouseRelease(java.awt.event.InputEvent.BUTTON1_MASK);
+% robot.keyRelease  (java.awt.event.KeyEvent.VK_CONTROL);
 
 % robot.mousePress(KeyEvent.VK_CONTROL);
 % robot.mousePress(KeyEvent.VK_2);
