@@ -387,7 +387,7 @@ If you find this repo useful in your research, please consider citing:
 
 # 参考
 ## 书籍
-1. 探索脑（全文背诵）、神经科学原理（只抽出研究的章节看）
+1. 探索脑（全文了解）、神经科学原理（只抽出研究的章节看）
 2. 认知神经科学
 3. 人的意识
 4. Reinforcement Learning, An Introduction
