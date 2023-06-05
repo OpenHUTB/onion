@@ -165,7 +165,6 @@ python 2.7, tensorflow 1.0
 
 
 # 研究计划内容
-博士后特别资助项目申请书。
 
 ## 计划内容
 该课题主要包括三个阶段：类脑图像识别的设计分析和建模、类脑跟踪的机理研究和仿真、类脑感知融合探索和研究。
@@ -197,7 +196,7 @@ python 2.7, tensorflow 1.0
 同时利用设计并训练好的类脑深度神经网络探索脑机接口的应用和人产生视觉概念乃至意识的神经相关物，利用已经比较成熟的高性能计算机和深度学习算法，解决神经科学实验条件受限的不足，解决深度学习领域模型的复杂度越来越高、可解释性越来越差的问题。
 
 
-# 期刊
+## 相关期刊
 [Nature](http://www.letpub.com.cn/index.php?journalid=6054&page=journalapp&view=detail) 
 
 [Nature Machine Intelligence](http://www.letpub.com.cn/index.php?journalid=11172&page=journalapp&view=detail) 
@@ -380,9 +379,10 @@ If you find this repo useful in your research, please consider citing:
     }
 
 
-## Release Notes
-**Version 1.0**
-* Original version from the paper. It contains the KITTI tracking experiment.
+# 学习
+## 视频
+[大脑与认知科学](https://www.bilibili.com/video/BV1Xb4y1z7eR/?p=1&vd_source=98260b8dbf6f69741edcee62e52758ab) 
+
 
 
 # 参考
