@@ -1,5 +1,4 @@
 %% 类脑音频识别
-run('./init');
 
 %% 准备音频数据
 run('music_genre_fMRI\process_music.mlx');
@@ -21,6 +20,7 @@ run('get_fMRI_activation.mlx');
 run('analysis_FeaturePrediction'); % 得出类脑相似性分数
 
 %% 论文生成
+run('./init');
 % 图片生成
 % 下载eps2pdf工具
 utils_rep = fullfile(hutb_rep, "utils");
@@ -33,7 +33,9 @@ if ~exist(utils_dir, 'dir')
     % 克隆失败：error setting certificate verify locations:  CAfile:
     % 换成C:\Program Files\Git 下的软件就成功了，原因未知
 end
-%%
+
+
+%
 addpath(fullfile(utils_dir, 'export_fig'));
 % 如果出现需要定位：Ghostcript not found. Please locate the program.
 % 则下载并安装Ghostcript: 
