@@ -8,6 +8,15 @@
 
 [Bert的注意力分析](https://github.com/clarkkev/attention-analysis)
 
+[跨模态的翻译模型](https://github.com/Glaciohound/Chimera-ST) ，[解读](https://picture.iczhiku.com/weixin/message1625543107586.html) 。
+
+
+# 模式
+
+![颞上回里的语言-文本处理模式](https://picture.iczhiku.com/weixin/weixin16255431075866.png)
+
+
+
 # 参考
 
 

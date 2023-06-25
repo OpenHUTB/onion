@@ -693,29 +693,29 @@ The attention mechanism, which intensified with recurrence, imitates the visual 
 Then, we detail each component of the brain-like tracking architecture. 
 
 
-%\begin{figure*}
-%	\centering
-%	\includegraphics[width=5.7in]{figs/pipeline.pdf}
-%	\caption{
-	%		\textbf{
-		%			The designed architecture in visual object tracking in humans.} 
-	%		The believable cortical areas implementing particular roles in smooth pursuit are indicated with rectangular modules.
-	%		The foveal view $f_t$ is obtained in the input frame $F_t$ with the spatial selector in the fovea. 
-	%		V1 and the ventral pathway learn the appearance representations $v_t$, 
-	%		and neurons in the dorsal pathway (including V1 and MT/MST) segment the salient object $d_t$ and background on the foveal view.
-	%		The refined representations $m_t$ are utilized to compute the working memory $h_t$.
-	%		Specifically, the FEF may be more important for initiating pursuit learning based on the target velocity,
-	%		and we combine FEF output $o_t$ and dorsal stream output $d_t$ into the next module. 
-	%		The cerebellum and brainstem together (including pontine nuclei (PN), flocculus, vermis and vestibular nuclei (VN)) are modeled by fully connected layers (FCs) to generate attention $a_{t+1}$, appearance $\alpha_{t+1}$, and eye position correction signals $\Delta p$,
-	%		even the final eye movement ($\Delta p_t$) via the oculomotor.
-	%		All black arrows indicate that information flows within one time-step, 
-	%		while the gray colored arrows represent the temporal connections.  
-	%	}
-%	\label{fig:pipeline}
-%\end{figure*}
+\begin{figure*}
+	\centering
+	\includegraphics[width=5.7in]{figs/pipeline.pdf}
+	\caption{
+	\textbf{
+	The designed architecture in auditory recognition for humans.}
+	The believable cortical areas implementing particular roles in auditory recognition are indicated with rectangular modules.
+	The auditory neural signal $f_t$ is obtained for input voice $F_t$ with hair cells in cochlea. 
+	In ventral pathway, A1 learn the auditory representations $v_t$, 
+	and neurons in the ventral "what" pathway (including V1, Belt, PB and T2/T3) extract auditory features on preprocessed neural signal $m_t$.
+	The input representations $m_t$ are utilized to compute temporal and rate codes $a_t$ via primary cortex A1.
+	Specifically, the Belt and PB may be more important for refining features based on the temporal and rate codes $a_t$,
+	and we feed PB output $p_t$ into the next module. 
+	The middle A1, Belt, PB and superior temporal cortex are recurrent.
+	The coder are modeled by fully connected layers (FCs) to generate auditory category.
+	All black arrows indicate that information flows within one time-step, 
+	while the gray colored arrows represent the temporal connections.
+	}
+	\label{fig:pipeline}
+\end{figure*}
 
 \subsubsection{Cochlear and MFCC features}
-For the mel-frequency cepstral coefficient (MFCC) model, the MIR toolbox was used to extract multiple music-related features from the dataset (Lartillot et al., 2008).
+Mel-frequency cepstral coefficient (MFCC) model is used to extract multiple music-related features from the dataset\cite{rabiner2010theory}.
 Consistent with a previous neuroimaging study on music (Alluri et al., 2012), we extracted the following 24 features: 
 RMS energy as the loudness feature; 
 zero-crossing rate, 
@@ -738,6 +738,7 @@ Each feature was averaged across 1.5 s.
 In addition, we used the MIR toolbox to extract MFCC features with 12 channels (Lartillot et al., 2008). 
 Feature extraction of the MIRT and MFCC models was also restricted within 100–8,000 Hz. 
 The number of features used in the MIRT and MFCC models was 24 and 12, respectively.
+
 
 \subsubsection{Primary Auditory Cortex}
 Typical, input is a data matrix represented by a time-frequency representation. 
@@ -1514,7 +1515,59 @@ Third, some nonacoustic features (such as the participants' preference, knowledg
 Further research is therefore required to clarify the detailed neural basis of music categorization.
 
 
+\subsection{Humans have specialized cortical neurons that encode pitch and harmonics}
+Pitch perception is crucial for perceiving speech and music and for recognizing auditory objects in a complex acoustic environment.
+Pitch is the percept that allows harmonically structured periodic sounds to be perceived and ordered on a musical scale.
+Pitch carries crucial linguistic information in tonal languages such as Chinese and prosodic information in European languages.
+We use pitch to identify a particular voice from a noisy background in a cocktail party.
+When listening to an orchestra, we hear the melody of the soloist over the background of accompanying instruments.
 
+
+An important phenomenon for understanding pitch is the perception of “missing fundamental,” also referred to as the residue pitch.
+When the harmonics of a fundamental frequency are played together, the pitch is perceived as the fundamental frequency even if the fundamental frequency is missing.
+For example, the harmonics of the fundamental frequency of 200 Hz are at 400, 600, 800 Hz, and so on.
+Playing the frequencies 400, 600, and 800 Hz together will generate a pitch perception of 200 Hz, even though a distinct frequency component of 200 Hz is not physically present in the sound.
+We encounter this phenomenon routinely when we listen to music over speakers that are too small to generate sounds at low frequencies.
+
+
+Many combinations of frequencies can give rise to a common fundamental frequency or pitch, making it a particularly valuable auditory cue.
+This is especially useful when pitch conveys behaviorally important information, as in the case of human speech or animal vocalizations.
+Sounds propagated through the environment can become spectrally degraded, losing high or low frequencies.
+While such spectral filtering distorts spectral information, the perception of the missing fundamental is robust despite the loss of some harmonic components.
+
+
+The ability to perceive pitch is not unique to humans; 
+birds, cats, and monkeys can also pick out pitch.
+Monkeys are capable of spectral pitch discrimination, melody recognition, and octave generalization, each of which requires the perception of pitch.
+Marmoset monkeys (Callithrix jacchus), a highly vocal New World primate species whose hearing range is similar to that of humans, exhibit human-like pitch perception.
+Marmosets are able to discriminate a missing fundamental in harmonic sounds with a precision as small as one semitone for the periodicity above 440 Hz.
+
+
+Given that both humans and some animals experience a pitch that generalizes across a variety of sounds with the same periodicity (including harmonic sounds with a missing fundamental), it is reasonable to expect that some neurons extract pitch from complex sounds. 
+Xiaoqin Wang and his colleagues discovered a decade ago that a small region in the auditory cortex of marmoset monkeys contains “pitch-selective neurons.”
+These neurons are tuned to pure tones with a best frequency and respond to harmonic complexes with a fundamental frequency near its best frequency even when the harmonics lay outside the neuron’s excitatory-frequency response area (Figure 28–13A).
+
+
+A pitch-selective neuron responds to pitch-evoking sounds (eg, harmonic sounds, click trains) when the pitch is near the neuron’s preferred best frequency.
+Pitch-selective neurons increase their firing rates as the behavioral salience of pitch increases and prefer sounds with periodicity over aperiodic sounds.
+It is important to note that the pitch-selective neurons in marmoset monkeys, which extract and code for pitch embedded in harmonic sounds (a highly nonlinear computation), are distinctly different from neurons in subcortical areas or A1 that merely “reflect” information on pitch in their firing patterns.
+
+
+The region containing the pitch-selective neurons in marmoset monkeys is confined to the low-frequency border of A1, the rostral auditory cortex (area R), and lateral belt areas (Figure 28–13B).
+Human imaging studies have identified a restricted region at the lateral end of Heschl’s gyrus anterolateral to A1 that extracts pitch of harmonic complex sounds and is sensitive to changes in pitch salience.
+The location of this region mirrors the location of the pitch center in marmoset monkeys (Figure 28–13B).
+
+
+The core regions of auditory cortex in marmosets also contain a class of harmonic template neurons that respond weakly or not at all to pure tones or twotone combinations but respond strongly to particular combinations of multiple harmonics.
+The harmonic template neurons show stronger responses to harmonic sounds than inharmonic sounds and selectivity for particular harmonic structures.
+In contrast to the pitch-selective neurons that are localized within a small cortical region lateral to the low-frequency border between A1 and R and have best frequencies less than 1,000 Hz, the harmonic template neurons are distributed across A1 and R and have best frequencies ranging from approximately 1 kHz to approximately 32 kHz, a range that covers the entire hearing range of marmosets.
+
+
+Whereas in the periphery single auditory nerve fibers encode individual components of harmonic sounds, the properties of the harmonic template neurons reveal harmonically structured receptive fields for extracting harmonic patterns.
+The change in neural representation of harmonic sounds from auditory nerve fibers to the auditory cortex reflects a principle of neural coding in sensory systems.
+Neurons in sensory pathways transform the representation of physical features, such as the frequency of sounds in hearing or luminance of images in vision, into a representation of perceptual features, such as pitch in hearing or curvature in vision.
+Such features lead to the formation of auditory or visual percepts.
+The harmonic template neurons in the auditory cortex are key to processing sounds with harmonic structures such as animal vocalizations, human speech, and music.
 
 
 \section{CONCLUSION}

@@ -4,21 +4,22 @@ function [predictor,response,segmentsPerFile] = helperAudioPreprocess(ads, overl
 
 numFiles = numel(ads.Files);
 
-% Extract predictors and responses for each file
+% 抽取每个文件的预测器和响应
 for ii = 1:numFiles
     [audioIn,info] = read(ads);
 
     fs = info.SampleRate;
-    features = vggishPreprocess(audioIn,fs,OverlapPercentage=overlap); 
-    numSpectrograms = size(features,4);
+    % 为 VGGish 网络特征特征抽取对音频数据进行预处理
+    features = vggishPreprocess(audioIn, fs, OverlapPercentage=overlap); 
+    numSpectrograms = size(features, 4);
 
     predictor{ii} = features;
-    response{ii} = repelem(info.Label,numSpectrograms);
+    response{ii} = repelem(info.Label, numSpectrograms);
     segmentsPerFile(ii) = numSpectrograms;
 
 end
 
-% Concatenate predictors and responses into arrays
+% 将预测器和响应连接为数组
 predictor = cat(4,predictor{:});
 response = cat(2,response{:});
 end
