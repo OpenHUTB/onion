@@ -1,3 +1,6 @@
 [submodule "structure"]
 	path = structure
 	url = https://github.com/OpenHUTB/structure.git
+[submodule "visual/object_decoding"]
+	path = visual/object_decoding
+	url = https://github.com/OpenHUTB/object_decoding.git
