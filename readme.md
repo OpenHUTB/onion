@@ -101,6 +101,13 @@ Reinforcement Learning, An Introduction 神经科学章节。
 * 听觉通路的建模
 * 除了视觉、听觉、语言之外其他脑区的建模
 
+## 猜想
+
+[神经孪生](https://www.neurotwin.eu/)
+![神经孪生](https://static.wixstatic.com/media/432df4_337513b4fa12447d9763f7e88c988138~mv2.png/v1/fill/w_1476,h_864,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/Starlab_Neurotwin-infographic.png)
+
+[神经孪生解读](https://m.thepaper.cn/baijiahao_17409074)
+
 ## 计划
 * 随机初始化人脸识别模型能够对人脸有相对于其他物体有特殊反应的原因是否为网络模型架构
 
