@@ -7,6 +7,9 @@ raw_url = 'D:\data\neuro\music_genre';  % 本地原始音频和fMRI文件的存�
 % work_dir = tempdir;
 work_dir = 'D:\buffer';  % 工作目录
 if ~exist(work_dir, 'dir'); mkdir(work_dir); end
+data_dir = fullfile(work_dir, 'data', 'brain', 'auditory');
+
+addpath('utils');
 
 % fMRI原始数据放置的目录
 fMRI_dir = fullfile(work_dir, 'data', 'brain', 'auditory', 'music_genre_fMRI', 'preprocess', 'ds003720-download');
