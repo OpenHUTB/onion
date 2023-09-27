@@ -194,6 +194,9 @@ parahippocampal gyrus (T5)
 # 论文
 [分析 fMRI 的论文](/data2/whd/win10/doc/paper/doctor/doctor.Data/PDF/1580343150)
 
+“听觉通路突触连接的经验和细化”位于神经科学的第49章图49-17。
+
+
 # 数据
 [10个音乐流派](https://openneuro.org/datasets/ds003720/versions/1.0.0)
 注意：sub-001的原始.nii文件有4个前缀重复了，需要重命名。
