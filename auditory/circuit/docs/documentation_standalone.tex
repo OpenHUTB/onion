@@ -1,0 +1,256 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath,amsfonts}
+\usepackage{hyperref}
+\usepackage[a4paper, margin=.5in]{geometry}
+
+%opening
+\title{Documentation: A Unifying Mechanistic Model of Excitatory-Inhibitory Interactions in the Auditory Cortex}
+\author{Youngmin Park}
+
+\newcommand{\y}[1]{{\texttt{#1}}}
+
+\begin{document}
+
+\maketitle
+
+%\begin{abstract}
+
+%\end{abstract}
+
+\section{Introduction}
+The primary tools of this paper are Python (with numpy, scipy, matplotlib), XPPAUTO (XPPAUT or XPP for short) \cite{ermentrout2002simulating}, a Python binding for XPP, \y{Py\_XPPCALL} \cite{xppy}, and Brian2 \cite{Stimberg595710}. Please contact me with any questions about these programs: \y{ympark1988@gmail.com}\footnote{I used XPP extensively in my PhD, and XPP was created by and continues to be developed by Bard Ermentrout, my doctoral advisor. In addition, I am one of the primary contributors to \y{Py\_XPPCALL}.}.
+
+I highly recommend using Ubuntu, since the most stable versions of XPP are currently on Ubuntu. At the time of writing, I have used Ubuntu 16.04 (Python 2.7.12, numpy 1.15.2, scipy 1.1.0, matplotlib 2.2.3), Ubuntu 18.04.2 (Python 2.7.15rc1, numpy 1.15.2, scipy 1.1.0, matplotlib 2.2.3), and XPPAUT version 8 to successfully run all code.
+
+\section{Rate Models}
+
+Rate models are implemented in XPPAUTO. In order to plot the simulations, I run XPPAUTO through the Python binding \y{Py\_XPPCALL}. 
+
+\subsection{XPPAUTO}
+All rate models were implemented in \texttt{XPPAUTO} for convenience. XPP auto uses an almost plain-text file format for simulating ordinary differential equations (ODEs). There is extensive documentation on XPPAUTO on Bard's website:
+\url{http://www.math.pitt.edu/~bard/xpp/help/xppodes.html}. The linked page provides full documentation of ode file syntax. XPPAUTO also comes with a graphical user interface (GUI), but this will not be needed for this documentation. The XPP .ode files for this project are located in the directory \url{https://github.com/geffenlab/park_geffen/rate_models/xpp}.
+
+Let us take a look at one of the ode files, \texttt{cols3\_fs.ode}, which is the three-unit rate model for the forward suppression paradigm. The file begins with a function definition and a bunch of parameters:
+\begin{verbatim}
+f(x)=al*heav(x)*x*heav(1/al-x)+heav(x-1/al)
+dan(x)=exp(-tl*x)
+p al = 3
+
+p wee=1.1,wep=2,wes=1
+# either wpe=1.2, or wpp=1.8 to reduce SOM disinhibition activity.
+p wpe=1.,wpp=2,wps=2
+
+p wse=6,wss=0,wsp=0
+p wee2=1,wpe2=1.25,wse2=.125
+#p wee2=1,wpe2=1.5,wse2=.25
+
+par tau1=1,tau2=1
+par et=.7,pt=1,st=1
+par pv_opto=0,som_opto=0
+
+p q=1.3,tl=1
+p taud1=150,taud2=10
+p tde1=150,tde2=2
+p lat=.65
+\end{verbatim}
+Comment lines are denoted by the pound symbol (\#). The function \texttt{f} is the firing-rate function, which corresponds to Equation (2) in the manuscript (There is a typo in the current manuscript. All simulations were run using the correct $f$ as shown in the code). The function is zero until $x=0$, at which point the function increases linearly with slope $\text{al}=3$ as a function of $x$, until the function reaches the value 1 (when $x=1/\text{al}$, at which point the function ``saturates'' at the value 1. The second function, which I named \y{dan}, is a decaying exponential with rate \y{tl}, which we will later use to modulate the square-wave inputs into the model. We use the same firing rate function for all models, which is a common choice in modeling studies \cite{natan2015complementary,yarden2017stimulus}.
+
+The notation \texttt{p} and \texttt{par} both denote a line consisting of parameters. The first set of parameters:
+\begin{verbatim}
+p wee=1.1,wep=2,wes=1
+p wpe=1.,wpp=2,wps=2
+
+p wse=6,wss=0,wsp=0
+p wee2=1,wpe2=1.25,wse2=.125
+\end{verbatim}
+are for recurrent excitation (\texttt{wee}), PV-to-Pyr inhibition (\texttt{wep}), SOM-to-Pyr inhibition (\texttt{wes}), Pyr-to-PV excitation (\texttt{wpe}), recurrent PV inhibition (\y{wpp}), SOM-to-PV inhibition (\y{wps}), Pyr-to-SOM excitation (\y{wse}), PV-to-SOM inhibition (\y{wsp}), and recurrent SOM inhibition (\y{wss}). The remaining terms are for the lateral weights. Lateral Pyr-to-Pyr (\y{wee2}), lateral Pyr-to-PV (\y{wpe2}), and lateral Pyr-to-SOM (\y{wse2}). These parameters appear in Equation 4, and in the unit equations on page 2.
+
+The next set of parameters:
+\begin{verbatim}
+par tau1=1,tau2=1
+par et=.7,pt=1,st=1
+par pv_opto=0,som_opto=0
+\end{verbatim}
+Are time constants \y{tau1} and \y{tau2} are for the inhibitory populations, PV, and SOM, respectively. This rate model is written so that 1 time unit is 10ms, i.e., \y{tau1=1} means $\tau_1 = 10$ms \cite{tsodyks1997neural,natan2015complementary}. If needed, one could perform the necessary transformation in time so the model displays the correct time units by default.
+
+The next line is for thresholds in the excitatory activity \y{et}, PV activity \y{pt}, and SOM activity \y{st}. These thresholds are minimum values beyond which the population activity can influence the postsynaptic population. Finally, the \y{pv\_opto} and \y{som\_opto} parameters set the level of optogenetic \textit{inactivation}, i.e., positive values of \y{pv\_opto} inactivation PVs, and likewise for \y{som\_opto}. In the paper I flip these numbers for readability.
+
+Next up:
+\begin{verbatim}
+p q=1.3,tl=1
+p taud1=150,taud2=10
+p tde1=150,tde2=2
+p lat=.65 
+\end{verbatim}
+\y{q} is the strength of the thalamic inputs into the model. \y{tl} is the decay time constant in the exponential function \y{dan}. The depression time constants are \y{taud1} and \y{taud2}, again in the same units, so $\tau_{D_1} = 1500$ms and $\tau_{D_2} = 100$ms. We can ignore \y{tde1,tde2} as they are not used in the code. The parameter \y{lat} determines the strength of lateral thalamic inputs.
+
+The next chunk of code sets up the stimuli in the forward suppression paradigm.
+\begin{verbatim}
+par t0=10,dur=5,isi=2
+
+t1on=t0
+t1off=t1on+dur
+t2on=t1off+isi
+t2off=t2on+dur
+
+t3on=t2off+isi
+t3off=t3on+dur
+t4on=t3off+isi
+t4off=t4on+dur
+
+t5on=t4off+isi
+t5off=t5on+dur
+t6on=t5off+isi
+t6off=t6on+dur
+
+t7on=t6off+isi
+t7off=t7on+dur
+t8on=t7off+isi
+t8off=t8on+dur
+
+# thalamic inputs with fast timescale depression
+gt1(x)=heav(x-t1on)*heav(t1off-x)*dan(x-t1on)
+gt2(x)=heav(x-t2on)*heav(t2off-x)*dan(x-t2on)
+gt3(x)=heav(x-t3on)*heav(t3off-x)*dan(x-t3on)
+gt4(x)=heav(x-t4on)*heav(t4off-x)*dan(x-t4on)
+
+gt5(x)=heav(x-t5on)*heav(t5off-x)*dan(x-t5on)
+gt6(x)=heav(x-t6on)*heav(t6off-x)*dan(x-t6on)
+gt7(x)=heav(x-t7on)*heav(t7off-x)*dan(x-t7on)
+gt8(x)=heav(x-t8on)*heav(t8off-x)*dan(x-t8on)
+
+par mode=1
+i1(x)=g1*q*if(mode-1)then(0)else(gt1(x))
+i2(x)=g2*q*if(mode-2)then(gt2(x))else(gt1(x)+gt2(x))
+i3(x)=g3*q*if(mode-3)then(0)else(gt1(x))
+\end{verbatim}
+
+The functions \y{gt1(x)} through \y{gt8(x)} represent 8 different stimuli with stimulus onset times of \y{t1on} through \y{t8on}, stimulus offset times of \y{t1off} through \y{t8off}. The \y{heav} functions are heaviside functions, and the multiplication of two of them as written forms a square pulse. This pulse is then modulated by the exponential decay function \y{dan}. For the forward suppression paradigm, we only need two stimuli, so we only use \y{gt1} and \y{gt2} for the rest of the code.
+
+The \y{mode} parameter sets which unit receives the first input. If \y{mode=1}, then
+\begin{verbatim}
+i1(x)=g1*q*gt1(x)
+i2(x)=g2*q*gt2(x)
+i3(x)=0
+\end{verbatim}
+For more information on how the if statement works in XPP, see the bottom of \url{http://www.math.pitt.edu/~bard/xpp/help/xppodes.html}. If the \y{mode} parameter is set to \y{mode=2}, then
+\begin{verbatim}
+i1(x)=0
+i2(x)=g2*q*(gt1(x)+gt2(x))
+i3(x)=0
+\end{verbatim}
+and so on. The terms \y{g1} and \y{g2} are variables and satisfy the equations
+\begin{verbatim}
+g1'=(1-g1)/taud1-i1(y)/taud2
+g2'=(1-g2)/taud1-i2(y)/taud2
+g3'=(1-g3)/taud1-i3(y)/taud2
+\end{verbatim}
+where \y{y'=1} and all \y{g1,g2,g3} are initialized with a value of 1. The trivial ODE \y{y'=1} is needed for technical reasons related to XPP that isn't too important for now. Anyway, as \y{i1(y)} activates, it ``depletes'' vesicles and forces \y{g1} to decay on a fast timescale. With no other activation of \y{i1}, \y{g1} recovers slowly back to its original value of 1.
+
+Now we finally reach the actual model equations:
+\begin{verbatim}
+u1'=-u1+f(wee*u1-(wep-damp*(1-g1))*p1-(wes+samp*(1-g1))*s1-et+i1(y)+i2(y)*lat+wee2*u2/1.5)
+p1'=(-p1+f(wpe*u1-wpp*p1-wps*s1-pt +i1(y)+i2(y)*lat +wpe2*u2-pv_opto ))/tau1
+s1'=(-s1+f(wse*u1-wsp*p1-wss*s1-st                  +wse2*u2-som_opto ))/tau2
+
+u2'=-u2+f(wee*u2-(wep-damp*(1-g2))*p2-(wes+samp*(1-g2))*s2-et+(i1(y)+i3(y))*lat+i2(y)+wee2*(u1+u3)/2)
+p2'=(-p2+f(wpe*u2-wpp*p2-wps*s2-pt +(i1(y)+i3(y))*lat+i2(y)+wpe2*(u1+u3)/2 -pv_opto ))/tau1
+s2'=(-s2+f(wse*u2-wsp*p2-wss*s2-st                         +wse2*(u1+u3)/2 -som_opto ))/tau2
+
+u3'=-u3+f(wee*u3-(wep-damp*(1-g3))*p3-(wes+samp*(1-g3))*s3-et+i2(y)*lat+i3(y)+wee2*u2/1.5)
+p3'=(-p3+f(wpe*u3-wpp*p3-wps*s3-pt +i2(y)*lat+i3(y) +wpe2*u2-pv_opto ))/tau1
+s3'=(-s3+f(wse*u3-wsp*p3-wss*s3-st                  +wse2*u2-som_opto ))/tau2
+\end{verbatim}
+These are the implemented versions of the 3 unit equations from the manuscript:
+Th first or left unit satisfies
+\begin{align*}
+ \tau_u u_1' &= -u_1 + f( w_{ee} u_1 - (w_{ep}(t)-aD_1)p_1 - (w_{es}(t)+b F_1)s_1 + qI_1(t) + w_{ee}^* u_2),\\
+ \tau_p p_1' &= -p_1 + f( w_{pe} u_1 - w_{pp}p_1 - w_{ps}s_1 + I_\text{Opt,PV} + qI_1(t) + w_{pe}^* u_2),\\
+ \tau_s s_1' &= -s_1 + f( w_{se} u_1 - w_{sp}p_1 - w_{ss}s_1 + I_\text{Opt,SOM} + w_{se}^* u_2),
+\end{align*}
+where $I_1 = i_1(t) +i_2(t)\alpha$. The second, or center unit, satisfies
+\begin{align*}
+ \tau_u u_2' &= -u_2 + f( w_{ee} u_2 - (w_{ep}(t)-aD_2)p_2 - (w_{es}(t)+b F_2)s_2 + qI_2(t) + w_{ee}^* (u_1+u_3)/2),\\
+ \tau_p p_2' &= -p_2 + f( w_{pe} u_2 - w_{pp}p_2 - w_{ps}s_2 + I_\text{Opt,PV} + qI_2(t) + w_{pe}^* (u_1+u_3)/2),\\
+ \tau_s s_2' &= -s_2 + f( w_{se} u_2 - w_{sp}p_2 - w_{ss}s_2 + I_\text{Opt,SOM} + w_{se}^* u_2),
+\end{align*}
+where $I_2(t) = (i_1(t)+i_3(t))\alpha +i_2(t)$. Finally, the third, or right unit, satisfies
+\begin{align*}
+ \tau_u u_3' &= -u_3 + f( w_{ee} u_3 - (w_{ep}(t)-aD_3)p_3 - (w_{es}(t)+b F_3)s_3 + qI_3(t) + w_{ee}^* u_2),\\
+ \tau_p p_3' &= -p_3 + f( w_{pe} u_3 - w_{pp}p_3 - w_{ps}s_3 + I_\text{Opt,PV} + qI_3(t) + w_{pe}^* u_2),\\
+ \tau_s s_3' &= -s_3 + f( w_{se} u_3 - w_{sp}p_3 - w_{ss}s_3 + I_\text{Opt,SOM} + w_{se}^* u_2), 
+\end{align*}
+where $I_3 = i_2(t) +i_3(t)\alpha$.
+
+The remaining lines are mostly related to using the XPPAUTO GUI. Choices that affect the integration are
+\begin{verbatim}
+@ bounds=100000
+@ maxstor=1000000
+@ total=200
+@ dt=.1
+\end{verbatim}
+\y{bounds} is simply the maximum possible value of any solution before XPPAUTO gives up. \y{maxstor} sets the max storage XPPAUTO is allowed to take from memory. \y{total} is the total time of the simulation, and \y{dt} is the time step.
+
+\subsection{Python Visualization}
+These XPP ode files can be run using the XPP GUI, but we will run them using Python using \y{Py\_XPPCALL}. I have tried to include enough documentation to help users understand the basics \url{https://github.com/youngmp/Py_XPPCALL}. The Python files that run the XPP files are are located in \url{https://github.com/geffenlab/park_geffen/rate_models}. The Python file that reads the ODE file from the example above is called \y{cols3\_fs.py}. You should be able to run the python file directly.
+\begin{verbatim}
+$ python cols3_fs.py
+\end{verbatim}
+There will be lots of text that appears. These were mostly for debugging purposes and can be turned off by commenting the print statements in this file and in \y{xppcall.py}. After the script runs, a few plots should appear. I like to set up the plotting framework in the individual Python files before finalizing them in \y{generate\_figures.py}.
+
+The \y{main} function calls all the relevant files. In brief, the loop runs three different stimulus patterns. The first stimulates the left unit then the center unit with 50ms tones and a 20ms inter-stimulus-interval. The second stimulates the center unit twice with the same time intervals. The third stimulates the right unit then the center unit with the same time intervals. This is a simple version of the forward suppression paradigm. These three sets of stimuli are repeated for PV inactivation and SOM inactivation. The max firing rate response is then recorded into a matrix and plotted.
+
+Much of this logic appears in its final form in the function \y{r3\_s3\_fs\_full} in \y{generate\_figures.py}. The difference is that the function \y{r3\_s3\_fs\_full} includes the spiking model simulation and plots. I've tried to comment on most things... Let me know if you have any questions.
+
+The remaining Python files for simulating the rate model, \y{cols3\_ssa} and \y{natan2015\_simple\_linear} have a similar construction. The \y{main} function in each script contains all the preliminary plotting/visualization code, which you can use to tinker and learn the ins and outs of the python/xpp interface. Seriously, play with those all you want.
+
+The final version of the plotting functions appear in \y{generate\_figures.py}. Don't change those unless you're familiar with the code.
+
+
+\section{Spiking Models}
+
+\section{Generating Figures}
+
+\y{generate\_figures.py} is the master plotting function for the paper. Most figure papers are generated here, except for a couple that were created in Inkscape. This file serves as a technical documentation of the code. In the main function, comments note which function belong to which figure.
+
+\begin{thebibliography}{1}
+
+\bibitem{ermentrout2002simulating}
+Bard Ermentrout.
+\newblock {\em Simulating, analyzing, and animating dynamical systems: a guide
+  to XPPAUT for researchers and students}, volume~14.
+\newblock Siam, 2002.
+
+\bibitem{natan2015complementary}
+Ryan~G Natan, John~J Briguglio, Laetitia Mwilambwe-Tshilobo, Sara~I Jones, Mark
+  Aizenberg, Ethan~M Goldberg, and Maria~Neimark Geffen.
+\newblock Complementary control of sensory adaptation by two types of cortical
+  interneurons.
+\newblock {\em Elife}, 4, 2015.
+
+\bibitem{xppy}
+Ilya Prokin and Youngmin Park.
+\newblock Pyxppcall.
+\newblock \url{https://github.com/iprokin/Py_XPPCALL}, 2017.
+
+\bibitem{Stimberg595710}
+Marcel Stimberg, Romain Brette, and Dan F.~M. Goodman.
+\newblock Brian 2: an intuitive and efficient neural simulator.
+\newblock {\em bioRxiv}, 2019.
+
+\bibitem{tsodyks1997neural}
+Misha~V Tsodyks and Henry Markram.
+\newblock The neural code between neocortical pyramidal neurons depends on
+  neurotransmitter release probability.
+\newblock {\em Proceedings of the national academy of sciences},
+  94(2):719--723, 1997.
+
+\bibitem{yarden2017stimulus}
+Tohar~S Yarden and Israel Nelken.
+\newblock Stimulus-specific adaptation in a recurrent network model of primary
+  auditory cortex.
+\newblock {\em PLoS computational biology}, 13(3):e1005437, 2017.
+
+\end{thebibliography}
+\end{document}

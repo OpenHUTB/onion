@@ -1,0 +1,106 @@
+# two sets of neural masses to understand the lateral propagation.
+# choice 1 setup.
+
+f(x)=al*heav(x)*x*heav(1/al-x)+heav(x-1/al)
+dan(x)=exp(-tl*x)
+p al = 3
+
+p wee=1.1,wep=2,wes=1
+# either wpe=1.2, or wpp=1.8 to reduce SOM disinhibition activity.
+p wpe=1.,wpp=2,wps=2
+
+p wse=6,wss=0,wsp=0
+p wee2=1,wpe2=1.25,wse2=.125
+#p wee2=1,wpe2=1.5,wse2=.25
+
+par tau1=1,tau2=1
+par et=.7,pt=1,st=1
+par pv_opto=0,som_opto=0
+
+p q=1.3,tl=1
+p taud1=150,taud2=10
+p tde1=150,tde2=2
+p lat=.65
+
+par t0=10,dur=5,isi=2
+
+t1on=t0
+t1off=t1on+dur
+t2on=t1off+isi
+t2off=t2on+dur
+
+t3on=t2off+isi
+t3off=t3on+dur
+t4on=t3off+isi
+t4off=t4on+dur
+
+t5on=t4off+isi
+t5off=t5on+dur
+t6on=t5off+isi
+t6off=t6on+dur
+
+t7on=t6off+isi
+t7off=t7on+dur
+t8on=t7off+isi
+t8off=t8on+dur
+
+# thalamic inputs with fast timescale depression
+gt1(x)=heav(x-t1on)*heav(t1off-x)*dan(x-t1on)
+gt2(x)=heav(x-t2on)*heav(t2off-x)*dan(x-t2on)
+gt3(x)=heav(x-t3on)*heav(t3off-x)*dan(x-t3on)
+gt4(x)=heav(x-t4on)*heav(t4off-x)*dan(x-t4on)
+
+gt5(x)=heav(x-t5on)*heav(t5off-x)*dan(x-t5on)
+gt6(x)=heav(x-t6on)*heav(t6off-x)*dan(x-t6on)
+gt7(x)=heav(x-t7on)*heav(t7off-x)*dan(x-t7on)
+gt8(x)=heav(x-t8on)*heav(t8off-x)*dan(x-t8on)
+
+par mode=1
+i1(x)=g1*q*if(mode-1)then(0)else(gt1(x))
+i2(x)=g2*q*if(mode-2)then(gt2(x))else(gt1(x)+gt2(x))
+i3(x)=g3*q*if(mode-3)then(0)else(gt1(x))
+
+p samp=2
+p damp=.5
+
+# thalamic input modifiers, slow timescale depression. Into all neurons
+g1'=(1-g1)/taud1-i1(y)/taud2
+g2'=(1-g2)/taud1-i2(y)/taud2
+g3'=(1-g3)/taud1-i3(y)/taud2
+
+u1'=(-u1+f( wee*u1-(wep-damp*(1-g1))*p1-(wes+samp*(1-g1))*s1 -et +i1(y)+i2(y)*lat +wee2*u2/1.5 ))
+p1'=(-p1+f( wpe*u1-wpp*p1-wps*s1 -pt +i1(y)+i2(y)*lat +wpe2*u2 -pv_opto ))/tau1
+s1'=(-s1+f( wse*u1-wsp*p1-wss*s1 -st                  +wse2*u2 -som_opto ))/tau2
+
+u2'=(-u2+f( wee*u2-(wep-damp*(1-g2))*p2-(wes+samp*(1-g2))*s2 -et +(i1(y)+i3(y))*lat+i2(y) +wee2*(u1+u3)/2 ))
+p2'=(-p2+f( wpe*u2-wpp*p2-wps*s2 -pt +(i1(y)+i3(y))*lat+i2(y) +wpe2*(u1+u3)/2 -pv_opto ))/tau1
+s2'=(-s2+f( wse*u2-wsp*p2-wss*s2 -st                          +wse2*(u1+u3)/2 -som_opto ))/tau2
+
+u3'=(-u3+f( wee*u3-(wep-damp*(1-g3))*p3-(wes+samp*(1-g3))*s3 -et +i2(y)*lat+i3(y) +wee2*u2/1.5 ))
+p3'=(-p3+f( wpe*u3-wpp*p3-wps*s3 -pt +i2(y)*lat+i3(y) +wpe2*u2 -pv_opto ))/tau1
+s3'=(-s3+f( wse*u3-wsp*p3-wss*s3 -st                  +wse2*u2 -som_opto ))/tau2
+
+aux fac=(1-g2)*i2(y)
+y'=1
+init g1=1,g2=1,g3=1
+aux ia1=i1(y)
+aux ia2=i2(y)
+aux ia3=i3(y)
+
+@ bounds=100000
+@ maxstor=1000000
+@ nplot=4
+@ total=200
+@ dt=.1
+
+@ xp1=t,yp1=u2
+@ xp2=t,yp2=p2
+@ xp3=t,yp3=s2
+
+@ xp4=t,yp4=g2
+#@ xp5=t,yp5=ws2p
+#@ xp6=t,yp6=ws2v
+
+@ xlo=0,xhi=200,ylo=-.1,yhi=1
+
+done

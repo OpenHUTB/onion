@@ -1,0 +1,133 @@
+# wilson-cowan threshold linear
+
+# see https://www.sciencedirect.com/science/article/pii/S1053811915007909
+# http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006007
+
+# see 
+# Two Dynamically Distinct Inhibitory Networks in Layer 4 of the Neocortex
+# for evidence on Pyr -> Som facilitation.
+
+f(x)=al*heav(x)*x*heav(1/al-x)+heav(x-1/al)
+#f(x)=al*heav(x)*x
+p al = 3
+
+# pyr input weights
+p baseline=2
+#p wee=.9
+#wep=1*baseline
+#wes=0.5*baseline
+
+p wee=1.1,wep=2,wes=1
+
+# PV input weights
+#par wpe=.1
+#wpp=baseline
+#wps=baseline*0.3
+
+# either wpe=1.2, or wpp=1.8
+p wpe=1.,wpp=2,wps=2
+
+# SOM input weights
+#par wse=8
+#wss=0*baseline
+#wsp=0*baseline
+
+p wse=6,wss=0,wsp=0
+
+# with tau2=2, first 2 responses are not affected by soms.
+#par tau1=1,tau2=2
+par tau1=1,tau2=1
+par eth=.7,pth=1,sth=1
+
+par tone1on=30,tone1off=40
+par tone2on=70,tone2off=80
+par tone3on=110,tone3off=120
+par tone4on=150,tone4off=160
+par tone5on=190,tone5off=200
+
+# thalamic inputs with fast timescale depression
+gate1(x)=heav(x-tone1on)*heav(tone1off-x)
+gate2(x)=heav(x-tone2on)*heav(tone2off-x)
+gate3(x)=heav(x-tone3on)*heav(tone3off-x)
+gate4(x)=heav(x-tone4on)*heav(tone4off-x)
+
+#gate5(x)=0
+gate6(x)=0
+gate7(x)=0
+gate8(x)=0
+
+gate5(x)=heav(x-tone5on)*heav(tone5off-x)
+#gate6(x)=heav(x-230)*heav(240-x)
+#gate7(x)=heav(x-270)*heav(280-x)
+#gate8(x)=heav(x-310)*heav(320-x)
+
+gate9(x)=heav(x-350)*heav(360-x)
+gate10(x)=heav(x-390)*heav(400-x)
+gate11(x)=heav(x-430)*heav(440-x)
+gate12(x)=heav(x-470)*heav(480-x)
+
+par pv_off1=0,som_off1=0
+par pv_off2=0,som_off2=0
+par pv_offall=0,som_offall=0
+par pv_opto=2,som_opto=2
+
+pv_supp(x)=pv_opto*(pv_off1*heav(x-20)*heav(45-x) + pv_off2*heav(x-140)*heav(165-x))
+som_supp(x)=som_opto*(som_off1*heav(x-20)*heav(45-x) + som_off2*heav(x-140)*heav(165-x))
+
+p tl=1
+
+i1(s)=(gate1(s)*exp(-tl*(s-30))+gate2(s)*exp(-tl*(s-70))+gate3(s)*exp(-tl*(s-110))+gate4(s)*exp(-tl*(s-150)))*g
+i2(s)=(gate5(s)*exp(-tl*(s-190))+gate6(s)*exp(-tl*(s-230))+gate7(s)*exp(-tl*(s-270))+gate8(s)*exp(-tl*(s-310)))*g
+
+aux ia=amp1*(i1(s)+i2(s))
+
+p amp1=5,amp2=5
+
+# thatalmic input modifiers, slow timescale depression. Into all neurons
+#g'=(g0-g)/taud1-g*(gate1(s)+gate2(s)+gate3(s)+gate4(s)+gate5(s)+gate6(s)+gate7(s)+gate8(s))/taud2
+g'=(g0-g)/taud1-(i1(s)+i2(s))/taud2
+
+p taud1=150,taud2=2,g0=1
+p tauf1=150,tauf2=2,fal=1
+
+init u=.0,v1=.0,v2=.0,g=1
+
+uin= wee*u-wep*v1-wes*v2 -eth +amp1*(i1(s)+i2(s))
+v1in=wpe*u-wpp*v1-wps*v2 -pth +amp2*(i1(s)+i2(s)) -pv_supp(s) -pv_offall*pv_opto
+v2in=wse*u-wsp*v1-wss*v2 -sth -som_supp(s) -som_offall*som_opto
+
+aux uina=uin
+aux v1ina=v1in
+aux v2ina=v2in
+
+aux weeu=wee*u
+aux wepv1=-wep*v1
+aux wesv2=-wes*v2
+aux iin=-wep*v1
+aux fa=f(uin)
+aux uiin=-wep*v1-wes*v2-eth+amp1*(i1(s)+i2(s))
+
+# inh1 is PV, inh2 is SOM
+rhsf(u)=(-u+f( uin ))
+u'=rhsf(u)
+v1'=(-v1+f( v1in ))/tau1
+v2'=(-v2+f( v2in ))/tau2
+
+s'=1
+
+@ bounds=100000
+@ maxstor=1000000
+@ nplot=4
+@ total=200
+
+@ xp1=t,yp1=u
+@ xp2=t,yp2=v1
+@ xp3=t,yp3=v2
+
+@ xp4=t,yp4=g
+#@ xp5=t,yp5=ws2p
+#@ xp6=t,yp6=ws2v
+
+@ xlo=0,xhi=200,ylo=-.1,yhi=1
+
+done
