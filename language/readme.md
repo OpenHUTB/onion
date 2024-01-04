@@ -10,6 +10,9 @@
 
 [跨模态的翻译模型](https://github.com/Glaciohound/Chimera-ST) ，[解读](https://picture.iczhiku.com/weixin/message1625543107586.html) 。
 
+# 数据
+[阅读《爱丽丝梦游仙境》音频第一章的内容](https://openneuro.org/datasets/ds002322/versions/1.0.4) 
+
 
 # 模式
 
