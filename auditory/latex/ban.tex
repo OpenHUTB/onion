@@ -740,6 +740,7 @@ Feature extraction of the MIRT and MFCC models was also restricted within 100–
 The number of features used in the MIRT and MFCC models was 24 and 12, respectively.
 
 
+% 初级听觉皮层
 \subsubsection{Primary Auditory Cortex}
 Typical, input is a data matrix represented by a time-frequency representation. 
 Typically there is a Mel-spectrogram.
@@ -796,7 +797,8 @@ Therefore, the output of ventral and dorsal pathways are integrated as
 where $\odot$ indicates the Hadamard product that performs salient object extraction through the representation mask, 
 and $conc$ means a concatenation operator that concatenates all rows of a matrix into a vector.
 
-\subsubsection{Belt and PB}
+% 带状区和伞状区
+\subsubsection{Belt and PB area}
 
 The proposed method depends on the ability to estimate the object appearance and position in the next frame; 
 and therefore, it heavily relies on state prediction. 
@@ -813,7 +815,7 @@ The refined representations $m_t$ are used to update the hidden state $h_t$ in t
 \end{equation}
 
 
-
+% 中颞皮层和上颞皮层
 \subsubsection{Middle and Superior Temporal Cortex}
 
 Then we utilize the output $d_t$ and $o_t$ to estimate eye movement $\Delta p_t$, attention $a_{t+1}$ and appearance $\alpha_{t+1}$.
@@ -881,6 +883,7 @@ We use L2 regularization to regularize the dynamic filter parameter $\phi_t(\alp
 \end{equation}
 
 
+% 数据分析
 \section{Data Analysis} \label{sec:data_analysis}
 To compare the similarity between DNN tracking and human smooth pursuit, we first extract the smooth pursuit from various eye movements 
 and then select the corresponding brain areas and activations. 
@@ -1029,7 +1032,7 @@ Participants then listened to the 60 music clips used as the test dataset in the
 Participants listened to each music clip only once and in the same order of presentation as in the fMRI experiment.
 Of the 21 non-MRI participants, data from one participant were excluded because the average accuracy (30.0\%) was outside the mean $ \pm \ 3*SD $ range (and also outside the median 3*interquartile range) for all participants.
 
-
+% 类脑分数
 \section{BAS: Brain-like Auditory Score} \label{sec:bas}
 In this part, we present the BAS metrics, which measure the similarity between DNN model and the human cortex. 
 The BAS is a metric tested on specific experimental datasets, which can be both cortical and behavioral measurements. 

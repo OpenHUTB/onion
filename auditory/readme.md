@@ -198,9 +198,13 @@ parahippocampal gyrus (T5)
 
 
 # 数据
+
 [10个音乐流派](https://openneuro.org/datasets/ds003720/versions/1.0.0)
 注意：sub-001的原始.nii文件有4个前缀重复了，需要重命名。
 
 [听富有情感的音乐EEG](https://openneuro.org/datasets/ds002721/versions/1.0.2)
 
 [听富有情感的音乐EEG-fMRI](https://openneuro.org/datasets/ds002725/versions/1.0.0)
+
+## 代码
+[无假设体素分解揭示了音乐和说话的不同皮层通路](https://github.com/snormanhaignere/natsound165-neuron2015) 
