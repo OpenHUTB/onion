@@ -9,3 +9,6 @@ last tested on Ubuntu 18.04.2, Python 2.7.15rc1, matplotlib 2.2.3, scipy, 1.1.0,
 See documentation_standalone.tex for details.
 
 MIT license
+
+# 参考
+原始代码[链接](https://github.com/geffenlab/park_geffen) 。
