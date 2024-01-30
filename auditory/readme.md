@@ -76,7 +76,12 @@ mr analysis_FeaturePrediction &
 ![听觉通路](https://wimg.iiiff.com/wimg/0908/cross-section-of-auditory-cortex.jpg)
 
 ## 耳蜗核（Cochlear nucleus）
-[耳蜗核](https://zh.wikipedia.org/wiki/%E8%80%B3%E8%9C%97%E6%A0%B8)分为腹侧耳蜗核（Ventral Cochlear Nucleus，VCN）和背侧耳蜗核（Dorsal Cochlear Nucleus，DCN）。
+[耳蜗核](https://zh.wikipedia.org/wiki/%E8%80%B3%E8%9C%97%E6%A0%B8) 分为腹侧耳蜗核（Ventral Cochlear Nucleus，VCN）和背侧耳蜗核（Dorsal Cochlear Nucleus，DCN）。
+
+[人工耳蜗建模](https://ww2.mathworks.cn/help/dsp/ug/cochlear-implant-speech-processor.html)
+```shell
+openExample('dsp/CochlearImplantSpeechProcessorExample')
+```
 
 ### 腹侧耳蜗核（VCN）
 VCN 约有 30000 个细胞，分为腹前耳蜗核（Anteroventral cochlear nucleus，AVCN）和腹后耳蜗核（Postventral cochlear nucleus，PVCN）。
