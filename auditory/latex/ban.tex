@@ -742,32 +742,18 @@ The number of features used in the MIRT and MFCC models was 24 and 12, respectiv
 
 % 初级听觉皮层
 \subsubsection{Primary Auditory Cortex}
-Typical, input is a data matrix represented by a time-frequency representation. 
+Typical, the processed signals reach the primary auditory cortex located in the temporal lobe of the brain. 
+This area is critical for processing the basic characteristics of sound such as pitch and volume.
+The input is a data matrix represented by a time-frequency representation $ m_t $. 
 Typically there is a Mel-spectrogram.
 
-The spatial selector selects the foveal view $f_t$ for the current frame $F_t$,
-and its output is transmitted to two interconnected cortical pathways.
-The ventral pathway recognizes the tracked targets 
-and the dorsal pathway learns motion features in the field of view. 
-We present the dorsal pathway with the MT/MST that analyses motion features, as depicted in Figure~\ref{fig:pipeline};
-and computes a foreground segmentation $d_t$ of the foveal view.
+The auditory pathway selects view $f_t$ for the current frame $F_t$,
+and its output is transmitted to ventral "what" cortical pathways.
+The ventral pathway recognizes the heard sound in the field of sound. 
+We present the ventral pathway that extracts audio features, as depicted in Figure~\ref{fig:pipeline};
+and computes a foreground segmentation $d_t$ of the foveal view. 
 
-(1) \textbf{Retina}: 
-The spatial attention mechanism in our model pipeline is modeled according to~\cite{RATM}. 
-An input frame $F_t \in R^{W \times H}$ forms matrices $M_t^x \in R^{w \times W}$ and $M_t^y \in R^{h \times H}$.
-A row of the matrix contains a gaussian distribution. 
-The position and width of the gaussian distribution determine which parts of the input frame are selected as the foveal view $f_t$ in the retina.
-Therefore, the foveal view $f_t \in R^{h \times w}$ can be denoted as
-\begin{equation}
-	f_t = M_t^y F_t (M_t^x)^T.
-\end{equation}
-We represent attention with the distributive center, the variance and the stride of the distributive center of continuous matrix rows.
-Unlike the study~\cite{hart}, only the stride and center are predicted through LSTM;
-however, variance only relies on stride.
-The operation avoids extravagant bias when estimating a smaller variance, contributing to a faster learning speed. 
-In addition, the utilized size of $f_t$ relies on the experimental analysis. 
 
-(2) \textbf{Ventral Pathway}: 
 The ventral pathway converts the foveal view $f_t$ into a fixed dimension vector $v_t$ including spatial and appearance features of the tracked object. 
 The network structure architecture relies on the specific experimental analysis. 
 In the architecture of the ventral pathway, we implement V1 using a CNN, which is a mutual module in the ventral pathway and dorsal pathway.
@@ -776,7 +762,7 @@ These layers, which imitate V1 in humans~\cite{theoretical_neuroscience}, are sh
 In addition, the pipeline is split into dorsal and ventral pathways. 
 Finally, we implement the ventral pathway by CNN that extracts object representations $v_t$.
 
-(3) \textbf{Dorsal Pathway}: 
+
 The dorsal pathway (MT/MST) is implemented as a DFN~\cite{brabandere2016dynamic} 
 and is used to address spatial relations between the foreground and background. 
 Let FC$(\cdot)$ indicate a fully connected layer.
@@ -800,15 +786,35 @@ and $conc$ means a concatenation operator that concatenates all rows of a matrix
 % 带状区和伞状区
 \subsubsection{Belt and PB area}
 
-The proposed method depends on the ability to estimate the object appearance and position in the next frame; 
-and therefore, it heavily relies on state prediction. 
-The LSTM can utilize spatial-temporal and appearance features, 
-and enables the proposed model to handle occlusion and drifting target representations, such as a tracked target obscured by other distractors. 
+The Belt and Parabelt (PB) areas are significant regions within the auditory cortex, specifically associated with the processing of complex auditory information. 
+These areas are located around A1 and are involved in higher-order auditory processing.
+Here's an overview of their functions and significance:
 
-The LSTM module, presented in Figure~\ref{fig:pipeline} and named the FEF, utilizes the output error to predict eye movement. 
+% Belt Area
+The Belt area is the first level of auditory cortex that surrounds A1.
+It receives direct projections from the core area and is considered a secondary auditory processing region.
+The Belt area is crucial for processing more complex features of sound than the core area. 
+It integrates information from the core area and provides a more sophisticated analysis of sound, such as complex sound patterns and where sounds are coming from in space.
+
+
+% Parabelt Area (PB):
+The Parabelt area is located adjacent to the Belt area and represents an even higher level of auditory processing.
+It receives inputs from the Belt area and has connections with various other brain regions, including those involved in memory, emotion, and multisensory integration.
+The Parabelt area is thought to play a key role in complex auditory scene analysis, such as distinguishing between different voices in a crowded room or understanding modulated sounds like music or speech.
+It is also involved in the integration of auditory information with other sensory modalities, contributing to our perception of a cohesive environment.
+
+The Belt and Parabelt regions highlight the hierarchical nature of auditory processing in the brain, where sounds are analyzed in increasingly complex and integrative stages. 
+This organization allows for the nuanced perception and interpretation of a wide range of sounds, essential for communication, environmental awareness, and interaction with the world.
+
+The proposed method depends on the ability to estimate the response in next frame; 
+and therefore, it heavily relies on state prediction. 
+The recurrent module can utilize spatial-temporal features, 
+and enables the proposed model to handle temporal prediction.
+
+The recurrent module, presented in Figure~\ref{fig:pipeline} and named the Belt and PB. 
 Similar predictive actions exist when smooth pursuit is demonstrated in the FEF area that accepts the output of the dorsal stream~\cite{b11,b13,b14}. 
 The output error goes to zero when the delay between object and eye movement is decreased in model training; 
-thus, LSTM requires inferring eye motion without image input.
+thus, recurrent module requires inferring eye motion without image input.
 The refined representations $m_t$ are used to update the hidden state $h_t$ in the FEF. 
 \begin{equation} \label{LSTM}
 	h_t, o_t = \text{LSTM}(h_{t-1}, m_t).
@@ -816,30 +822,27 @@ The refined representations $m_t$ are used to update the hidden state $h_t$ in t
 
 
 % 中颞皮层和上颞皮层
-\subsubsection{Middle and Superior Temporal Cortex}
+\subsubsection{Middle and Superior Temporal Cortex (T2/T3)}
 
-Then we utilize the output $d_t$ and $o_t$ to estimate eye movement $\Delta p_t$, attention $a_{t+1}$ and appearance $\alpha_{t+1}$.
-\begin{equation} \label{FC}
-	\Delta p_t, \Delta a_{t+1}, \alpha_{t+1} = \text{FC}(conc(d_t), o_t),
-\end{equation}
-\begin{equation} \label{attention}
-	a_{t+1} = a_t + tanh(c) \Delta a_{t+1},
-\end{equation}
-where $c$ is a trainable coefficient initialized with a low parameter to restrict the update size during learning. 
-Equations (\ref{LSTM}) to (\ref{attention}) describe the information update. 
-We calculate the gaze position with an accumulation of attention variations. 
-Because spatial attention is learned to estimate the position of the tracked object in the next frame, as depicted in Section~\ref{sec:loss}, a gaze position $p_t$ relative to the attention at time $t$ is predicted.
-\begin{equation}
-	p_t = a_t + \Delta p_t.
-\end{equation}
+The middle temporal (MT or T2) and superior temporal (ST or T3) cortices are key regions in the brain involved in various aspects of sensory processing, including auditory recognition. 
+These areas, particularly located in the temporal lobe, play critical roles in interpreting and understanding complex auditory signals such as speech and music. 
+Here's an overview of their functions related to auditory recognition:
 
-In addition, we refer to the discoveries and the idea~\cite{b9} that the brainstem and the cerebellum both instantiate an inverse dynamics controller (IDC)~\cite{purkinje_IDC}. 
-Like~\cite{b9}, we suppose that the IDC is perfect, and thus we can denote 
-\begin{equation}
-	\Delta p_t = \Delta p,
-\end{equation}
-where $\Delta p$ is the low pass filter of eye motion.
-Based on this hypothesis, we will not implement IDC in our study. 
+
+While the middle temporal cortex is primarily recognized for its role in processing visual motion (hence also known as V5), it also interacts with auditory processing, particularly when it comes to the perception of motion or the integration of audio-visual information.
+In the context of auditory recognition, the MT cortex can be involved when there's a need to integrate visual cues with auditory signals, as seen in speech perception where lip-reading and auditory cues are combined.
+
+
+The superior temporal cortex, particularly the superior temporal gyrus (STG), is directly involved in auditory processing and is crucial for recognizing complex sounds, including speech and music.
+Within the STG, the primary auditory cortex (Heschl's gyrus) is the initial cortical area to receive auditory information. 
+The surrounding areas, including the planum temporale, are heavily involved in processing the higher-order aspects of sound, such as language comprehension.
+The posterior part of the superior temporal gyrus and the adjacent superior temporal sulcus (STS) are involved in processing the more complex attributes of sounds, like prosody and the emotional content of speech.
+The superior temporal cortex has extensive connections with other brain regions, facilitating its role in integrating auditory information with other sensory modalities and cognitive processes.
+
+
+In auditory recognition, these areas work together to decode and interpret sounds, enabling individuals to recognize and respond to various auditory stimuli effectively. 
+This includes distinguishing between different speech sounds, understanding spoken language, appreciating music, and recognizing environmental sounds, which are crucial for effective communication and interaction with the environment.
+
 
 \subsection{Loss} \label{sec:loss}
 
@@ -851,9 +854,9 @@ The BAN loss $L_{b}$ is given by
 Detailed information on the BAN loss is described below.
 
 
-\subsubsection{Tracking Loss}
-To locate the tracked target, we design the tracking loss between the output of the BAN and the true label. 
-We refer to the study~\cite{UnitBox} and denote the tracking loss as the negative logarithm of their intersection over union (IoU) between predicted bounding box $p_t$ and ground truth $\hat{p}_t$:
+\subsubsection{Recognition Loss}
+To recognize music, we design the recognition loss between the output of BAN and the true label. 
+We refer to the study~\cite{UnitBox} and denote the recognition loss as the negative logarithm of their intersection over union (IoU) between predicted label $p_t$ and ground truth $\hat{p}_t$:
 \begin{equation}
 	L_t = -\log(\mbox{IoU} ( \frac{p_t \cap \hat{p}_t}{p_t \cup \hat{p}_t} )).
 \end{equation}
@@ -862,7 +865,7 @@ We refer to the study~\cite{UnitBox} and denote the tracking loss as the negativ
 \subsubsection{Attention Loss}
 The attention mechanism selects the tracked object from the input frame $F_t$.
 To train the BAN better, we utilize three attention loss terms.
-The first item makes the intersection area between the predicted attention $a_t$ and the bounding box $p_t$ as large as possible. 
+The first item makes the similarity between predicted attention $a_t$ and the bounding box $p_t$ as same as possible. 
 The second item prevents obtaining a very large width, and the log functions are applied to maintain stability in the calculation. 
 The third item restrains background noise while focusing entirely on the tracked target, e.g., gazing at a particular object moving in a crowd. 
 To achieve this, we elaborately design a loss that selects only the tracked target.
@@ -1104,8 +1107,32 @@ Finally, we discuss the model design mechanism and the relationship between DNN 
 
 
 \subsection{Datasets} \label{sec:datasets}
+
+% 刺激
 We use the GTZAN dataset which has been the most widely used in the music genre classification task.
 The dataset contains 30-second audio file including 10 different genres including reggae, classical, country, jazz, metal, pop, disco, hiphop, rock and blues.
+From the original music pieces, we randomly selected 54 music pieces (30 s, 22,050 Hz) from each music genre. 
+A total of 540 music pieces were thus used in the current study. 
+A 15 s music clip was randomly extracted from each music piece.
+We applied 2 s of fade-in and fade-out effects for each music clip. 
+All music clips were normalized for their root mean square.
+
+
+% fMRI
+The fMRI experiment consisted of 12 training runs and 6 test runs (18 runs in total). 
+Each run lasted 10 min and consisted of 40 music clips.
+A total of 480 music clips were used for the training runs, and the left-out 60 music clips were used for the test runs. 
+In each test run, a set of 10 music clips (150 s in total) was presented four times in the same order. 
+There was no repetition in the training runs.
+
+
+% 行为
+To compare brain activation patterns and behavioral performance, we utilized the subjects to participate in additional behavioral experiments. 
+These music clips were selected randomly from the 460 music pieces which were not used in the MRI experiment. 
+The subjects selected the music genre of the target music clip by filling in 1 of 10 cells on the answer sheet displayed on a laptop computer screen. 
+The music clips were presented through closed headphones. 
+Music clips were presented in the same order as in the MRI experiments. 
+Subjects were allowed to listen to each music clip only once.
 
 
 % \makecell [c]
@@ -1141,27 +1168,19 @@ The dataset contains 30-second audio file including 10 different genres includin
 \begin{table}[h]
 	\centering
 	\footnotesize
-	\caption{Frame sequences 1-12 to construct our Tracking-Gump dataset.
-		These 12 short videos in which only one salient object appears in the video sequence are selected. 
-		This ensures that most of subjects will gaze at the object constantly.}
+	\caption{Age, sex, and number of fMRI runs and samples for each participant.}
 	
-	\label{tab:track_seg}
+	\label{tab:fMRI_runs}
 	
-	\begin{tabular}{p{1.0cm}<{\centering}p{0.9cm}<{\centering}p{1.6cm}<{\centering}p{1.5cm}<{\centering}p{0.7cm}<{\centering}}
+	\begin{tabular}{p{2.9cm}<{\centering}p{0.6cm}<{\centering}p{0.6cm}<{\centering}p{0.7cm}<{\centering}p{0.7cm}<{\centering}p{0.7cm}<{\centering}}
 		\toprule[1.5pt]
-		Segment ID & Video ID  & Start Frame    & End Frame  & TRs   \\ \midrule[1pt]
-		1     		  & 3 			   & 02:30.00 	   & 02:48.00  & 10  		  \\
-		2  	 		  & 4 			   & 14:50.00 	   & 15:14.00  & 13   		  \\
-		3   		  & 5 			   & 01:32.00 	   & 01:48.00  & 9   		  \\
-		4   		  & 5 			   & 05:02.00  	   & 05:20.00  & 10   		  \\
-		5   		  & 6 			   & 00:08.00 	   & 00:24.00  & 9   		  \\
-		6   		  & 6 			   & 06:56.00 	   & 07:10.02  & 8   		  \\
-		7   		  & 6 			   & 09:42.00  	   & 09:56.01  & 8   		  \\
-		8   		  & 6 			   & 12:26.00 	   & 12:44.00  & 12		      \\
-		9   		  & 7  			   & 06:44.00 	   & 07:06.00  & 12		      \\
-		10  		  & 7 			   & 07:26.00 	   & 08:28.00  & 32		      \\
-		11  		  & 7 			   & 08:30.00 	   & 08:52.00  & 12		      \\
-		12 			  & 7 			   & 10:40.00 	   & 11:10.00  & 16		      \\
+		 & sub-001  & sub-002    & sub-003  & sub-004 & sub-005  \\ \midrule[1pt]
+		Age     		  & 30 			   & 33 	   & 23  & 30  & 25		  \\
+		Sex     		  & M  & F 	   & M  & M  & F		  \\
+		Music experience (years)     		  & 12  & 15 	   & 4  & 12  & 10		  \\
+		Total fMRI runs     		  & 18  & 18 	   & 18  & 18  & 18		  \\
+		train samples (volumes) & 4800  & 4800 	   & 4800  & 4800  & 4800		  \\
+		test samples (volumes) & 600  & 600 	   & 600  & 600  & 600		  \\
 		\bottomrule[1.5pt]
 	\end{tabular}
 	
@@ -1227,7 +1246,7 @@ and model the V1 with the headmost 3 convolutional module from the revised AlexN
 The input size of raw AlexNet is $227 \times 227$ and is downsized to $14 \times 14$ after 3 convolutional modules. 
 Because low-resolution features will lead to poor tracking results, 
 we convert the preliminary step size of 4 to 1 
-and remove a pooling module to retain spatial features, as depicted in Figure~\ref{fig:structure_analysis}. 
+and remove a pooling module to retain spatial features, as depicted in Figure~\ref{fig:pipeline}. 
 In this way, the size of the obtained feature is $14 \times 14 \times 384$, and the size of the input foveal view is $56 \times 56$.
 In addition, at the tail of V1, there is a 20$\%$ probability of randomly omitting the feature. 
 The ventral pathway includes a convolutional module in which the kernel size is $1 \times 1$. 
@@ -1235,6 +1254,27 @@ The filters of the DFN are $3 \times 3$ and $1 \times 1$.
 We used 100 LSTM units with the zoneout operation~\cite{zoneout} that have a probability of 0.05.
 We train BAN~\cite{curriculum}, and utilize a similar learning configuration except for the learning rate, which is $2 \times 10 ^{-6}$.
 The starting sequence length is five and increases every twelve iterations. 
+
+
+\subsection{BAN circuitry analysis}
+While we believe that BAN is a closer approximation to the anatomy of the ventral auditory stream than current state-of-the-art deep ANNs because we specifically limit the number of areas and include recurrence, it is still far from complete in many ways. 
+From a neuroscientist's point of view, on top of the lack of biologically-plausible learning mechanisms (self-supervised or unsupervised), a better model of the ventral auditory pathway would include more anatomical and circuitry-level details, such as cochlea or medial geniculate nucleus. 
+Similarly, adding a skip connection was not informed by cortical circuitry properties but rather proposed by He et al.\cite{he2016deep} as a means to alleviate the degradation problem in very deep architectures. 
+But we note that not just any architectural choices work.
+We have tested hundreds of architectures before finding CORnet-S type of circuitries, as Depicted in Figure~\ref{fig:structure_analysis}.
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=\linewidth]{figs/structure_analysis}
+	\caption{
+		\textbf{
+			BAN circuitry analysis.  
+		}
+		Each row indicates how GTZAN top-1 and Brain-Score change with respect to the baseline model (in bold) when a particular hyperparameter is changed.
+	}
+	\label{fig:structure_analysis}
+\end{figure}
 
 
 % 流派分类
