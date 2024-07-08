@@ -28,6 +28,9 @@ AI --> NeuroAI --> Organoid Intelligence（类器官智能）
 ### 视觉
 包括人脸、跟踪
 
+### 其他
+[温度表征](https://github.com/haesemeyer/GradientPrediction) 
+
 ### 融合
 听觉、多模态融合
 

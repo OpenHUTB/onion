@@ -65,7 +65,7 @@ opt.device = torch.device("cuda" if use_cuda else "cpu")
 opt.name = 'cnn_audioset_nomusic'
 dr = 0.2 # dropout rate
 
-datadir = '/home/kgspiano/Music_selectivity/data/AudioSet'
+datadir = 'data\\AudioSet'
 
 
 # In[3]:
@@ -473,7 +473,26 @@ class Evaluator(object):
 # In[13]:
 
 
-get_ipython().run_cell_magic('time', '', '\ncheckpoint = torch.load(\'checkpoint/\' + \'cnn_audioset_nomusic\' + \'.t7\')\nmodel = checkpoint[\'model\']\nmodel.eval() # evaluation mode\n\n# Get test statistics\nevaluator = Evaluator(model=model)\nwith torch.no_grad():\n    test_statistics = evaluator.evaluate(test_loader)\n# chance\nevaluator = Evaluator(model=model)\nwith torch.no_grad():\n    test_statistics_chance = evaluator.evaluate_chance(test_loader)\n\nprint(\'Net:trained without music, nonmusic detection performance\')\nprint(\'mean\'+ u"\\u00B1" + \'std: mean average precision = \' + str(np.mean(test_statistics[\'average_precision\'][~labelismusic]))) \nprint(\'chance mAP = \' + str(np.mean(test_statistics_chance[\'average_precision\'][~labelismusic])))\n\nprint(\'Net:trained without music, music detection performance\')\nprint(\'mean\'+ u"\\u00B1" + \'std: mean average precision = \' + str(np.mean(test_statistics[\'average_precision\'][labelismusic]))) \nprint(\'chance mAP = \' + str(np.mean(test_statistics_chance[\'average_precision\'][labelismusic])))\n\n    \n')
+checkpoint = torch.load('checkpoint/' + 'cnn_audioset_nomusic' + '.t7')
+model = checkpoint['model']
+model.eval() # evaluation mode
+
+# Get test statistics
+evaluator = Evaluator(model=model)
+with torch.no_grad():
+    test_statistics = evaluator.evaluate(test_loader)
+# chance
+evaluator = Evaluator(model=model)
+with torch.no_grad():
+    test_statistics_chance = evaluator.evaluate_chance(test_loader)
+
+print('Net:trained without music, nonmusic detection performance')
+print('mean'+ u"\u00B1" + 'std: mean average precision = ' + str(np.mean(test_statistics['average_precision'][~labelismusic])))
+print('chance mAP = ' + str(np.mean(test_statistics_chance['average_precision'][~labelismusic])))
+
+print('Net:trained without music, music detection performance')
+print('mean'+ u"\u00B1" + 'std: mean average precision = ' + str(np.mean(test_statistics['average_precision'][labelismusic])))
+print('chance mAP = ' + str(np.mean(test_statistics_chance['average_precision'][labelismusic])))
 
 
 # #### Extracting feature vectors
@@ -598,14 +617,34 @@ def tSNE_visualization(name, isA, isnonA, isscatter = False, label1 = 'Music', l
 
 # In[17]:
 
-
-get_ipython().run_cell_magic('time', '', "checkpoint = torch.load('checkpoint/' + 'cnn_audioset_nomusic' + '.t7')\nmodel = checkpoint['model']\nmodel.eval() # evaluation mode\nfeaturevectors = {} \nkey_test = 'data:test, net:trained_nomusic'\nkey_train = 'data:train, net:trained_nomusic'\nfeaturevectors[key_test] = get_feature(model, test_loader) # tuple: fv, ismusic, isnonmusic, isspeech\nfeaturevectors[key_train] = get_feature(model, train_loader) # tuple: fv, ismusic, isnonmusic, isspeech\n")
+checkpoint = torch.load('checkpoint/' + 'cnn_audioset_nomusic' + '.t7')
+model = checkpoint['model']
+model.eval() # evaluation mode
+featurevectors = {}
+key_test = 'data:test, net:trained_nomusic'
+key_train = 'data:train, net:trained_nomusic'
+featurevectors[key_test] = get_feature(model, test_loader) # tuple: fv, ismusic, isnonmusic, isspeech
+featurevectors[key_train] = get_feature(model, train_loader) # tuple: fv, ismusic, isnonmusic, isspeech
 
 
 # In[18]:
 
 
-get_ipython().run_cell_magic('time', '', "ismusic = featurevectors[key_test]['ismusic']\nisnonmusic = featurevectors[key_test]['isnonmusic']\nismusic_tr = featurevectors[key_train]['ismusic']\nisnonmusic_tr = featurevectors[key_train]['isnonmusic']\n\nembeddings = {}\nSIstmp = []\nfv = featurevectors[key_test]['fv']\ntSNE = Pipeline([('scaling', StandardScaler()), ('tSNE', TSNE(n_components=2))])\npoints = tSNE.fit_transform(fv)\nembeddings['method:TSNE, ' + key_test] = points\n\nSI = tSNE_visualization(key_test, ismusic, isnonmusic)\n")
+# %%time
+ismusic = featurevectors[key_test]['ismusic']
+isnonmusic = featurevectors[key_test]['isnonmusic']
+ismusic_tr = featurevectors[key_train]['ismusic']
+isnonmusic_tr = featurevectors[key_train]['isnonmusic']
+
+embeddings = {}
+SIstmp = []
+fv = featurevectors[key_test]['fv']
+tSNE = Pipeline([('scaling', StandardScaler()), ('tSNE', TSNE(n_components=2))])
+points = tSNE.fit_transform(fv)
+embeddings['method:TSNE, ' + key_test] = points
+
+SI = tSNE_visualization(key_test, ismusic, isnonmusic)
+
 
 
 # #### tSNE embedding of testset (Checking Music/nonmusic clustering)
@@ -945,7 +984,16 @@ def get_feature_soundquilt(model, data_loader, segment_size_in_win):
 # In[32]:
 
 
-get_ipython().run_cell_magic('time', '', "MSI_inds = []\nseg_sizes = [0, 2, 4, 8, 16, 32, 64]\ny_preds = np.zeros((len(seg_sizes), len(ismusic_tr)))\nresptmp2 = np.zeros((len(seg_sizes), len(ismusic_tr), 256))\nfor ss, segment_size_in_win in enumerate(seg_sizes):\n\n    fv = get_feature_soundquilt(model, train_loader, segment_size_in_win)\n    X2 = fv['fv']\n    y = ismusic_tr\n    resptmp2[ss, :,:] = X2\n")
+MSI_inds = []
+seg_sizes = [0, 2, 4, 8, 16, 32, 64]
+y_preds = np.zeros((len(seg_sizes), len(ismusic_tr)))
+resptmp2 = np.zeros((len(seg_sizes), len(ismusic_tr), 256))
+for ss, segment_size_in_win in enumerate(seg_sizes):
+
+    fv = get_feature_soundquilt(model, train_loader, segment_size_in_win)
+    X2 = fv['fv']
+    y = ismusic_tr
+    resptmp2[ss, :,:] = X2
 
 
 # In[33]:
@@ -1074,8 +1122,44 @@ def Ablation_test(modelused, data_loader, idx_ablation=None): # output: average 
 # In[36]:
 
 
-get_ipython().run_cell_magic('time', '', "Accuracy = {}\nN_ablation = 32\n\nname = key_test\nif not (name in Accuracy):\n    Accuracy[name] = {}\n    \n# Baseline\nAccuracy[name]['Baseline'] = Ablation_test(model, test_loader)\n\n# Ablation based on MSI\nfv = featurevectors[name]; \nt = fv['t']\ntt = np.argsort(t)\nsamplingrange_top = np.arange(unitN-1-N_ablation, unitN-1); \nsamplingrange_bottom = np.arange(0, N_ablation); \nsamplingrange_middle = np.arange((np.int(unitN/2)-np.int(N_ablation/2)), (np.int(unitN/2)+np.int(N_ablation/2)))\n\nAccuracy[name]['MSI bottom '+str(100*N_ablation/256) +'%'] = Ablation_test(model, test_loader, idx_ablation = tt[samplingrange_bottom])\nAccuracy[name]['MSI top '+str(100*N_ablation/256) +'%'] = Ablation_test(model, test_loader, idx_ablation = tt[samplingrange_top])\nAccuracy[name]['MSI middle '+str(100*N_ablation/256) +'%'] = Ablation_test(model, test_loader, idx_ablation = tt[samplingrange_middle])\n\n# Ablation based on L1norm\nn = 1\nLnnorm = np.mean(np.power(abs(featurevectors[name]['fv']), n), axis=0)\ntt = np.argsort(Lnnorm) \nsamplingrange_top = np.arange(unitN-1-N_ablation, unitN-1); \nAccuracy[name]['L' +str(n) +'norm, top '+str(100*N_ablation/256) +'%'] = Ablation_test(model, test_loader, idx_ablation = tt[samplingrange_top])\n")
+# get_ipython().run_cell_magic('time', '', "Accuracy = {}\nN_ablation = 32\n\nname = key_test\nif not (name in Accuracy):\n    Accuracy[name] = {}\n    \n# Baseline\nAccuracy[name]['Baseline'] = Ablation_test(model, test_loader)\n\n# Ablation based on MSI\nfv = featurevectors[name]; \nt = fv['t']\ntt = np.argsort(t)\nsamplingrange_top = np.arange(unitN-1-N_ablation, unitN-1); \nsamplingrange_bottom = np.arange(0, N_ablation); \nsamplingrange_middle = np.arange((np.int(unitN/2)-np.int(N_ablation/2)), (np.int(unitN/2)+np.int(N_ablation/2)))\n\nAccuracy[name]['MSI bottom '+str(100*N_ablation/256) +'%'] = Ablation_test(model, test_loader, idx_ablation = tt[samplingrange_bottom])\nAccuracy[name]['MSI top '+str(100*N_ablation/256) +'%'] = Ablation_test(model, test_loader, idx_ablation = tt[samplingrange_top])\nAccuracy[name]['MSI middle '+str(100*N_ablation/256) +'%'] = Ablation_test(model, test_loader, idx_ablation = tt[samplingrange_middle])\n\n# Ablation based on L1norm\nn = 1\nLnnorm = np.mean(np.power(abs(featurevectors[name]['fv']), n), axis=0)\ntt = np.argsort(Lnnorm) \nsamplingrange_top = np.arange(unitN-1-N_ablation, unitN-1); \nAccuracy[name]['L' +str(n) +'norm, top '+str(100*N_ablation/256) +'%'] = Ablation_test(model, test_loader, idx_ablation = tt[samplingrange_top])\n")
 
+
+# time
+Accuracy = {}
+N_ablation = 32
+
+name = key_test
+if not (name in Accuracy):
+    Accuracy[name] = {}
+
+# Baseline
+Accuracy[name]['Baseline'] = Ablation_test(model, test_loader)
+
+# Ablation based on MSI
+fv = featurevectors[name];
+t = fv['t']
+tt = np.argsort(t)
+samplingrange_top = np.arange(unitN - 1 - N_ablation, unitN - 1);
+samplingrange_bottom = np.arange(0, N_ablation);
+samplingrange_middle = np.arange((np.int(unitN / 2) - np.int(N_ablation / 2)),
+                                 (np.int(unitN / 2) + np.int(N_ablation / 2)))
+
+Accuracy[name]['MSI bottom ' + str(100 * N_ablation / 256) + '%'] = Ablation_test(model, test_loader,
+                                                                                  idx_ablation=tt[samplingrange_bottom])
+Accuracy[name]['MSI top ' + str(100 * N_ablation / 256) + '%'] = Ablation_test(model, test_loader,
+                                                                               idx_ablation=tt[samplingrange_top])
+Accuracy[name]['MSI middle ' + str(100 * N_ablation / 256) + '%'] = Ablation_test(model, test_loader,
+                                                                                  idx_ablation=tt[samplingrange_middle])
+
+# Ablation based on L1norm
+n = 1
+Lnnorm = np.mean(np.power(abs(featurevectors[name]['fv']), n), axis=0)
+tt = np.argsort(Lnnorm)
+samplingrange_top = np.arange(unitN - 1 - N_ablation, unitN - 1);
+Accuracy[name]['L' + str(n) + 'norm, top ' + str(100 * N_ablation / 256) + '%'] = Ablation_test(model, test_loader,
+                                                                                                idx_ablation=tt[
+                                                                                                    samplingrange_top])
 
 # In[37]:
 
